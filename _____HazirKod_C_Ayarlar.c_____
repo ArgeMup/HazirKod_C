@@ -1,0 +1,52 @@
+// Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
+// V1.0
+
+#define YAZDIR_BASLIK "HazirKod_C_Ayarlar.c"
+#include "HazirKod_C_Ayarlar.h"
+#include "HazirKod_C/LedKontrol.h"
+#include "HazirKod_C/Gunluk.h"
+#include "HazirKod_C/Gorev.h"
+
+int32_t BekciKopegi_Gorev()
+{
+	Bekci Kopegini Tazeleyen Islemi Tanimla
+
+	return Bekci kopeginin zaman asimi değerinin %90 nına ayarla
+}
+
+void HazirKod_C_Baslat()
+{
+	Bu Noktaya Gelene Kadar Osilator, Bekci Kopegi, Giris/Cikis ve Uart Donanimlarini Ayarlamis Ol
+
+	Gunluk_Baslat();
+	Yazdir("Islemci yeniden basladi. Sebebi : 0x%X", Yeniden Baslama Sebebi Degiskenini Tanimla);
+
+	HataKontrol_Baslat();
+
+	Gorev_Ekle(LedKontrol_Gorev);
+	Gorev_Ekle(BekciKopegi_Gorev);
+	Varsa Ek Gorevleri Tanimla
+
+	while (1)
+	{
+		Gorev_Calistir();
+
+		Islemciyi Uyutacak Islemi Tanimla Ornegin WFI
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//Zamanlama.h
+////////////////////////////////////////////////////////////////////////////////
+_An_Tip_ Zamanlama_An_Okuma_Islemi()
+{
+	return Sistem Tick Okuma Islemini Tanimla
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//Gunluk.h
+////////////////////////////////////////////////////////////////////////////////
+void Gunluk_Disari_Aktarma_Islemi(_Ortak_Tip_Isaretci_ Tampon, _Ortak_Tip_uint16_t_ Adet)
+{
+	Gonderme Islemini Tanimla
+}

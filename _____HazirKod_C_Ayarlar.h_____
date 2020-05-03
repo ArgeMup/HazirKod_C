@@ -1,0 +1,79 @@
+// Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
+// V1.0
+
+#ifndef __HazirKod_C_Ayarlar_H__
+#define __HazirKod_C_Ayarlar_H__
+
+////////////////////////////////////////////////////////////////////////////////
+//HazirKod_C_Ayarlar.h
+////////////////////////////////////////////////////////////////////////////////
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define _Ortak_Tip_Isaretci_				void *
+#define _Ortak_Tip_bool_					bool
+#define _Ortak_Tip_char_					char
+#define _Ortak_Tip_uint8_t_					uint8_t
+#define _Ortak_Tip_int8_t_					int8_t
+#define _Ortak_Tip_uint16_t_				uint16_t
+#define _Ortak_Tip_int16_t_					int16_t
+#define _Ortak_Tip_uint32_t_				uint32_t
+#define _Ortak_Tip_int32_t_					int32_t
+#define _Ortak_Tip_uint64_t_				uint64_t
+#define _Ortak_Tip_int64_t_					int64_t
+#define _Ortak_Tip_null_					NULL
+#define _Ortak_Tip_weak_					__attribute__((weak)) // __weak
+#define _Ortak_Islem_memcpy_(x,y,z)			memcpy(x,y,z)
+#define _Ortak_Islem_malloc_(x)				malloc(x)
+#define _Ortak_Islem_free_(x)				free(x)
+
+////////////////////////////////////////////////////////////////////////////////
+//Gorev.h
+////////////////////////////////////////////////////////////////////////////////
+#define _Gorev_Sayisi_						3
+
+////////////////////////////////////////////////////////////////////////////////
+//ZamanAsimi.h
+////////////////////////////////////////////////////////////////////////////////
+#define ZamanAsimi_AcKapat_Gorev_Adet		0
+#define ZamanAsimi_AcKapat_8Bayt			0
+#define ZamanAsimi_AcKapat_CokluZamanlayici	0
+
+#define ZamanAsimi_AcKapat_Kur_Saniye		0
+#define ZamanAsimi_AcKapat_Kur_Dakika		0
+#define ZamanAsimi_AcKapat_Kur_Saat			0
+#define ZamanAsimi_AcKapat_Kur_Gun			0
+#define ZamanAsimi_AcKapat_Kur_Hafta		0
+#define ZamanAsimi_AcKapat_Kur_Yil			0
+
+////////////////////////////////////////////////////////////////////////////////
+//Zamanlama.h
+////////////////////////////////////////////////////////////////////////////////
+#define _An_Aralik_Msn_						1  //_An_Okuma_Islemi_ nin dondurecegi degerin her bir kademesinin degeri
+#define _An_Tip_							_Ortak_Tip_uint32_t_ // _Ortak_Tip_uint64_t_
+
+////////////////////////////////////////////////////////////////////////////////
+//Uygulama Detaylari
+////////////////////////////////////////////////////////////////////////////////
+#include "Tanimlamalar.h"
+
+void HazirKod_C_Baslat();
+_An_Tip_ Zamanlama_An_Okuma_Islemi();
+void Gunluk_Disari_Aktarma_Islemi(_Ortak_Tip_Isaretci_ Tampon, _Ortak_Tip_uint16_t_ Adet);
+
+enum e_HataKontrol_Hatalar
+{
+	e_HataKontrol_Hata_Hata1,
+	e_HataKontrol_Hata_Hata2,
+
+	e_HataKontrol_Hata_SonEleman //Ilk eleman en onemli hatadir
+};
+
+#define YenidenBaslat(Kaynak)				Tanimla
+#define Bacak_Yaz_1(Bacak)					Tanimla
+#define Bacak_Yaz_0(Bacak)					Tanimla
+#define Bacak_Oku(Bacak)					Tanimla
+
+#endif /*__HazirKod_C_Ayarlar_H__ */
