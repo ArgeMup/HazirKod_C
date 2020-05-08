@@ -126,5 +126,5 @@ _Ortak_Tip_int32_t_ LedKontrol_Gorev()
 	}
 
 	LedKontrol_Islem = e_LedKontrol_Islem_Bosta;
-	return LedKontrol_HataVar_Bekleme_Uzun; //Buraya ula�mamas� gerekiyor
+	return LedKontrol_HataVar_Bekleme_Uzun; //Buraya ulasmamasi gerekiyor
 }

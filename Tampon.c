@@ -1,6 +1,7 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
+#define YAZDIR_BASLIK "Tampon.c"
 #include "Tampon.h"
 
 struct s_Tampon_Tutucu_
@@ -13,9 +14,19 @@ _Ortak_Tip_uint32_t_ _Tampon_ToplamKullanim_ = 0;
 
 _Ortak_Tip_Isaretci_ _Tampon_Ac_(_Ortak_Tip_uint32_t_ Adet)
 {
-	_Ortak_Tip_Isaretci_ Isaretci = _Ortak_Islem_malloc_(Adet);
-	if (Isaretci) _Tampon_ToplamKullanim_ += Adet;
-	return Isaretci;
+	_Ortak_Tip_uint32_t_ Uretilen = (_Ortak_Tip_uint32_t_)_Ortak_Islem_malloc_(Adet);
+
+	if (Uretilen >= Tampon_Ram_Baslangic && (Uretilen + Adet) <= Tampon_Ram_Bitis)
+	{
+		_Tampon_ToplamKullanim_ += Adet;
+		return (_Ortak_Tip_Isaretci_)Uretilen;
+	}
+	else
+	{
+		_Ortak_Islem_free_((_Ortak_Tip_Isaretci_)Uretilen);
+		Yazdir("%d adet tampon acilamadi", Adet);
+		return NULL;
+	}
 }
 void _Tampon_Kapat_(_Ortak_Tip_Isaretci_ Isaretci, _Ortak_Tip_uint32_t_ Adet)
 {
@@ -89,7 +100,7 @@ struct s_Tampon_ * Tampon_Bul_Hatirlatici(_Ortak_Tip_uint32_t_ Baslangic, _Ortak
 }
 void Tampon_Kapat(struct s_Tampon_ * Tampon)
 {
-	if (Tampon == NULL || _Tampon_Ilk_ == NULL) return;
+	if (Tampon == NULL) return;
 
 	Tampon_Mutex_Tut_Islemi();
 	
@@ -102,6 +113,8 @@ void Tampon_Kapat(struct s_Tampon_ * Tampon)
 		{
 			if (Onceki == NULL) _Tampon_Ilk_ = Simdiki->SonrakiTamponTutucu;
 			else Onceki->SonrakiTamponTutucu = Simdiki->SonrakiTamponTutucu;
+
+			if (Simdiki == _Tampon_Son_) _Tampon_Son_ = Onceki;
 
 			_Tampon_Kapat_(Simdiki->Tampon.Isaretci, Simdiki->Tampon.Kapasite);
 			_Tampon_Kapat_(Simdiki, sizeof(struct s_Tampon_Tutucu_));

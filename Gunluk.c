@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #define YAZDIR_BASLIK "Gunluk.c"
 #include "Gunluk.h"
@@ -49,7 +49,7 @@ void Gunluk_Ekle_Hex(const _Ortak_Tip_char_ * Baslik, _Ortak_Tip_Isaretci_ Tampo
 	_Ortak_Tip_uint16_t_ Konum = 0;
 	
 	Konum += snprintf(&Yazi[Konum],  (sizeof(Yazi) - 2) - Konum, "%lu ", An_Simdi());
-	Konum += snprintf(&Yazi[Konum],  (sizeof(Yazi) - 2) - Konum, "%s Adet:%d\r\n", Baslik, Adet);
+	Konum += snprintf(&Yazi[Konum],  (sizeof(Yazi) - 2) - Konum, "%s Adet:%.5d | Hex | Konum | Ascii\r\n", Baslik, Adet);
 	Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 	
 	while (YazdirilanAdet < Adet)
@@ -58,16 +58,21 @@ void Gunluk_Ekle_Hex(const _Ortak_Tip_char_ * Baslik, _Ortak_Tip_Isaretci_ Tampo
 	  	if (AnlikAdet > 16) AnlikAdet = 16; 
 		
 		Konum = 0;
+
+		Konum += snprintf(&Yazi[Konum],  (sizeof(Yazi) - 2) - Konum, "%lu %s ", An_Simdi(), Baslik);
+
 		for (_Ortak_Tip_uint16_t_ i = 0; i < AnlikAdet; i++)
 		{
 			Konum += snprintf(&Yazi[Konum], sizeof(Yazi) - Konum, "%.2X ", *((_Ortak_Tip_uint8_t_ *)((_Ortak_Tip_uint32_t_)Tampon + YazdirilanAdet + i)));
 		}
-		Konum += snprintf(&Yazi[Konum], sizeof(Yazi) - Konum, "| ");
+		Konum += snprintf(&Yazi[Konum], sizeof(Yazi) - Konum, "| %.4X - %.4X | ", YazdirilanAdet, YazdirilanAdet + AnlikAdet - 1);
 		for (_Ortak_Tip_uint16_t_ i = 0; i < AnlikAdet; i++)
 		{
-			Konum += snprintf(&Yazi[Konum], sizeof(Yazi) - Konum, "%c", (_Ortak_Tip_char_)(*((_Ortak_Tip_uint8_t_ *)((_Ortak_Tip_uint32_t_)Tampon + YazdirilanAdet + i))));
+			char siradaki = (_Ortak_Tip_char_)(*((_Ortak_Tip_uint8_t_ *)((_Ortak_Tip_uint32_t_)Tampon + YazdirilanAdet + i)));
+			if (!isprint(siradaki)) siradaki = ' ';
+			Konum += snprintf(&Yazi[Konum], sizeof(Yazi) - Konum, "%c", siradaki);
 		}
-		Konum += snprintf(&Yazi[Konum], sizeof(Yazi) - Konum, " %d - %d\r\n", YazdirilanAdet, YazdirilanAdet + AnlikAdet - 1);
+		Konum += snprintf(&Yazi[Konum], sizeof(Yazi) - Konum, "\r\n");
 		
 		Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 		

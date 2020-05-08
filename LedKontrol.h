@@ -1,10 +1,10 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #ifndef __LedKontrol_H__
 #define __LedKontrol_H__
 
-#include "HataKontrol.h"
+#include "../HazirKod_C_Ayarlar.h"
 
 int32_t LedKontrol_Gorev();
 void LedKontrol_AnlikBildirim();

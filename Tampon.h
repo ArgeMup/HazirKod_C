@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #ifndef __Tampon_H__
 #define __Tampon_H__
@@ -10,7 +10,8 @@
 //Genel Goruse Acik Tanimlamalar
 ////////////////////////////////////////////////////////////////////////////////
 
-#define IsaretciyiArttir(Tip, Isaretci, Adet) 	( (Tip *)( (uint32_t)Isaretci + (uint32_t)Adet ) )
+#define Tampon_Isaretcisi(s_Tampon_, Konum, Tip)	( ( (Tip *)s_Tampon_->Isaretci ) + Konum )
+#define Tampon_Icerigi(s_Tampon_, Konum, Tip)		( *Tampon_Isaretcisi(s_Tampon_, Konum, Tip) )
 
 struct s_Tampon_
 {

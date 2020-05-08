@@ -1,17 +1,14 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #define YAZDIR_BASLIK "HazirKod_C_Ayarlar.c"
 #include "HazirKod_C_Ayarlar.h"
-#include "HazirKod_C/LedKontrol.h"
-#include "HazirKod_C/Gunluk.h"
-#include "HazirKod_C/Gorev.h"
 
 int32_t BekciKopegi_Gorev()
 {
 	Bekci Kopegini Tazeleyen Islemi Tanimla
 
-	return Bekci kopeginin zaman asimi deÄŸerinin %90 nÄ±na ayarla
+	return Bekci kopeginin zaman asimi deðerinin %90 nýna ayarla
 }
 
 void HazirKod_C_Baslat()
@@ -19,12 +16,13 @@ void HazirKod_C_Baslat()
 	Bu Noktaya Gelene Kadar Osilator, Bekci Kopegi, Giris/Cikis ve Uart Donanimlarini Ayarlamis Ol
 
 	Gunluk_Baslat();
+	Yazdir("Uygulama : %s %s", Uygulama_Donanim , Uygulama_Yazilim);
 	Yazdir("Islemci yeniden basladi. Sebebi : 0x%X", Yeniden Baslama Sebebi Degiskenini Tanimla);
 
 	HataKontrol_Baslat();
 
-	Gorev_Ekle(LedKontrol_Gorev);
-	Gorev_Ekle(BekciKopegi_Gorev);
+	if (Gorev_Ekle(LedKontrol_Gorev) < 0) Yazdir("Gorev olusturulamadi, LedKontrol_Gorev");
+	if (Gorev_Ekle(BekciKopegi_Gorev) < 0) Yazdir("Gorev olusturulamadi, BekciKopegi_Gorev");
 	Varsa Ek Gorevleri Tanimla
 
 	while (1)
@@ -32,7 +30,6 @@ void HazirKod_C_Baslat()
 		Gorev_Calistir();
 
 		Islemciyi Uyutacak Islemi Tanimla Ornegin WFI
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
