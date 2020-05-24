@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #include "ZamanAsimi.h"
 
@@ -23,7 +23,7 @@ void ZamanAsimi_Baslat(ZamanAsimi_Parametre_1)
 	}
 	#endif	
 }
-void ZamanAsimi_Baslat_An(ZamanAsimi_Parametre_2 struct s_An_ * An)
+void ZamanAsimi_Baslat_An(ZamanAsimi_Parametre_2 struct s_ZamanAsimi_An_ * An)
 {
   	An->ZamanAsimi = ZamanAsimi;
 }
@@ -94,7 +94,7 @@ void ZamanAsimi_Gorevler_Calistir(ZamanAsimi_Parametre_1)
 // Zaman asimini ayarla, hemen geri d�n
 ////////////////////////////////////////////////////////////////////
 
-void ZamanAsimi_Kur_MiliSaniye(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
+void ZamanAsimi_Kur_MiliSaniye(struct s_ZamanAsimi_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
 {
   	if (!UstuneEkle)
 	{
@@ -122,7 +122,7 @@ void ZamanAsimi_Kur_MiliSaniye(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Or
 }
 
 #if ZamanAsimi_AcKapat_Kur_Saniye
-void ZamanAsimi_Kur_Saniye(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
+void ZamanAsimi_Kur_Saniye(struct s_ZamanAsimi_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
 {
   	if (!UstuneEkle)
 	{
@@ -155,7 +155,7 @@ void ZamanAsimi_Kur_Saniye(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_
 	}
 }
 #if ZamanAsimi_AcKapat_Kur_Dakika
-void ZamanAsimi_Kur_Dakika(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
+void ZamanAsimi_Kur_Dakika(struct s_ZamanAsimi_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
 {
   	if (!UstuneEkle)
 	{
@@ -188,7 +188,7 @@ void ZamanAsimi_Kur_Dakika(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_
 	}
 }
 #if ZamanAsimi_AcKapat_Kur_Saat
-void ZamanAsimi_Kur_Saat(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
+void ZamanAsimi_Kur_Saat(struct s_ZamanAsimi_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
 {
   	if (!UstuneEkle)
 	{
@@ -221,7 +221,7 @@ void ZamanAsimi_Kur_Saat(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Ti
 	}
 }
 #if ZamanAsimi_AcKapat_Kur_Gun
-void ZamanAsimi_Kur_Gun(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
+void ZamanAsimi_Kur_Gun(struct s_ZamanAsimi_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
 {
   	if (!UstuneEkle)
 	{
@@ -254,7 +254,7 @@ void ZamanAsimi_Kur_Gun(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip
 	}
 }
 #if ZamanAsimi_AcKapat_Kur_Hafta
-void ZamanAsimi_Kur_Hafta(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
+void ZamanAsimi_Kur_Hafta(struct s_ZamanAsimi_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
 {
   	if (!UstuneEkle)
 	{
@@ -287,7 +287,7 @@ void ZamanAsimi_Kur_Hafta(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_T
 	}
 }
 #if ZamanAsimi_AcKapat_Kur_Yil
-void ZamanAsimi_Kur_Yil(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
+void ZamanAsimi_Kur_Yil(struct s_ZamanAsimi_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip_bool_ UstuneEkle)
 {
   	if (!UstuneEkle)
 	{
@@ -326,7 +326,7 @@ void ZamanAsimi_Kur_Yil(struct s_An_ * An, _Ortak_Tip_uint32_t_ Sure, _Ortak_Tip
 #endif
 #endif
 
-_Ortak_Tip_bool_ ZamanAsimi_OlduMu(struct s_An_ * An)
+_Ortak_Tip_bool_ ZamanAsimi_OlduMu(struct s_ZamanAsimi_An_ * An)
 {
 	if (An->ZamanAsimi->SayaciGuncelle) An->ZamanAsimi->SayaciGuncelle(&An->ZamanAsimi->_IcKullanim_.An, An->ZamanAsimi->Hatirlatici);
 	
@@ -358,7 +358,7 @@ void ZamanAsimi_SayaciIlerlet(ZamanAsimi_Parametre_2 _Ortak_Tip_uint32_t_ MiliSa
 
 void ZamanAsimi_Bekle_MiliSaniye(ZamanAsimi_Parametre_2 _Ortak_Tip_uint32_t_ Sure)
 {
-  	struct s_An_ An;
+  	struct s_ZamanAsimi_An_ An;
 	ZamanAsimi_Baslat_An(ZamanAsimi_Parametre_3 &An);
 	
 	ZamanAsimi_Kur_MiliSaniye(&An, Sure, false);
@@ -368,7 +368,7 @@ void ZamanAsimi_Bekle_MiliSaniye(ZamanAsimi_Parametre_2 _Ortak_Tip_uint32_t_ Sur
 #if ZamanAsimi_AcKapat_Kur_Saniye
 void ZamanAsimi_Bekle_Saniye(ZamanAsimi_Parametre_2 _Ortak_Tip_uint32_t_ Sure)
 {
-  	struct s_An_ An;
+  	struct s_ZamanAsimi_An_ An;
 	ZamanAsimi_Baslat_An(ZamanAsimi_Parametre_3 &An);
 	
 	ZamanAsimi_Kur_Saniye(&An, Sure, false);

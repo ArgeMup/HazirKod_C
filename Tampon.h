@@ -1,10 +1,10 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #ifndef __Tampon_H__
 #define __Tampon_H__
 
-#include "../HazirKod_C_Ayarlar.h"
+#include "HazirKod_C_Ayarlar.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar

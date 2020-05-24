@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #ifndef __Gunluk_H__
 #define __Gunluk_H__
@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <ctype.h>
-#include "../HazirKod_C_Ayarlar.h"
+#include "HazirKod_C_Ayarlar.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar

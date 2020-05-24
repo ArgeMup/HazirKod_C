@@ -30,6 +30,7 @@ void HazirKod_C_Baslat()
 		Gorev_Calistir();
 
 		Islemciyi Uyutacak Islemi Tanimla Ornegin WFI
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
