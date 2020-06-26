@@ -34,6 +34,16 @@ _Ortak_Tip_int32_t_ Gorev_Sil(_Ortak_Tip_int32_t_ (*Islem) (void))
 	
 	return -1;
 }
+void Gorev_HemenCalistir(_Ortak_Tip_int32_t_ (*Islem) (void))
+{
+	for (_Ortak_Tip_int32_t_ i = 0; i < _Gorev_Sayisi_; i++)
+	{
+		if (Gorevler[i].Islem != Islem) continue;
+
+		Gorevler[i].An = 0;
+		return;
+	}
+}
 void Gorev_Calistir()
 {
 	for (_Ortak_Tip_int32_t_ i = 0; i < _Gorev_Sayisi_; i++)

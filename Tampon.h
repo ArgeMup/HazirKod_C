@@ -5,25 +5,39 @@
 #define __Tampon_H__
 
 #include "HazirKod_C_Ayarlar.h"
+#include "Zamanlama.h"
+#include "YerTahsisati.h"
+
+////////////////////////////////////////////////////////////////////////////////
+//Ic Kullanim
+////////////////////////////////////////////////////////////////////////////////
+struct _s_Tampon_
+{
+	Tip_Isaretci Isaretci;
+	Tip_u32 Kapasite;
+	Tip_u32 Kullanim;
+};
+#define _Tampon_(s_Tampon)						( (struct _s_Tampon_ *)s_Tampon )
 
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
 ////////////////////////////////////////////////////////////////////////////////
+typedef Tip_Isaretci Tip_Isaretci_Tampon;
 
-#define Tampon_Isaretcisi(s_Tampon_, Konum, Tip)	( ( (Tip *)s_Tampon_->Isaretci ) + Konum )
-#define Tampon_Icerigi(s_Tampon_, Konum, Tip)		( *Tampon_Isaretcisi(s_Tampon_, Konum, Tip) )
+#define Tampon_Isaretci_Konum(s_Tampon, Konum, Tip)		Isaretci_Konumlandir(_Tampon_(s_Tampon)->Isaretci, Konum, Tip)
+#define Tampon_Icerik_Konum(s_Tampon, Konum, Tip)		Isaretci_Icerigi(_Tampon_(s_Tampon)->Isaretci, Konum, Tip)
 
-struct s_Tampon_
-{
-	_Ortak_Tip_Isaretci_ Isaretci;
-	_Ortak_Tip_uint32_t_ Kapasite;
-	_Ortak_Tip_uint32_t_ Kullanim;
-	_Ortak_Tip_uint32_t_ Hatirlatici;
-};
+#define Tampon_Isaretci_GecerliKonum(s_Tampon)			Tampon_Isaretci_Konum(s_Tampon, _Tampon_(s_Tampon)->Kullanim, Tip_u8)
+#define Tampon_Icerik_GecerliKonum(s_Tampon)	        Tampon_Icerik_Konum(s_Tampon, _Tampon_(s_Tampon)->Kullanim, Tip_u8)
 
-struct s_Tampon_ * Tampon_Ac(_Ortak_Tip_uint32_t_ Kapasite, _Ortak_Tip_uint32_t_ Hatirlatici);
-struct s_Tampon_ * Tampon_Bul_Hatirlatici(_Ortak_Tip_uint32_t_ Baslangic, _Ortak_Tip_uint32_t_ Bitis, struct s_Tampon_ * OncekiTampon);
-void Tampon_Kapat(struct s_Tampon_ * Tampon);
-void Tampon_Kapat_Hatirlatici(_Ortak_Tip_uint32_t_ Baslangic, _Ortak_Tip_uint32_t_ Bitis);
+#define Tampon_Kapasite(s_Tampon)						( _Tampon_(s_Tampon)->Kapasite )
+#define Tampon_DoluAlan(s_Tampon)						( _Tampon_(s_Tampon)->Kullanim )
+#define Tampon_BosAlan(s_Tampon)						( Tampon_Kapasite(s_Tampon) - Tampon_DoluAlan(s_Tampon) )
+
+Tip_Isaretci_Tampon Tampon_Yeni(Tip_u32 Kapasite);
+Tip_void Tampon_Sil(Tip_Isaretci_Tampon Tampon);
+
+Tip_bool Tampon_Bilgi_Ekle_Bayt(Tip_Isaretci_Tampon Tampon, Tip_u8 Bayt);
+Tip_bool Tampon_Bilgi_Ekle_Blok(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Kaynak, Tip_u32 KaynakBoyut);
 
 #endif /*__Tampon_H__ */

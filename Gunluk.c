@@ -81,6 +81,6 @@ void Gunluk_Ekle_Hex(const _Ortak_Tip_char_ * Baslik, _Ortak_Tip_Isaretci_ Tampo
 }
 void Gunluk_SureliDurdur(_Ortak_Tip_uint32_t_ Saniye)
 {	
-	Gunluk_Ekle(YAZDIR_BASLIK, "%d sn boyunca durduruldu", Saniye);
+	//Gunluk_Ekle(YAZDIR_BASLIK, "%d sn boyunca durduruldu", Saniye);
   	Sure_Saniye(Gunluk_An, Saniye);	
 }
