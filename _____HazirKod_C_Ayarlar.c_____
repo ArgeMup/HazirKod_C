@@ -1,17 +1,25 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #define YAZDIR_BASLIK "HazirKod_C_Ayarlar.c"
 #include "HazirKod_C_Ayarlar.h"
 
-int32_t BekciKopegi_Gorev()
+#include "Gorev.h"
+#include "Gunluk.h"
+#include "LedKontrol.h"
+#include "Zamanlama.h"
+
+Tip_Isaretci _Gorevler = Tip_null;
+Tip_u32 _HataKontrol_Hatalar;
+
+int32_t BekciKopegi_Gorev(struct s_Gorev_Detaylar_ * Gorev)
 {
 	Bekci Kopegini Tazeleyen Islemi Tanimla
 
-	return Bekci kopeginin zaman asimi deðerinin %90 nýna ayarla
+	Gorev_Islem_CikVeTekrarCalistir(Bekci kopeginin zaman asimi deðerinin %90 nýna ayarla);
 }
 
-void HazirKod_C_Baslat()
+Tip_void HazirKod_C_Baslat()
 {
 	Bu Noktaya Gelene Kadar Osilator, Bekci Kopegi, Giris/Cikis ve Uart Donanimlarini Ayarlamis Ol
 
@@ -20,16 +28,24 @@ void HazirKod_C_Baslat()
 	Yazdir("Islemci yeniden basladi. Sebebi : 0x%X", Yeniden Baslama Sebebi Degiskenini Tanimla);
 
 	HataKontrol_Baslat();
-
-	if (Gorev_Ekle(LedKontrol_Gorev) < 0) Yazdir("Gorev olusturulamadi, LedKontrol_Gorev");
-	if (Gorev_Ekle(BekciKopegi_Gorev) < 0) Yazdir("Gorev olusturulamadi, BekciKopegi_Gorev");
-	Varsa Ek Gorevleri Tanimla
-
+	HataKontrol_Hatasiz(e_HataKontrol_Hata_YerTahsisati);
+	HataKontrol_Hatasiz(e_HataKontrol_Hata_IlkGirenIlkCikar);
+	HataKontrol_Hatasiz(e_HataKontrol_Hata_Depo);
+	
+	_Gorevler = Gorev_Yeni();
+	if (_Gorevler)
+	{
+		if (!Gorev_Islem_Ekle(_Gorevler, LedKontrol_Gorev, Tip_null)) Yazdir("Gorev olusturulamadi, LedKontrol_Gorev");
+		if (!Gorev_Islem_Ekle(_Gorevler, BekciKopegi_Gorev, Tip_null)) Yazdir("Gorev olusturulamadi, BekciKopegi_Gorev");
+		Varsa Ek Gorevleri Tanimla
+	}
+	else Yazdir("Gorev yapisi olusturulamadi");
+	
 	while (1)
 	{
-		Gorev_Calistir();
+		Gorev_Calistir(_Gorevler);
 
-		Islemciyi Uyutacak Islemi Tanimla Ornegin WFI
+		_An_KesmeIcinBekle_Islemi();
 	}
 }
 
@@ -40,11 +56,15 @@ _An_Tip_ Zamanlama_An_Okuma_Islemi()
 {
 	return Sistem Tick Okuma Islemini Tanimla
 }
+_An_void Zamanlama_KesmeIcinBekle_Islemi()
+{
+	__WFI();
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //Gunluk.h
 ////////////////////////////////////////////////////////////////////////////////
-void Gunluk_Disari_Aktarma_Islemi(_Ortak_Tip_Isaretci_ Tampon, _Ortak_Tip_uint16_t_ Adet)
+Tip_void Gunluk_Disari_Aktarma_Islemi(Tip_Isaretci Tampon, Tip_u16 Adet)
 {
 	Gonderme Islemini Tanimla
 }
