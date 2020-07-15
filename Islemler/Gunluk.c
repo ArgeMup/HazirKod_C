@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #define YAZDIR_BASLIK "Gunluk.c"
 #include "Gunluk.h"
@@ -76,5 +76,6 @@ Tip_void Gunluk_Ekle_Hex(const Tip_char * Baslik, Tip_Isaretci Tampon, Tip_u16 A
 Tip_void Gunluk_SureliDurdur(Tip_u32 Saniye)
 {	
 	//Gunluk_Ekle(YAZDIR_BASLIK, "%d sn boyunca durduruldu", Saniye);
-  	Sure_Saniye(_Gunluk_An, Saniye);	
+	if (Saniye == 0) Sure_Hemen(_Gunluk_An);
+	else Sure_Saniye(_Gunluk_An, Saniye);
 }

@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.3
+// V1.4
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -33,14 +33,14 @@ typedef void *											Tip_Isaretci;
 #define _Islem_malloc_(x)								malloc(x)
 #define _Islem_free_(x)									free(x)
 
-#define Bit_Yaz_1(Degisken, No)							Degisken |= (1 << No)
-#define Bit_Yaz_0(Degisken, No)							Degisken &= (~(1 << No))
-#define Bit_Oku(Degisken, No)							( ( Degisken & (1 << No) ) > 0 )
+#define Bit_Yaz_1(Degisken, No)							Degisken |= ( 1 << ( No ) )
+#define Bit_Yaz_0(Degisken, No)							Degisken &= ( ~( 1 << ( No ) ) )
+#define Bit_Oku(Degisken, No)							( ( Degisken & ( 1 << ( No ) ) ) > 0 )
 
-#define Isaretci_Konumlandir(Isaretci, Konum, Tip)		( ( (Tip *)Isaretci ) + Konum )
+#define Isaretci_Konumlandir(Isaretci, Konum, Tip)		( ( (Tip *)(Isaretci) ) + (Konum) )
 #define Isaretci_Icerigi(Isaretci, Konum, Tip)			( *Isaretci_Konumlandir(Isaretci, Konum, Tip) )
 
-#define Hesapla_Yuzde_Tamsayi(Kullanim, Kapasite)		( (Kullanim * 100) / Kapasite )
+#define Hesapla_Yuzde_Tamsayi(Kullanim, Kapasite)		( ((Kullanim) * 100) / (Kapasite) )
 
 #define YenidenBaslat(Sebep)
 #define Bekle_MiliSaniye(Sure)

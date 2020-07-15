@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #ifndef __Zamanlama_H__
 #define __Zamanlama_H__
@@ -12,13 +12,13 @@
 typedef Tip_void (*Tip_Islem_Sure_AnOkuma) ();
 typedef Tip_void (*Tip_Islem_Sure_KesmeIcinBekle) ();
 
-#define _An_(u)			( (Tip_Sure)( _An_Okuma_Islemi() + (Tip_Sure)u ) )
-#define _Msn_(u)		( ( u / _An_Aralik_Msn_ ) + 1 )
-#define _Saniye_(u)		( _Msn_(u * 1000) )
-#define _Dakika_(u)		( _Saniye_(u * 60) )
-#define _Saat_(u)		( _Dakika_(u * 60) )
-#define _Gun_(u)		( _Saat_(u * 24) )
-#define _Hafta_(u)		( _Gun_(u * 7) )
+#define _An_(u)			(Tip_Sure)( _An_Okuma_Islemi() + (Tip_Sure)( u ) )
+#define _Msn_(u)		( ( u ) / _An_Aralik_Msn_ ) + 1
+#define _Saniye_(u)		_Msn_( ( u ) * 1000 )
+#define _Dakika_(u)		_Saniye_( ( u ) * 60 )
+#define _Saat_(u)		_Dakika_( ( u ) * 60 )
+#define _Gun_(u)		_Saat_( ( u ) * 24 )
+#define _Hafta_(u)		_Gun_( (u )* 7 )
 
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
