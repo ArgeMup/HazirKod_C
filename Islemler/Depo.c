@@ -89,7 +89,7 @@ Tip_u32 Depo_Bilgi_Oku(Tip_Isaretci_Depo Depo, Tip_Isaretci YazilacakTampon, Tip
 		igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, Tip_null, _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt, true);
 		if (igic_okunan != _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt) goto BeklenmeyenDurum;
 
-		igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, YazilacakTampon ? YazilacakTampon + OkunanAdet : Tip_null, AnlikAdet, true);
+		igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, (YazilacakTampon ? (Tip_u8 *)YazilacakTampon + OkunanAdet : Tip_null), AnlikAdet, true);
 		if (igic_okunan != AnlikAdet) goto BeklenmeyenDurum;
 
 		OkunanAdet += AnlikAdet;

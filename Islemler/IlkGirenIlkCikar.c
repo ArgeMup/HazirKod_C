@@ -74,7 +74,7 @@ Tip_bool IGIC_Bilgi_Ekle(Tip_Isaretci_IGIC IGIC, Tip_Isaretci OkunacakTampon, Ti
 
 		if (Fark > 0)
 		{
-			if (IGIC_Bilgi_Oku(IGIC, NULL, Fark, true) != Fark) goto BeklenmeyenDurum;
+			if (IGIC_Bilgi_Oku(IGIC, NULL, Fark, true) != (Tip_u32)Fark) goto BeklenmeyenDurum;
 		}
 	}
 

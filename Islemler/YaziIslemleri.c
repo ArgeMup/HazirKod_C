@@ -25,7 +25,7 @@ Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_c
 
 		KonumBaslangic = KonumBaslangic + strlen(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
 
-		KonumBitis = YI_Ara(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_u8), ArananBitis);
+		KonumBitis = YI_Ara(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
 		if (KonumBitis == 0) return 0;
 
 		KonumBitis = KonumBitis + KonumBaslangic - 1 /*Ilk karaktere gitmek icin*/;
@@ -33,7 +33,7 @@ Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_c
 	else if (ArananBaslangic == Tip_null)
 	{
 		KonumBaslangic = 0;
-		KonumBitis = YI_Ara(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_u8), ArananBitis);
+		KonumBitis = YI_Ara(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
 		if (KonumBitis == 0) return 0;
 
 		KonumBitis = KonumBitis - 1 /*Ilk karaktere gitmek icin*/;
@@ -69,7 +69,7 @@ Tip_char * YI_Yazdir(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_char * Sekil, 
 Tip_char * YI_Yazdir_TarihSaat(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_time An)
 {
 	struct tm ZamanBilgisi = { 0 };
-	//localtime_r(&An, &ZamanBilgisi); // mingw win de tanimli de�il
+	localtime_r(&An, &ZamanBilgisi); // mingw win de tanimli degil
 	strftime(Hedef, HedefKapasite, _YI_Yazdir_Sablon_TarihSaat, &ZamanBilgisi);
 	return Hedef;
 }

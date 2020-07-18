@@ -12,7 +12,7 @@
 Tip_Isaretci _Gorevler = Tip_null;
 Tip_u32 _HataKontrol_Hatalar;
 
-int32_t BekciKopegi_Gorev(struct s_Gorev_Detaylar_ * Gorev)
+int32_t BekciKopegi_Gorev(struct s_Gorev_Detaylar_ * Detaylar)
 {
 	Bekci Kopegini Tazeleyen Islemi Tanimla
 
@@ -47,24 +47,4 @@ Tip_void HazirKod_C_Baslat()
 
 		_An_KesmeIcinBekle_Islemi();
 	}
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//Zamanlama.h
-////////////////////////////////////////////////////////////////////////////////
-_An_Tip_ Zamanlama_An_Okuma_Islemi()
-{
-	return Sistem Tick Okuma Islemini Tanimla
-}
-_An_void Zamanlama_KesmeIcinBekle_Islemi()
-{
-	__WFI();
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//Gunluk.h
-////////////////////////////////////////////////////////////////////////////////
-Tip_void Gunluk_Disari_Aktarma_Islemi(Tip_Isaretci Tampon, Tip_u16 Adet)
-{
-	Gonderme Islemini Tanimla
 }
