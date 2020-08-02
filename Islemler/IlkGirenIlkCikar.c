@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #include "IlkGirenIlkCikar.h"
 
@@ -14,7 +14,7 @@ Tip_Isaretci_IGIC IGIC_Yeni(Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmaz
 	_Islem_memset_(Yeni, 0, sizeof(struct _s_IGIC_));
 
 	Yeni->Kapasite = Kapasite;
-	Yeni->Tampon = Yeni + sizeof(struct _s_IGIC_);
+	Yeni->Tampon = Isaretci_Konumlandir(Yeni, sizeof(struct _s_IGIC_), Tip_u8);
 	Yeni->YerKalmazsa = YerKalmazsa;
 	Yeni->Islem_Siliniyor = Islem_Siliniyor;
 

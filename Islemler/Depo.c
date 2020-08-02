@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #include "Depo.h"
 
@@ -89,7 +89,7 @@ Tip_u32 Depo_Bilgi_Oku(Tip_Isaretci_Depo Depo, Tip_Isaretci YazilacakTampon, Tip
 		igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, Tip_null, _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt, true);
 		if (igic_okunan != _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt) goto BeklenmeyenDurum;
 
-		igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, (YazilacakTampon ? (Tip_u8 *)YazilacakTampon + OkunanAdet : Tip_null), AnlikAdet, true);
+		igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, (YazilacakTampon ? Isaretci_Konumlandir(YazilacakTampon, OkunanAdet, Tip_u8) : Tip_null), AnlikAdet, true);
 		if (igic_okunan != AnlikAdet) goto BeklenmeyenDurum;
 
 		OkunanAdet += AnlikAdet;
@@ -107,11 +107,11 @@ Tip_u32 Depo_Bilgi_SiradakiAdet(Tip_Isaretci_Depo Depo)
 
 	Tip_u32 AnlikAdet = 0;
 	Tip_u32 igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, &AnlikAdet, _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt, false);
-	if (igic_okunan != _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt) goto BeklenmeyenDurum;
-
-	return AnlikAdet;
 	
-	BeklenmeyenDurum:
+	if (igic_okunan == 0) return 0;
+	else if (igic_okunan == _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt) return AnlikAdet;
+
+	//BeklenmeyenDurum:
 	HataKontrol_Hatali(e_HataKontrol_Hata_Depo);
 	return 0;
 }

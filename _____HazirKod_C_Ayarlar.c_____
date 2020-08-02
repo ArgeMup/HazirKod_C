@@ -1,22 +1,24 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
-#define YAZDIR_BASLIK "HazirKod_C_Ayarlar.c"
-#include "HazirKod_C_Ayarlar.h"
+//////////////////////////////////////////////////////////////////////////////
+#define _Gunluk_Baslik "HazirKod_C_Ayarlar"
+#include "Gunluk.h"
+//////////////////////////////////////////////////////////////////////////////
 
 #include "Gorev.h"
-#include "Gunluk.h"
 #include "LedKontrol.h"
 #include "Zamanlama.h"
 
-Tip_Isaretci _Gorevler = Tip_null;
 Tip_u32 _HataKontrol_Hatalar;
+Tip_Isaretci _Gorevler = Tip_null;
+Tip_u8 ucHeap[configTOTAL_HEAP_SIZE];
 
 int32_t BekciKopegi_Gorev(struct s_Gorev_Detaylar_ * Detaylar)
 {
 	Bekci Kopegini Tazeleyen Islemi Tanimla
 
-	Gorev_Islem_CikVeTekrarCalistir(Bekci kopeginin zaman asimi deðerinin %90 nýna ayarla);
+	Gorev_Islem_CikVeTekrarCalistir(Bekci kopeginin zaman asimi degerinin %90 nina ayarla);
 }
 
 Tip_void HazirKod_C_Baslat()

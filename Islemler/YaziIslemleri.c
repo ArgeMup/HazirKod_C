@@ -69,7 +69,11 @@ Tip_char * YI_Yazdir(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_char * Sekil, 
 Tip_char * YI_Yazdir_TarihSaat(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_time An)
 {
 	struct tm ZamanBilgisi = { 0 };
-	localtime_r(&An, &ZamanBilgisi); // mingw win de tanimli degil
+#ifndef __MINGW32__
+	localtime_r(&An, &ZamanBilgisi);
+#else
+	( void ) An;
+#endif
 	strftime(Hedef, HedefKapasite, _YI_Yazdir_Sablon_TarihSaat, &ZamanBilgisi);
 	return Hedef;
 }

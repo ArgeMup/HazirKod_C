@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #ifndef __Tampon_H__
 #define __Tampon_H__
@@ -39,7 +39,8 @@ typedef Tip_Isaretci Tip_Isaretci_Tampon;
 Tip_Isaretci_Tampon Tampon_Yeni(Tip_u32 Kapasite);
 Tip_void Tampon_Sil(Tip_Isaretci_Tampon Tampon);
 
-Tip_bool Tampon_Bilgi_Ekle_Bayt(Tip_Isaretci_Tampon Tampon, Tip_u8 Bayt);
-Tip_bool Tampon_Bilgi_Ekle_Blok(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Kaynak, Tip_u32 KaynakBoyut);
+Tip_bool Tampon_Bilgi_Ekle_GecerliKonum(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Kaynak, Tip_u32 Adet);
+Tip_u32 Tampon_Bilgi_Oku_GecerliKonum(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Hedef, Tip_u32 HedefKapasitesi);
+Tip_u32 Tampon_Bilgi_Oku_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKonumu, Tip_Isaretci Hedef, Tip_u32 HedefKapasitesi);
 
 #endif /*__Tampon_H__ */

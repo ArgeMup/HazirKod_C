@@ -1,7 +1,6 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
 // V1.0
 
-#define YAZDIR_BASLIK "Liste.c"
 #include "Liste.h"
 
 Tip_Isaretci_Liste Liste_Yeni()

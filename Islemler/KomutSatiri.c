@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #include "KomutSatiri.h"
 
@@ -84,7 +84,7 @@ Tip_Isaretci_Tampon KomutSatiri_Oku_Hex(Tip_Isaretci_Tampon Tampon)
 	Tip_u32 Adet = _KomutSatiri_KarakterSayisi(Tampon);
 	if (Adet == 0 || (Adet & ((Tip_u32)1) )) return Tip_null; //Karakter say�s� 0 veya tek sayi, hex icin cift olmali
 
-	struct _s_Tampon_ * YazilacakTampon = Tampon_Yeni(Adet / 2);
+	Tip_Isaretci_Tampon YazilacakTampon = Tampon_Yeni(Adet / 2);
 	if (YazilacakTampon == Tip_null) return Tip_null;
 
 	Tip_u8 Okunan[3] = { 0 };
@@ -93,7 +93,8 @@ Tip_Isaretci_Tampon KomutSatiri_Oku_Hex(Tip_Isaretci_Tampon Tampon)
 	for (Tip_u32 i = 0; i < Tampon_Kapasite(YazilacakTampon); i++)
 	{
 		_Islem_memcpy_(Okunan, Kaynak++, 2);
-		Tampon_Bilgi_Ekle_Bayt(YazilacakTampon, (Tip_u8)strtol((Tip_char *)Okunan, Tip_null, 16));
+		Tip_u8 Okunan_bayt = (Tip_u8)strtol((Tip_char *)Okunan, Tip_null, 16);
+		Tampon_Bilgi_Ekle_GecerliKonum(YazilacakTampon, &Okunan_bayt, 1);
 	}
 
 	Tampon_DoluAlan(Tampon) +=  Adet + 1 /*Ayirac*/;
@@ -107,7 +108,7 @@ Tip_Isaretci_Tampon KomutSatiri_Oku_Yazi(Tip_Isaretci_Tampon Tampon)
 	Tip_u32 Adet = _KomutSatiri_KarakterSayisi_Yazi(Tampon);
 	if (Adet == 0) return Tip_null; //Karakter say�s� 0
 
-	struct _s_Tampon_ * YazilacakTampon = Tampon_Yeni(Adet + 1 /* \0 */);
+	Tip_Isaretci_Tampon YazilacakTampon = Tampon_Yeni(Adet + 1 /* \0 */);
 	if (YazilacakTampon == Tip_null) return Tip_null;
 
 	_Islem_memcpy_(Tampon_Isaretci_GecerliKonum(YazilacakTampon, Tip_char), Tampon_Isaretci_GecerliKonum(Tampon, Tip_char), Adet);

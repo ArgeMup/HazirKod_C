@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.4
+// V1.5
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -30,8 +30,6 @@ typedef void *											Tip_Isaretci;
 
 #define _Islem_memcpy_(x,y,z)							memcpy(x,y,z)
 #define _Islem_memset_(x,y,z)							memset(x,y,z)
-#define _Islem_malloc_(x)								malloc(x)
-#define _Islem_free_(x)									free(x)
 
 #define Bit_Yaz_1(Degisken, No)							Degisken |= ( 1 << ( No ) )
 #define Bit_Yaz_0(Degisken, No)							Degisken &= ( ~( 1 << ( No ) ) )
@@ -62,9 +60,18 @@ typedef Tip_u8 											Gorev_CalistirilacakAdim_Tip;
 ////////////////////////////////////////////////////////////////////////////////
 //Gunluk.h
 ////////////////////////////////////////////////////////////////////////////////
-#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)
-#define Yazdir(Yazi , ...) 								//Gunluk_Ekle(YAZDIR_BASLIK, Yazi, ##__VA_ARGS__)
-#define Yazdir_Hex(Tampon, Adet) 						//Gunluk_Ekle_Hex(YAZDIR_BASLIK, Tampon, Adet)
+#define _Gunluk_Renkli_Cikti_Uretsin
+#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//_Gunluk_Aktarma_Islemi(Tampon, Adet)
+#define _Gunluk_Cikti_Onem_Seviyesi 					_Gunluk_Cikti_Onem_Seviye_Geveze
+#define _Gunluk_Renk_BeklenmeyenDurum					( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi )
+#define _Gunluk_Renk_Hata								( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah )
+#define _Gunluk_Renk_Uyari								( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah )
+#define _Gunluk_Renk_Bilgi								( e_Gunluk_Gorunum_Yazi_Yesil | e_Gunluk_Gorunum_Yuzey_Siyah )
+#define _Gunluk_Renk_Geveze								( e_Gunluk_Gorunum_Duzyazi )
+////////////////////////////////////////////////////////////////////////////////
+//#define _Gunluk_Baslik "KaynakKod"	//Kaynak kod içinde tanimlanmali
+//#include "Gunluk.h"					//Kaynak kod içinde tanimlanmali
+////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
 //IlkGirenIlkCikar.h
@@ -75,7 +82,7 @@ typedef Tip_u8 											Gorev_CalistirilacakAdim_Tip;
 ////////////////////////////////////////////////////////////////////////////////
 enum e_HataKontrol_Hatalar_
 {
-	//Sistem Hatalari
+	//HazirKod_C Hatalari
 	e_HataKontrol_Hata_YerTahsisati,
 	e_HataKontrol_Hata_IlkGirenIlkCikar,
 	e_HataKontrol_Hata_Depo,
@@ -94,6 +101,12 @@ extern Tip_u32 _HataKontrol_Hatalar;
 #define	HataKontrol_Hatali(e_HataKontrol_Hatalar_)				Bit_Yaz_0(_HataKontrol_Hatalar, e_HataKontrol_Hatalar_)
 
 ////////////////////////////////////////////////////////////////////////////////
+//Heap_4.h
+////////////////////////////////////////////////////////////////////////////////
+#define configTOTAL_HEAP_SIZE 							( 2 * 1024 )
+#define portBYTE_ALIGNMENT 								( 8 )
+
+////////////////////////////////////////////////////////////////////////////////
 //KomutSatiri.h
 ////////////////////////////////////////////////////////////////////////////////
 #define _KomutSatiri_Komut_Baslangici					"Kart"
@@ -101,7 +114,7 @@ extern Tip_u32 _HataKontrol_Hatalar;
 #define _KomutSatiri_Cevap_Baslangici					">>"
 #define _KomutSatiri_Cevap_Bitisi						_KomutSatiri_Komut_Bitisi
 #define _KomutSatiri_Ayirac			 					' '
-#define _KomutSatiri_DonanimAdresi						1
+#define _KomutSatiri_DonanimAdresi						( 1 )
 #define _KomutSatiri_Komut_EnAzKaSa_Bas					(sizeof(_KomutSatiri_Komut_Baslangici) - 1) + (1 /*Ayirac*/) + (1 /*Adres*/) + (1 /*Ayirac*/) + (1 /*Komut*/) + (1 /*Ayirac*/)
 #define _KomutSatiri_Komut_EnAzKaSa_Tum					_KomutSatiri_Komut_EnAzKaSa_Bas + (sizeof(_KomutSatiri_Komut_Bitisi) - 1)
 #define _KomutSatiri_Cevap_Onay							"Tamam"
@@ -119,12 +132,12 @@ extern Tip_u32 _HataKontrol_Hatalar;
 ////////////////////////////////////////////////////////////////////////////////
 //LedKontrol.h
 ////////////////////////////////////////////////////////////////////////////////
-#define _LedKontrol_AnlikBildirim_Bekleme				50
-#define _LedKontrol_AnlikBildirim_Adet					5
-#define _LedKontrol_HerseyYolunda_Bekleme_Kisa			150
-#define _LedKontrol_HerseyYolunda_Bekleme_Uzun			1500
-#define _LedKontrol_HataVar_Bekleme_Kisa				500
-#define _LedKontrol_HataVar_Bekleme_Uzun				1500 - _LedKontrol_HerseyYolunda_Bekleme_Kisa
+#define _LedKontrol_AnlikBildirim_Bekleme				( 50 )
+#define _LedKontrol_AnlikBildirim_Adet					( 5 )
+#define _LedKontrol_HerseyYolunda_Bekleme_Kisa			( 150 )
+#define _LedKontrol_HerseyYolunda_Bekleme_Uzun			( 1500 )
+#define _LedKontrol_HataVar_Bekleme_Kisa				( 500 )
+#define _LedKontrol_HataVar_Bekleme_Uzun				( 1500 - _LedKontrol_HerseyYolunda_Bekleme_Kisa )
 #define _LedKontrol_LediYak()							Bacak_Yaz_0(Bacak_LED)
 #define _LedKontrol_LediSondur()						Bacak_Yaz_1(Bacak_LED)
 
@@ -148,25 +161,24 @@ extern Tip_u32 _HataKontrol_Hatalar;
 ////////////////////////////////////////////////////////////////////////////////
 //YerTahsisati.h
 ////////////////////////////////////////////////////////////////////////////////
-#define _YT_Ram_Baslangic 								( (Tip_u32)0 )			//(Tip_u32)&__heap_start__
-#define _YT_Ram_Bitis									( ((Tip_u32)0) - 1 )	//(Tip_u32)&__heap_end__
+#define _YT_Heap_Kullanimini_HazirKod_C_Duzenlesin
+#ifndef _YT_Heap_Kullanimini_HazirKod_C_Duzenlesin
+	#define _YT_Islem_malloc_(x)						malloc(x)
+	#define _YT_Islem_free_(x)							free(x)
+	#define _YT_Ram_Baslangic 							( (Tip_u32)0 )			//(Tip_u32)&__heap_start__
+	#define _YT_Ram_Bitis								( (Tip_u32)( _YT_Ram_Baslangic - 1 ) )	//(Tip_u32)&__heap_end__
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //Zamanlama.h
 ////////////////////////////////////////////////////////////////////////////////
 typedef Tip_u32 /*Tip_u64*/ 							Tip_Sure;
-#define _An_Aralik_Msn_									1  //_An_Okuma_Islemi_ nin dondurecegi degerin her bir kademesinin degeri
-#define _An_Okuma_Islemi()								//Zamanlama_An_Okuma_Islemi() //Tip_Sure tipinde bilgi dondurmeli ve 1 LSB nin degeri _An_Aralik_Msn_ kadar olmali
-#define _An_KesmeIcinBekle_Islemi()						//Zamanlama_KesmeIcinBekle_Islemi() //__WFI();
+#define _An_Aralik_Msn_									( 1 ) //_An_Okuma_Islemi_ nin dondurecegi degerin her bir kademesinin degeri
+#define _An_Okuma_Islemi()								//_Zamanlama_An_Okuma_Islemi() //Tip_Sure tipinde bilgi dondurmeli ve 1 LSB nin degeri _An_Aralik_Msn_ kadar olmali
+#define _An_KesmeIcinBekle_Islemi()						//_Zamanlama_KesmeIcinBekle_Islemi() //__WFI();
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//Uygulama Detaylari
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
+//Uygulama icin gerekli tanimlamalar
 ////////////////////////////////////////////////////////////////////////////////
 Tip_void HazirKod_C_Baslat();
 
