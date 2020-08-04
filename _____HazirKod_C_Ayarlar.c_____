@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.3
+// V1.4
 
 //////////////////////////////////////////////////////////////////////////////
 #define _Gunluk_Baslik "HazirKod_C_Ayarlar"
@@ -18,6 +18,8 @@ int32_t BekciKopegi_Gorev(struct s_Gorev_Detaylar_ * Detaylar)
 {
 	Bekci Kopegini Tazeleyen Islemi Tanimla
 
+	Gunluk_Bilgi("Bekci Kopegi");
+
 	Gorev_Islem_CikVeTekrarCalistir(Bekci kopeginin zaman asimi degerinin %90 nina ayarla);
 }
 
@@ -26,8 +28,8 @@ Tip_void HazirKod_C_Baslat()
 	Bu Noktaya Gelene Kadar Osilator, Bekci Kopegi, Giris/Cikis ve Uart Donanimlarini Ayarlamis Ol
 
 	Gunluk_Baslat();
-	Yazdir("Uygulama : %s %s", Uygulama_Donanim , Uygulama_Yazilim);
-	Yazdir("Islemci yeniden basladi. Sebebi : 0x%X", Yeniden Baslama Sebebi Degiskenini Tanimla);
+	Gunluk_Bilgi("Uygulama : %s %s", Uygulama_Donanim , Uygulama_Yazilim);
+	Gunluk_Uyari("Islemci yeniden basladi. Sebebi : 0x%X", Yeniden Baslama Sebebi Degiskenini Tanimla);
 
 	HataKontrol_Baslat();
 	HataKontrol_Hatasiz(e_HataKontrol_Hata_YerTahsisati);
@@ -37,11 +39,11 @@ Tip_void HazirKod_C_Baslat()
 	_Gorevler = Gorev_Yeni();
 	if (_Gorevler)
 	{
-		if (!Gorev_Islem_Ekle(_Gorevler, LedKontrol_Gorev, Tip_null)) Yazdir("Gorev olusturulamadi, LedKontrol_Gorev");
-		if (!Gorev_Islem_Ekle(_Gorevler, BekciKopegi_Gorev, Tip_null)) Yazdir("Gorev olusturulamadi, BekciKopegi_Gorev");
+		if (!Gorev_Islem_Ekle(_Gorevler, LedKontrol_Gorev, Tip_null)) Gunluk_Hata("Gorev olusturulamadi, LedKontrol_Gorev");
+		if (!Gorev_Islem_Ekle(_Gorevler, BekciKopegi_Gorev, Tip_null)) Gunluk_Hata("Gorev olusturulamadi, BekciKopegi_Gorev");
 		Varsa Ek Gorevleri Tanimla
 	}
-	else Yazdir("Gorev yapisi olusturulamadi");
+	else Gunluk_Hata("Gorev yapisi olusturulamadi");
 	
 	while (1)
 	{

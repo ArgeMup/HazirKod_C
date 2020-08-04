@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.4
+// V1.5
 #define _Gunluk_Baslik "Gunluk"
 #include "Gunluk.h"
 
@@ -25,7 +25,7 @@ Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, c
 
 	if (Gorunum != e_Gunluk_Gorunum_Duzyazi)
 	{
-		Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\[1");
+		Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\e[1");
 		if (Gorunum & 0x0F) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, ";%d", (Gorunum & 0x0F) + 29);
 		if (Gorunum & 0xF0) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, ";%d", (Gorunum >> 4) + 39);
 		Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "m");
@@ -35,7 +35,7 @@ Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, c
 	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", Baslik);
 	Konum += vsnprintf(&Yazi[Konum], Kapasite - Konum, Sekil, valist);
 
-	if (Gorunum != e_Gunluk_Gorunum_Duzyazi) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\[0m");
+	if (Gorunum != e_Gunluk_Gorunum_Duzyazi) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\e[0m");
 
 	Konum += snprintf(&Yazi[Konum],  sizeof(Yazi) - Konum, "\r\n");
 	
@@ -90,6 +90,7 @@ Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik, Tip_Isaretci Tampon, Tip_u16 
 Tip_void Gunluk_SureliDurdur(Tip_u32 Saniye)
 {	
 	HazirKod_C_Gunluk("%d sn boyunca durduruldu", Saniye);
+	
 	if (Saniye == 0) Sure_Hemen(_Gunluk_An);
 	else Sure_Saniye(_Gunluk_An, Saniye);
 }

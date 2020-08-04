@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #include "Depo.h"
 
@@ -78,7 +78,7 @@ Tip_u32 Depo_Bilgi_Oku(Tip_Isaretci_Depo Depo, Tip_Isaretci YazilacakTampon, Tip
 	if (Depo == Tip_null) return 0;
 	
 	Tip_u32 OkunanAdet = 0;
-	while (OkunanAdet < TamponKapasitesi && Depo_DoluAlan(Depo) > 0)
+	while ( (OkunanAdet < TamponKapasitesi) && (Depo_DoluAlan(Depo) > 0) )
 	{
 		Tip_u32 AnlikAdet = 0;
 		Tip_u32 igic_okunan = IGIC_Bilgi_Oku(_Depo_(Depo)->IGIC, &AnlikAdet, _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt, false);

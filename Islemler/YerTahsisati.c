@@ -1,11 +1,12 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
+
+#include "YerTahsisati.h"
 
 //////////////////////////////////////////////////////////////////////////////
-#define _Gunluk_Baslik "Gunluk"		//Kaynak kod içinde tanimlanmali
-#include "Gunluk.h"					//Kaynak kod içinde tanimlanmali
+#define _Gunluk_Baslik "YerTahsisati"		//Kaynak kod iï¿½inde tanimlanmali
+#include "Gunluk.h"					//Kaynak kod iï¿½inde tanimlanmali
 //////////////////////////////////////////////////////////////////////////////
-#include "YerTahsisati.h"
 
 Tip_Isaretci YT_Yeni(Tip_u32 Adet)
 {

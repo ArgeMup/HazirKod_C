@@ -165,8 +165,8 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     }
 
 	//////////////////////////////////////////////////////////////////////////////
-	#define _Gunluk_Baslik "main"	//Kaynak kod içinde tanimlanmali
-	#include "Gunluk.h"					//Kaynak kod içinde tanimlanmali
+	#define _Gunluk_Baslik "main"		//Kaynak kod icinde tanimlanmali
+	#include "Gunluk.h"					//Kaynak kod icinde tanimlanmali
 	//////////////////////////////////////////////////////////////////////////////
 
     int main(void)
