@@ -23,7 +23,7 @@ Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_c
 		KonumBaslangic = YI_Ara(Kaynak, ArananBaslangic);
 		if (KonumBaslangic == 0) return 0;
 
-		KonumBaslangic = KonumBaslangic + strlen(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
+		KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
 
 		KonumBitis = YI_Ara(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
 		if (KonumBitis == 0) return 0;
@@ -43,9 +43,9 @@ Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_c
 		KonumBaslangic = YI_Ara(Kaynak, ArananBaslangic);
 		if (KonumBaslangic == 0) return 0;
 
-		KonumBaslangic = KonumBaslangic + strlen(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
+		KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
 
-		KonumBitis = strlen(Kaynak);
+		KonumBitis = _Islem_strlen_(Kaynak);
 	}
 
 	Tip_u32 Adet = KonumBitis - KonumBaslangic;

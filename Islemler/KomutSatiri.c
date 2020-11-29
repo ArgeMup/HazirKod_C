@@ -26,17 +26,17 @@ Tip_bool KomutSatiri_KontrolEt_TampondakiBilgiUygunMu(Tip_Isaretci_Tampon Tampon
 {
 	if (Tampon_DoluAlan(Tampon) < _KomutSatiri_Komut_EnAzKaSa_Tum) return false;
 
-	Tip_u32 Konum = AI_Bul_Blok(Tampon_Isaretci_IlkKonum(Tampon, Tip_char), Tampon_DoluAlan(Tampon), _KomutSatiri_Komut_Baslangici, strlen(_KomutSatiri_Komut_Baslangici));
+	Tip_u32 Konum = AI_Bul_Blok(Tampon_Isaretci_IlkKonum(Tampon, Tip_char), Tampon_DoluAlan(Tampon), _KomutSatiri_Komut_Baslangici, _Islem_strlen_(_KomutSatiri_Komut_Baslangici));
 	if (Konum == 0) return false;
 
-	Konum = AI_Bul_Blok(Tampon_Isaretci_Konum(Tampon, _KomutSatiri_Komut_EnAzKaSa_Bas, Tip_char), Tampon_DoluAlan(Tampon) - _KomutSatiri_Komut_EnAzKaSa_Bas, _KomutSatiri_Komut_Bitisi, strlen(_KomutSatiri_Komut_Bitisi));
+	Konum = AI_Bul_Blok(Tampon_Isaretci_Konum(Tampon, Konum, Tip_char), Tampon_DoluAlan(Tampon) - Konum, _KomutSatiri_Komut_Bitisi, _Islem_strlen_(_KomutSatiri_Komut_Bitisi));
 	if (Konum == 0) return false;
 
 	return true;
 }
 Tip_bool KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Tip_Isaretci_Tampon Tampon)
 {
-	Tip_u32 Konum = AI_Bul_Blok(Tampon_Isaretci_IlkKonum(Tampon, Tip_char), Tampon_DoluAlan(Tampon), _KomutSatiri_Komut_Baslangici, strlen(_KomutSatiri_Komut_Baslangici));
+	Tip_u32 Konum = AI_Bul_Blok(Tampon_Isaretci_IlkKonum(Tampon, Tip_char), Tampon_DoluAlan(Tampon), _KomutSatiri_Komut_Baslangici, _Islem_strlen_(_KomutSatiri_Komut_Baslangici));
 	if (Konum == 0) return false;
 
 	Tampon_Kapasite(Tampon) = Tampon_DoluAlan(Tampon);
@@ -51,7 +51,7 @@ Tip_bool KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Tip_Isaretci_Tampon Tampon)
 }
 Tip_bool KomutSatiri_KontrolEt_Siradaki_BuMu(Tip_Isaretci_Tampon Tampon, Tip_char * Bu)
 {
-    Tip_u32 Aranan_Adet = strlen(Bu);
+    Tip_u32 Aranan_Adet = _Islem_strlen_(Bu);
     if (_KomutSatiri_KarakterSayisi(Tampon) != Aranan_Adet) return false;
 
 	if (!memcmp(Tampon_Isaretci_GecerliKonum(Tampon, Tip_char), Bu, Aranan_Adet))
@@ -123,7 +123,7 @@ Tip_void KomutSatiri_Cevapla_Hex(Tip_Isaretci_Tampon Hedef, Tip_Isaretci_Tampon 
 {
 	KomutSatiri_Cevap_Ekle(Hedef, "%s0x", _KomutSatiri_Cevap_Baslangici);
 
-	for (Tip_u32 i = 0; i < Tampon_DoluAlan(Kaynak); i++)
+	for (Tip_u32 i = 0; i < Tampon_Kapasite(Kaynak); i++)
 	{
 		KomutSatiri_Cevap_Ekle(Hedef, "%02X", Tampon_Icerik_Konum(Kaynak, i, Tip_u8));
 	}

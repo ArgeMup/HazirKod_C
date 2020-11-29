@@ -14,7 +14,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
 ////////////////////////////////////////////////////////////////////////////////
-#define YI_Ara(Kaynak, Aranan)   AI_Bul_Blok((Tip_Isaretci)Kaynak, strlen(Kaynak), (Tip_Isaretci)Aranan, strlen(Aranan))
+#define YI_Ara(Kaynak, Aranan)   AI_Bul_Blok((Tip_Isaretci)Kaynak, _Islem_strlen_(Kaynak), (Tip_Isaretci)Aranan, _Islem_strlen_(Aranan))
 Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_char * ArananBitis, Tip_char * Hedef, Tip_u32 HedefBoyut);
 
 Tip_char * YI_Yazdir(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_char * Sekil, ...);

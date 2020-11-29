@@ -30,6 +30,7 @@ typedef void *											Tip_Isaretci;
 
 #define _Islem_memcpy_(x,y,z)							memcpy(x,y,z)
 #define _Islem_memset_(x,y,z)							memset(x,y,z)
+#define _Islem_strlen_(x)								strlen(x)
 
 #define Bit_Yaz_1(Degisken, No)							Degisken |= ( 1 << ( No ) )
 #define Bit_Yaz_0(Degisken, No)							Degisken &= ( ~( 1 << ( No ) ) )

@@ -14,7 +14,7 @@ Tip_void Gunluk_Baslat()
 }
 Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, const Tip_char * Sekil, ...)
 {
-	if (!Sure_DolduMu(_Gunluk_An)) return;
+	if ( Baslik == NULL || !Sure_DolduMu(_Gunluk_An) ) return;
 
 	va_list valist;
 	va_start(valist, Sekil);
@@ -25,7 +25,7 @@ Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, c
 
 	if (Gorunum != e_Gunluk_Gorunum_Duzyazi)
 	{
-		Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\e[1");
+		Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\033[1");
 		if (Gorunum & 0x0F) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, ";%d", (Gorunum & 0x0F) + 29);
 		if (Gorunum & 0xF0) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, ";%d", (Gorunum >> 4) + 39);
 		Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "m");
@@ -35,7 +35,7 @@ Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, c
 	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", Baslik);
 	Konum += vsnprintf(&Yazi[Konum], Kapasite - Konum, Sekil, valist);
 
-	if (Gorunum != e_Gunluk_Gorunum_Duzyazi) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\e[0m");
+	if (Gorunum != e_Gunluk_Gorunum_Duzyazi) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\033[0m");
 
 	Konum += snprintf(&Yazi[Konum],  sizeof(Yazi) - Konum, "\r\n");
 	
@@ -45,7 +45,7 @@ Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, c
 }
 Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik, Tip_Isaretci Tampon, Tip_u16 Adet)
 {
-	if (!Sure_DolduMu(_Gunluk_An)) return;
+	if ( Baslik == NULL || !Sure_DolduMu(_Gunluk_An) ) return;
 
 	Tip_char Yazi[256];
 	Tip_u16 Kapasite = sizeof(Yazi) - 2 /*\r\n*/;
