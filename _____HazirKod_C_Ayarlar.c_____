@@ -14,7 +14,7 @@ Tip_u32 _HataKontrol_Hatalar;
 Tip_Isaretci _Gorevler = Tip_null;
 Tip_u8 ucHeap[configTOTAL_HEAP_SIZE];
 
-int32_t BekciKopegi_Gorev(struct s_Gorev_Detaylar_ * Detaylar)
+Tip_i32 BekciKopegi_Gorev(struct s_Gorev_Detaylar_ * Detaylar)
 {
 	Bekci Kopegini Tazeleyen Islemi Tanimla
 

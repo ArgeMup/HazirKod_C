@@ -18,9 +18,9 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     
     int main(void)
     {
-    	uint8_t T1[] = { 4,4,4,4 };
-    	uint8_t T2[] = { 3,4,5 };
-    	uint8_t T10[] = { 1,2,3,     4,4,4,     5,6,     3,4,5,     7,8,     4,4,4,4,     9,10 };
+    	Tip_u8 T1[] = { 4,4,4,4 };
+    	Tip_u8 T2[] = { 3,4,5 };
+    	Tip_u8 T10[] = { 1,2,3,     4,4,4,     5,6,     3,4,5,     7,8,     4,4,4,4,     9,10 };
     	uint32_t Bulunan = AI_Bul_Blok(T10, sizeof(T10), T1, sizeof(T1));
     	Bulunan = AI_Bul_Blok(T10, sizeof(T10), T2, sizeof(T2));
     
@@ -42,7 +42,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     
     int main(void)
     {
-    	Tip_Isaretci_Depo Depo =  Depo_Yeni(sizeof(uint8_t), 100, e_IGIC_YerKalmazsa_EnEskiyiSil, Islem_Siliniyor);
+    	Tip_Isaretci_Depo Depo =  Depo_Yeni(sizeof(Tip_u8), 100, e_IGIC_YerKalmazsa_EnEskiyiSil, Islem_Siliniyor);
     	if (Depo == NULL) return -1;
     
     	char * Bilgi = "1234567890ABCDEF";
@@ -141,7 +141,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	while (!Sure_DolduMu(ZamanAsimi))
     	{
     		Gorev_Calistir(Gorev);
-
+    		
     		_An_KesmeIcinBekle_Islemi();
     	}
     
@@ -151,44 +151,45 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     }
     
 ### Gunluk
-    #include <windows.h>
+	#include <windows.h>
+	
 	uint32_t _Zamanlama_An_Okuma_Islemi()
-    {
-    	return GetTickCount();
-    }
-
-    void _Gunluk_Aktarma_Islemi(void * Tampon, uint32_t Adet)
-    {
-    	char Gecici[Adet];
-    	memcpy(Gecici, Tampon, Adet);
-    	printf((char *)Tampon);
-    }
-
+	{
+		return GetTickCount();
+	}
+	
+	void _Gunluk_Aktarma_Islemi(void * Tampon, uint32_t Adet)
+	{
+		char Gecici[Adet];
+		memcpy(Gecici, Tampon, Adet);
+		printf((char *)Tampon);
+	}
+	
 	//////////////////////////////////////////////////////////////////////////////
 	#define _Gunluk_Baslik "main"		//Kaynak kod icinde tanimlanmali
 	#include "Gunluk.h"					//Kaynak kod icinde tanimlanmali
 	//////////////////////////////////////////////////////////////////////////////
-
-    int main(void)
-    {
-    	uint8_t Tampon[] = { 1, 2, 3, 4, 5 };
-
-    	Gunluk_Baslat();
-
-    	Gunluk_BeklenmeyenDurum("Hesapta olmayan bir duruma dair bilgi verir");
+	
+	int main(void)
+	{
+		Tip_u8 Tampon[] = { 1, 2, 3, 4, 5 };
+	
+		Gunluk_Baslat();
+	
+		Gunluk_BeklenmeyenDurum("Hesapta olmayan bir duruma dair bilgi verir");
 		Gunluk_Hata("Bilinen bir hataya dair bilgi verir");
 		Gunluk_Uyari("Bilinen bir duruma dair bilgi verir");
 		Gunluk_Bilgi("Asamalar arasi gecise dair bilgi verir");
 		Gunluk("Gelisiguzel bir bilgi verir");
-
-    	Gunluk_SureliDurdur(1);
-    	Gunluk_BeklenmeyenDurum("1 sn boyunca durduruldugu icin hicbir bilgi veremez");
-
-    	Sleep(1500);
-    	Gunluk("1 sn sonunda calisabilir");
-
-    	return EXIT_SUCCESS;
-    }
+	
+		Gunluk_SureliDurdur(1);
+		Gunluk_BeklenmeyenDurum("1 sn boyunca durduruldugu icin hicbir bilgi veremez");
+	
+		Sleep(1500);
+		Gunluk("1 sn sonunda calisabilir");
+	
+		return EXIT_SUCCESS;
+	}
     
 ### IlkGirenIlkCikar
     #include "IlkGirenIlkCikar.h"
@@ -220,71 +221,99 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     }
     
 ### KomutSatiri
-    #include "KomutSatiri.h"
-    
-    int main(void)
-    {
-    	#define KomutMetni "GuRuLtu Kart 1 Komut1 -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF\r\n GuRuLtu"
-    	//#define KomutMetni "GuRuLtu Kart 2 Komut1 -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF\r\n GuRuLtu"
-    	//#define KomutMetni "GuRuLtu Kart 1 ASDF -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF\r\n GuRuLtu"
-    
-    	Tip_Isaretci_Tampon Komut = Tampon_Yeni(256), Cevap = Tampon_Yeni(256), Hex;
-    	Tampon_Bilgi_Ekle_Blok(Komut, KomutMetni, strlen(KomutMetni));
-    
-    	if (KomutSatiri_KontrolEt_TampondakiBilgiUygunMu(Komut))
-    	{
-    		if (KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Komut))
-    		{
-    			if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut1))
-    			{
-    				Tip_i32 Tamsayi;
-    				if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))
-    				{
-    					if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut2))
-    					{
-    						Tip_Isaretci_Tampon OrnekYazi = KomutSatiri_Oku_Yazi(Komut);
-    						if (OrnekYazi)
-    						{
-    							char * _OrnekYazi_ = Tampon_Isaretci_Konum(OrnekYazi, 0, char);
-    
-    							Hex = KomutSatiri_Oku_Hex(Komut);
-    							if (Hex) KomutSatiri_Cevapla_Onay(Cevap);
-    
-    							Tampon_Sil(OrnekYazi);
-    						}
-    					}
-    				}
-    			}
-    		}
-    	}
-    
-    	char * _Cevap_ = Tampon_Isaretci_Konum(Cevap, 0, char);
-    
-    	if (Tampon_DoluAlan(Cevap) == 0) KomutSatiri_Cevapla_Ret(Cevap, "Parametrelerden biri hatali");
-    	else
-    	{
-    		Tampon_DoluAlan(Cevap) = 0;
-    		KomutSatiri_Cevap_Ekle(Cevap, "Serbest Cevap %d", 35);
-    
-    		Tampon_DoluAlan(Cevap) = 0;
-    		KomutSatiri_Cevapla_Hex(Cevap, Hex);
-    
-    		Tampon_DoluAlan(Cevap) = 0;
-    		KomutSatiri_Cevapla_Onay(Cevap);
-    
-    		Tampon_DoluAlan(Cevap) = 0;
-    		KomutSatiri_Cevapla_TamSayi(Cevap, 35);
-    
-    		Tampon_DoluAlan(Cevap) = 0;
-    		KomutSatiri_Cevapla_Yazi(Cevap, "Serbest Yazi");
-    	}
-    
-    	Tampon_Sil(Hex);
-    	Tampon_Sil(Komut);
-    	Tampon_Sil(Cevap);
-    
-    	return EXIT_SUCCESS;
-    }
+	#include "KomutSatiri.h"
+	
+	const char * dizi[] =
+	{
+		"Komut1",
+		"Komut2",
+		"Komut3",
+		"Komut4",
+		"Komut5",
+	};
+	
+	int main(void)
+	{
+		#define KomutMetni "GuRuLtu Kart 1 Komut1 -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF OrnekYazi2 OrnekYazi|51| Komut3\r\n GuRuLtu"
+		//#define KomutMetni "GuRuLtu Kart 2 Komut1 -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF\r\n GuRuLtu"
+		//#define KomutMetni "GuRuLtu Kart 1 ASDF -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF\r\n GuRuLtu"
+		
+		Tip_Isaretci_Tampon Komut = Tampon_Yeni(256), Cevap = Tampon_Yeni(256), Hex, OrnekYazi1, OrnekYazi2, OrnekYazi3;
+		Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));
+		uint32_t DizidekiKonum;
+		
+		if (KomutSatiri_KontrolEt_TampondakiBilgiUygunMu(Komut))
+		{
+			Tampon_Paketle(Komut);
+			
+			if (KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Komut))
+			{
+				if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut1))
+				{
+					Tip_i32 Tamsayi;
+					if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))
+					{
+						if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut2))
+						{
+							OrnekYazi1 = KomutSatiri_Oku_Yazi(Komut);
+							if (OrnekYazi1)
+							{
+								char * _OrnekYazi1_ = Tampon_Isaretci_Konum(OrnekYazi1, 0, char);
+								
+								Hex = KomutSatiri_Oku_Hex(Komut);
+								
+								OrnekYazi2 = KomutSatiri_Oku_Yazi(Komut);
+								if (OrnekYazi2)
+								{
+									char * _OrnekYazi2_ = Tampon_Isaretci_Konum(OrnekYazi2, 0, char);
+									
+									OrnekYazi3 = KomutSatiri_Oku_Yazi(Komut);
+									if (OrnekYazi3)
+									{
+										char * _OrnekYazi3_ = Tampon_Isaretci_Konum(OrnekYazi3, 0, char);
+										
+										DizidekiKonum = KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Komut, dizi, 5);
+										
+										if (Hex) KomutSatiri_Cevapla_Onay(Cevap);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		char * _Cevap_ = Tampon_Isaretci_Konum(Cevap, 0, char);
+		
+		if (Tampon_DoluAlan(Cevap) == 0) KomutSatiri_Cevapla_Ret(Cevap, "Parametrelerden biri hatali");
+		else
+		{
+			Tampon_DoluAlan(Cevap) = 0;
+			KomutSatiri_Cevap_Ekle(Cevap, "Serbest Cevap %d", 35);
+			
+			Tampon_DoluAlan(Cevap) = 0;
+			KomutSatiri_Cevapla_Hex(Cevap, Hex);
+			
+			Tampon_DoluAlan(Cevap) = 0;
+			KomutSatiri_Cevapla_Onay(Cevap);
+			
+			Tampon_DoluAlan(Cevap) = 0;
+			KomutSatiri_Cevapla_TamSayi(Cevap, 35);
+			
+			Tampon_DoluAlan(Cevap) = 0;
+			KomutSatiri_Cevapla_Yazi(Cevap, "Serbest Yazi");
+		}
+		
+		Tampon_Sil(Hex);
+		Tampon_Sil(Komut);
+		Tampon_Sil(Cevap);
+		Tampon_Sil(OrnekYazi1);
+		Tampon_Sil(OrnekYazi2);
+		Tampon_Sil(OrnekYazi3);
+		
+		return EXIT_SUCCESS;
+	}
     
 ### LedKontrol
     #include "LedKontrol.h"
@@ -304,7 +333,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	Tip_Isaretci_Liste Liste =  Liste_Yeni();
     	if (Liste == NULL) return -1;
     
-    	uint8_t Eleman1 = 1;
+    	Tip_u8 Eleman1 = 1;
     	uint16_t Eleman2 = 2;
     
     	Liste_Eleman_Ekle(Liste, &Eleman1);
@@ -313,8 +342,8 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	uint32_t * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(uint32_t));
     	*Eleman3 = 3;
     
-    	uint8_t Eleman1Okunan;
-    	memcpy(&Eleman1Okunan, Liste_Eleman_Ilk(Liste), sizeof(uint8_t));
+    	Tip_u8 Eleman1Okunan;
+    	memcpy(&Eleman1Okunan, Liste_Eleman_Ilk(Liste), sizeof(Tip_u8));
     
     	uint32_t Eleman3Okunan;
     	memcpy(&Eleman3Okunan, Liste_Eleman_Son(Liste), sizeof(uint32_t));
@@ -337,33 +366,33 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     
 ### Tampon
     #include "Tampon.h"
-
+    
     int main(void)
     {
     	Tip_Isaretci_Tampon Tampon =  Tampon_Yeni(10);
     	if (Tampon == NULL) return -1;
-
+    	
     	char Kaynak[] = "ArGeMuP";
     	bool sonuc = Tampon_Bilgi_Ekle_GecerliKonum(Tampon, Kaynak, strlen(Kaynak));
-
+    	
     	uint32_t Adet = Tampon_Kapasite(Tampon);
     	Adet = Tampon_DoluAlan(Tampon);
     	Adet = Tampon_BosAlan(Tampon);
-
+    	
     	char okunan_bayt = Tampon_Icerik_Konum(Tampon, 0, char);
-
+    	
     	char okunan_blok[strlen(Kaynak)];
     	Adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, okunan_blok, sizeof(okunan_blok));
-
+    	
     	char okunan_blok2[2];
     	Adet = Tampon_Bilgi_Oku_GecerliKonum(Tampon, okunan_blok2, sizeof(okunan_blok2));
     	Adet = Tampon_Bilgi_Oku_GecerliKonum(Tampon, okunan_blok2, sizeof(okunan_blok2));
     	Adet = Tampon_Bilgi_Oku_GecerliKonum(Tampon, okunan_blok2, sizeof(okunan_blok2));
-
+    	
     	Adet = Tampon_DoluAlan(Tampon);
-
+    	
     	Tampon_Sil(Tampon);
-
+    	
     	return EXIT_SUCCESS;
     }
     
@@ -374,27 +403,27 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     {
     	#define Kaynak1 "123456789"
     	#define Aranan1 "456"
-    
-    	uint32_t adet = YI_Ara(Kaynak1, Aranan1);
-    
+    	
+    	uint32_t adet = YI_Bul(Kaynak1, Aranan1);
+    	
     	#define Kaynak2 "Adres : 192.168.0.1\r\nYol : 80\r\nKapasite : 8192"
     	#define ArananBaslangic "Yol :"
     	#define ArananBitis "\r\n"
-    
+    	
     	char Bulunan[256];
-    
+    	
     	memset(Bulunan, 0xFF, sizeof(Bulunan));
     	adet = YI_BulAyiklaKopyala(Kaynak2, ArananBaslangic, ArananBitis, Bulunan, sizeof(Bulunan));
     	printf("Adet : %d ->%s<-\r\n", adet, Bulunan);
-    
+    	
     	memset(Bulunan, 0xFF, sizeof(Bulunan));
     	adet = YI_BulAyiklaKopyala(Kaynak2, NULL, ArananBitis, Bulunan, sizeof(Bulunan));
     	printf("Adet : %d ->%s<-\r\n", adet, Bulunan);
-    
+    	
     	memset(Bulunan, 0xFF, sizeof(Bulunan));
     	adet = YI_BulAyiklaKopyala(Kaynak2, ArananBaslangic, NULL, Bulunan, sizeof(Bulunan));
     	printf("Adet : %d ->%s<-\r\n", adet, Bulunan);
-    
+    	
     	printf("YI_Yazdir ->%s<-\r\n", YI_Yazdir(Bulunan, sizeof(Bulunan), "Deneme %d", 5));
     	printf("YI_Yazdir_TarihSaat ->%s<-\r\n", YI_Yazdir_TarihSaat(Bulunan, sizeof(Bulunan), 0));
     	printf("YI_Yazdir_NoktaliSayi ->%s<-\r\n", YI_Yazdir_NoktaliSayi(Bulunan, sizeof(Bulunan), 1.35));

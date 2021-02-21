@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.3
+// V1.4
 
 #ifndef __Zamanlama_H__
 #define __Zamanlama_H__
@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //Ic Kullanim
 ////////////////////////////////////////////////////////////////////////////////
-typedef Tip_u32 /*Tip_u64*/ Tip_Sure;
+typedef Tip_u64 Tip_Sure;
 typedef Tip_void (*Tip_Islem_Sure_AnOkuma) ();
 typedef Tip_void (*Tip_Islem_Sure_KesmeIcinBekle) ();
 
@@ -19,7 +19,7 @@ typedef Tip_void (*Tip_Islem_Sure_KesmeIcinBekle) ();
 #define _Dakika_(u)		_Saniye_( ( u ) * 60 )
 #define _Saat_(u)		_Dakika_( ( u ) * 60 )
 #define _Gun_(u)		_Saat_( ( u ) * 24 )
-#define _Hafta_(u)		_Gun_( (u )* 7 )
+#define _Hafta_(u)		_Gun_( ( u )* 7 )
 
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
@@ -37,6 +37,7 @@ typedef Tip_void (*Tip_Islem_Sure_KesmeIcinBekle) ();
 #define Sure_Simdi(Degisken)						Degisken = An_Simdi()
 #define Sure_Asla(Degisken)							Degisken = ( (Tip_Sure)0 - 1 )
 
+#define Sure_DegiskeniniOlustur(Ad)					Tip_Sure Ad = An_Simdi()
 #define Sure_DolduMu(Degisken)			            ( Degisken <= An_Simdi() )
 #define Sure_KalanSure_MiliSaniye(Degisken)			( ( Degisken - An_Simdi() ) * _An_Aralik_Msn_ )
 

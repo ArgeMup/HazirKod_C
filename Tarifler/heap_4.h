@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #ifndef __Heap_4_H__
 #define __Heap_4_H__
@@ -10,6 +10,7 @@
 //Ic Kullanim
 ////////////////////////////////////////////////////////////////////////////////
 void *pvPortMalloc( size_t xWantedSize );
+size_t pvPortMalloc_Size( void *pv );
 void vPortFree( void *pv );
 size_t xPortGetFreeHeapSize( void );
 

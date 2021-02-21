@@ -68,9 +68,9 @@ task.h is included from an application file. */
 //#if( configAPPLICATION_ALLOCATED_HEAP == 1 )
 //	/* The application writer has already defined the array used for the RTOS
 //	heap - probably so it can be placed in a special segment or address. */
-	extern uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
+	extern Tip_u8 ucHeap[ configTOTAL_HEAP_SIZE ];
 //#else
-//	static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
+//	static Tip_u8 ucHeap[ configTOTAL_HEAP_SIZE ];
 //#endif /* configAPPLICATION_ALLOCATED_HEAP */
 
 /* Define the linked list structure.  This is used to link free blocks in order
@@ -187,7 +187,7 @@ void *pvReturn = NULL;
 				{
 					/* Return the memory space pointed to - jumping over the
 					BlockLink_t structure at its start. */
-					pvReturn = ( void * ) ( ( ( uint8_t * ) pxPreviousBlock->pxNextFreeBlock ) + xHeapStructSize );
+					pvReturn = ( void * ) ( ( ( Tip_u8 * ) pxPreviousBlock->pxNextFreeBlock ) + xHeapStructSize );
 
 					/* This block is being returned for use so must be taken out
 					of the list of free blocks. */
@@ -201,7 +201,7 @@ void *pvReturn = NULL;
 						block following the number of bytes requested. The void
 						cast is used to prevent byte alignment warnings from the
 						compiler. */
-						pxNewBlockLink = ( void * ) ( ( ( uint8_t * ) pxBlock ) + xWantedSize );
+						pxNewBlockLink = ( void * ) ( ( ( Tip_u8 * ) pxBlock ) + xWantedSize );
 						configASSERT( ( ( ( size_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) == 0 );
 
 						/* Calculate the sizes of two blocks split from the
@@ -274,7 +274,7 @@ void *pvReturn = NULL;
 
 void vPortFree( void *pv )
 {
-uint8_t *puc = ( uint8_t * ) pv;
+Tip_u8 *puc = ( Tip_u8 * ) pv;
 BlockLink_t *pxLink;
 
 	if( pv != NULL )
@@ -321,6 +321,59 @@ BlockLink_t *pxLink;
 }
 /*-----------------------------------------------------------*/
 
+size_t pvPortMalloc_Size( void *pv )
+{
+	Tip_u8 *puc = ( Tip_u8 * ) pv;
+	BlockLink_t *pxLink;
+
+	if( pv != NULL )
+	{
+		/* The memory being freed will have an BlockLink_t structure immediately
+		before it. */
+		puc -= xHeapStructSize;
+
+		/* This casting is to keep the compiler from issuing warnings. */
+		pxLink = ( void * ) puc;
+
+		return pxLink->xBlockSize & ~xBlockAllocatedBit;
+
+//		/* Check the block is actually allocated. */
+//		configASSERT( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 );
+//		configASSERT( pxLink->pxNextFreeBlock == NULL );
+//
+//		if( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 )
+//		{
+//			if( pxLink->pxNextFreeBlock == NULL )
+//			{
+//				/* The block is being returned to the heap - it is no longer
+//				allocated. */
+//				pxLink->xBlockSize &= ~xBlockAllocatedBit;
+//
+////				vTaskSuspendAll();
+//				{
+//					/* Add this block to the list of free blocks. */
+//					xFreeBytesRemaining += pxLink->xBlockSize;
+////					traceFREE( pv, pxLink->xBlockSize );
+//					prvInsertBlockIntoFreeList( ( ( BlockLink_t * ) pxLink ) );
+////					xNumberOfSuccessfulFrees++;
+//				}
+////				( void ) xTaskResumeAll();
+//			}
+////			else
+////			{
+////				mtCOVERAGE_TEST_MARKER();
+////			}
+//		}
+////		else
+////		{
+////			mtCOVERAGE_TEST_MARKER();
+////		}
+	}
+
+	return 0;
+}
+/*-----------------------------------------------------------*/
+
 size_t xPortGetFreeHeapSize( void )
 {
 	return xFreeBytesRemaining;
@@ -342,7 +395,7 @@ size_t xPortGetFreeHeapSize( void )
 static void prvHeapInit( void )
 {
 BlockLink_t *pxFirstFreeBlock;
-uint8_t *pucAlignedHeap;
+Tip_u8 *pucAlignedHeap;
 size_t uxAddress;
 size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
 
@@ -356,7 +409,7 @@ size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
 		xTotalHeapSize -= uxAddress - ( size_t ) ucHeap;
 	}
 
-	pucAlignedHeap = ( uint8_t * ) uxAddress;
+	pucAlignedHeap = ( Tip_u8 * ) uxAddress;
 
 	/* xStart is used to hold a pointer to the first item in the list of free
 	blocks.  The void cast is used to prevent compiler warnings. */
@@ -390,7 +443,7 @@ size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
 static void prvInsertBlockIntoFreeList( BlockLink_t *pxBlockToInsert )
 {
 BlockLink_t *pxIterator;
-uint8_t *puc;
+Tip_u8 *puc;
 
 	/* Iterate through the list until a block is found that has a higher address
 	than the block being inserted. */
@@ -401,8 +454,8 @@ uint8_t *puc;
 
 	/* Do the block being inserted, and the block it is being inserted after
 	make a contiguous block of memory? */
-	puc = ( uint8_t * ) pxIterator;
-	if( ( puc + pxIterator->xBlockSize ) == ( uint8_t * ) pxBlockToInsert )
+	puc = ( Tip_u8 * ) pxIterator;
+	if( ( puc + pxIterator->xBlockSize ) == ( Tip_u8 * ) pxBlockToInsert )
 	{
 		pxIterator->xBlockSize += pxBlockToInsert->xBlockSize;
 		pxBlockToInsert = pxIterator;
@@ -414,8 +467,8 @@ uint8_t *puc;
 
 	/* Do the block being inserted, and the block it is being inserted before
 	make a contiguous block of memory? */
-	puc = ( uint8_t * ) pxBlockToInsert;
-	if( ( puc + pxBlockToInsert->xBlockSize ) == ( uint8_t * ) pxIterator->pxNextFreeBlock )
+	puc = ( Tip_u8 * ) pxBlockToInsert;
+	if( ( puc + pxBlockToInsert->xBlockSize ) == ( Tip_u8 * ) pxIterator->pxNextFreeBlock )
 	{
 		if( pxIterator->pxNextFreeBlock != pxEnd )
 		{

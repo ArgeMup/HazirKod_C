@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #include "YaziIslemleri.h"
 
@@ -20,12 +20,12 @@ Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_c
 
 	if (ArananBaslangic != Tip_null && ArananBitis != Tip_null)
 	{
-		KonumBaslangic = YI_Ara(Kaynak, ArananBaslangic);
+		KonumBaslangic = YI_Bul(Kaynak, ArananBaslangic);
 		if (KonumBaslangic == 0) return 0;
 
 		KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
 
-		KonumBitis = YI_Ara(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
+		KonumBitis = YI_Bul(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
 		if (KonumBitis == 0) return 0;
 
 		KonumBitis = KonumBitis + KonumBaslangic - 1 /*Ilk karaktere gitmek icin*/;
@@ -33,14 +33,14 @@ Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_c
 	else if (ArananBaslangic == Tip_null)
 	{
 		KonumBaslangic = 0;
-		KonumBitis = YI_Ara(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
+		KonumBitis = YI_Bul(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
 		if (KonumBitis == 0) return 0;
 
 		KonumBitis = KonumBitis - 1 /*Ilk karaktere gitmek icin*/;
 	}
 	else
 	{
-		KonumBaslangic = YI_Ara(Kaynak, ArananBaslangic);
+		KonumBaslangic = YI_Bul(Kaynak, ArananBaslangic);
 		if (KonumBaslangic == 0) return 0;
 
 		KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
@@ -89,7 +89,7 @@ Tip_char * YI_Yazdir_TamSayi_Hex(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_u3
 
 	return Hedef;
 }
-Tip_char * YI_Yazdir_TamSayi(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_u32 TamSayi)
+Tip_char * YI_Yazdir_TamSayi(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_i32 TamSayi)
 {
 	snprintf(Hedef, HedefKapasite, _YI_Yazdir_Sablon_TamSayi, TamSayi);
 

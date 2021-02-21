@@ -1,18 +1,39 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #include "Tampon.h"
 
 Tip_Isaretci_Tampon Tampon_Yeni(Tip_u32 Kapasite)
 {
-	struct _s_Tampon_ * Yeni = YT_Yeni(sizeof(struct _s_Tampon_) + Kapasite);
+	struct s_Tampon_ * Yeni = YT_Yeni(sizeof(struct s_Tampon_) + Kapasite);
 	if (Yeni == Tip_null) return Tip_null;
 
-	Yeni->Kullanim = 0;
+	Yeni->Sayac = 0;
 	Yeni->Kapasite = Kapasite;
-	Yeni->Isaretci = Isaretci_Konumlandir(Yeni, sizeof(struct _s_Tampon_), Tip_u8);
+	Yeni->Isaretci = Isaretci_Konumlandir(Yeni, sizeof(struct s_Tampon_), Tip_u8);
 
 	return Yeni;
+}
+Tip_void Tampon_Paketle(Tip_Isaretci_Tampon Tampon)
+{
+	if (Tampon == Tip_null) return;
+
+	Tampon->Kapasite = Tampon->Sayac;
+	Tampon->Sayac = 0;
+}
+Tip_bool Tampon_Kirp(Tip_Isaretci_Tampon Tampon, Tip_u32 Bastan, Tip_u32 Sondan)
+{
+	if (Tampon == Tip_null) return false;
+
+	Tip_u32 toplam = Bastan + Sondan;
+	if (toplam > Tampon->Kapasite) return false;
+
+	if (Bastan > 0) Tampon->Isaretci = Isaretci_Konumlandir(Tampon->Isaretci, Bastan, Tip_u8);
+	Tampon->Kapasite -= toplam;
+
+	Tampon->Sayac = 0;
+
+	return true;
 }
 Tip_void Tampon_Sil(Tip_Isaretci_Tampon Tampon)
 {
@@ -21,32 +42,51 @@ Tip_void Tampon_Sil(Tip_Isaretci_Tampon Tampon)
 	YT_Sil(Tampon);
 }
 
-Tip_bool Tampon_Bilgi_Ekle_GecerliKonum(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Kaynak, Tip_u32 Adet)
-{
-	if (Tampon == Tip_null) return false;
-	if (Adet > Tampon_BosAlan(Tampon)) return false;
-
-	_Islem_memcpy_(Tampon_Isaretci_GecerliKonum(Tampon, Tip_u8), Kaynak, Adet);
-	Tampon_DoluAlan(Tampon) += Adet;
-	return true;
-}
-Tip_u32 Tampon_Bilgi_Oku_GecerliKonum(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Hedef, Tip_u32 HedefKapasitesi)
-{
-	if (Tampon == Tip_null) return 0;
-	if (Tampon_DoluAlan(Tampon) < HedefKapasitesi) HedefKapasitesi = Tampon_DoluAlan(Tampon);
-
-	_Islem_memcpy_(Hedef, Tampon_Isaretci_IlkKonum(Tampon, Tip_u8), HedefKapasitesi);
-	Tampon_DoluAlan(Tampon) -= HedefKapasitesi;
-
-	if (Tampon_DoluAlan(Tampon) > 0) _Islem_memcpy_(Tampon_Isaretci_IlkKonum(Tampon, Tip_u8), Tampon_Isaretci_Konum(Tampon, HedefKapasitesi, Tip_u8), Tampon_DoluAlan(Tampon));
-	return HedefKapasitesi;
-}
-
 Tip_u32 Tampon_Bilgi_Oku_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKonumu, Tip_Isaretci Hedef, Tip_u32 HedefKapasitesi)
 {
 	if (Tampon == Tip_null) return 0;
-	if ( (Tampon_Kapasite(Tampon) - BaslangicKonumu) < HedefKapasitesi) HedefKapasitesi = Tampon_Kapasite(Tampon) - BaslangicKonumu;
+	if ( (Tampon->Kapasite - BaslangicKonumu) < HedefKapasitesi) HedefKapasitesi = Tampon->Kapasite - BaslangicKonumu;
 
 	_Islem_memcpy_(Hedef, Tampon_Isaretci_Konum(Tampon, BaslangicKonumu, Tip_u8), HedefKapasitesi);
 	return HedefKapasitesi;
 }
+Tip_bool Tampon_Bilgi_Ekle_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKonumu, Tip_Isaretci Kaynak, Tip_u32 Adet)
+{
+	if (Tampon == Tip_null) return false;
+	if ( (Tampon->Kapasite - BaslangicKonumu) < Adet) return false;
+
+	_Islem_memcpy_(Tampon_Isaretci_Konum(Tampon, BaslangicKonumu, Tip_u8), Kaynak, Adet);
+	return true;
+}
+
+Tip_u32 Tampon_Bilgi_Oku_BaslangictanGecerliKonumaKadar(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Hedef, Tip_u32 HedefKapasitesi)
+{
+	Tip_u32 adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, Hedef, HedefKapasitesi);
+
+	if (adet > 0)
+	{
+		Tampon->Sayac -= adet;
+		if (Tampon->Sayac > 0) _Islem_memcpy_(Tampon_Isaretci_KonumIlk(Tampon, Tip_u8), Tampon_Isaretci_Konum(Tampon, adet, Tip_u8), Tampon->Sayac);
+	}
+
+	return adet;
+}
+Tip_bool Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Kaynak, Tip_u32 Adet)
+{
+	Tip_bool sonuc = Tampon_Bilgi_Ekle_Konum(Tampon, Tampon->Sayac, Kaynak, Adet);
+
+	if (sonuc) Tampon->Sayac += Adet;
+
+	return sonuc;
+}
+
+#ifdef _YT_Heap_Kullanimini_HazirKod_C_Duzenlesin
+	Tip_void Tampon_Yenile(Tip_Isaretci_Tampon Tampon)
+	{
+		if (Tampon == Tip_null) return;
+
+		Tampon->Sayac = 0;
+		Tampon->Kapasite = YT_Kapasite(Tampon) - sizeof(struct s_Tampon_);
+		Tampon->Isaretci = Isaretci_Konumlandir(Tampon, sizeof(struct s_Tampon_), Tip_u8);
+	}
+#endif

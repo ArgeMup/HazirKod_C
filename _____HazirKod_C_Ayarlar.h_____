@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.6
+// V1.7
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -30,16 +30,26 @@ typedef void *											Tip_Isaretci;
 
 #define _Islem_memcpy_(x,y,z)							memcpy(x,y,z)
 #define _Islem_memset_(x,y,z)							memset(x,y,z)
+#define _Islem_memcmp_(x,y,z)							memcmp(x,y,z)
 #define _Islem_strlen_(x)								strlen(x)
+#define _Islem_strtol_(x,y,z)							strtol(x,y,z)
+#define _Islem_strtoul_(x,y,z)							strtoul(x,y,z)
 
-#define Bit_Yaz_1(Degisken, No)							Degisken |= ( 1 << ( No ) )
-#define Bit_Yaz_0(Degisken, No)							Degisken &= ( ~( 1 << ( No ) ) )
-#define Bit_Oku(Degisken, No)							( ( Degisken & ( 1 << ( No ) ) ) > 0 )
+#define Bit_Uret_1(No)									( 1 << ( No ) )
+#define Bit_Uret_0(No)									( ~Bit_Uret_1(No) )
+#define Bit_Uret_Ters(Degisken, No)						( Bit_Oku(Degisken, No) ? ( Degisken ) & Bit_Uret_0(No) : ( Degisken ) | Bit_Uret_1(No) )
+#define Bit_Yaz_1(Degisken, No)							Degisken |= Bit_Uret_1(No)
+#define Bit_Yaz_0(Degisken, No)							Degisken &= Bit_Uret_0(No)
+#define Bit_Oku(Degisken, No)							( ( ( Degisken ) & ( 1 << ( No ) ) ) > 0 )
+#define Bit_Yaz_Ters(Degisken, No)						Degisken = Bit_Uret_Ters(Degisken, No)
+#define Degisken_Uret_Ters(Degisken) 					( ~(Degisken) )
+#define Degisken_Yaz_Ters(Degisken) 					Degisken = Degisken_Uret_Ters(Degisken)
 
-#define Isaretci_Konumlandir(Isaretci, Konum, Tip)		( ( (Tip *)(Isaretci) ) + (Konum) )
+#define Isaretci_Konumlandir(Isaretci, Konum, Tip)		( ( (Tip *)( Isaretci ) ) + (Konum) )
 #define Isaretci_Icerigi(Isaretci, Konum, Tip)			( *Isaretci_Konumlandir(Isaretci, Konum, Tip) )
 
-#define Hesapla_Yuzde_Tamsayi(Kullanim, Kapasite)		( ((Kullanim) * 100) / (Kapasite) )
+#define Hesapla_Yuzde(Kullanim, Butun)					( ( ( Kullanim ) * 100 ) / ( Butun ) )
+#define Hesapla_Dolgu(Kullanim, Butun)					( ( Butun ) - ( ( Kullanim ) & ( ( Butun ) - 1 ) ) )
 
 #define YenidenBaslat(Sebep)
 #define Bekle_MiliSaniye(Sure)
@@ -56,7 +66,7 @@ typedef void *											Tip_Isaretci;
 //Gorev.h
 ////////////////////////////////////////////////////////////////////////////////
 extern Tip_Isaretci _Gorevler;
-typedef Tip_u8 											Gorev_CalistirilacakAdim_Tip;
+typedef Tip_u8 											_Tip_Gorev_CalistirilacakAdim;
 
 ////////////////////////////////////////////////////////////////////////////////
 //Gunluk.h
@@ -70,12 +80,38 @@ typedef Tip_u8 											Gorev_CalistirilacakAdim_Tip;
 #define _Gunluk_Renk_Bilgi								( e_Gunluk_Gorunum_Yazi_Yesil | e_Gunluk_Gorunum_Yuzey_Siyah )
 #define _Gunluk_Renk_Geveze								( e_Gunluk_Gorunum_Duzyazi )
 ////////////////////////////////////////////////////////////////////////////////
-//#define _Gunluk_Baslik "KaynakKod"	//Kaynak kod icinde tanimlanmali
-//#include "Gunluk.h"					//Kaynak kod icinde tanimlanmali
-////////////////////////////////////////////////////////////////////////////////
+//#define _Gunluk_KullaniciTanimliIslemleriKullan
+#ifdef _Gunluk_KullaniciTanimliIslemleriKullan
+	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_BeklenmeyenDurum
+		#define Gunluk_BeklenmeyenDurum(Yazi , ...)
+	#endif
+
+	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Hata
+		#define Gunluk_Hata(Yazi , ...)
+	#endif
+
+	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Uyari
+		#define Gunluk_Uyari(Yazi , ...)
+	#endif
+
+	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Bilgi
+		#define Gunluk_Bilgi(Yazi , ...)
+	#endif
+
+	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Geveze
+		#define Gunluk(Yazi , ...)
+		#define Gunluk_Hex(Tampon, Adet)
+	#endif
+
+	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_HazirKod_C
+		#define HazirKod_C_Gunluk(Yazi , ...)
+		#define HazirKod_C_Gunluk_Hex(Tampon, Adet)
+	#endif
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
-//IlkGirenIlkCikar.h
+//#define _Gunluk_Baslik "KaynakKod"	//Gunluk ciktilarini tum dosyada kapatmak için NULL olmali
+//#include "Gunluk.h"					//Kaynak kod içinde tanimlanmali
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -108,13 +144,21 @@ extern Tip_u32 _HataKontrol_Hatalar;
 #define portBYTE_ALIGNMENT 								( 8 )
 
 ////////////////////////////////////////////////////////////////////////////////
+//IlkGirenIlkCikar.h
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
 //KomutSatiri.h
 ////////////////////////////////////////////////////////////////////////////////
+#define _KomutSatiri_Yazi_Ayiracsiz_TekParca_Olabilir
+#define _KomutSatiri_Yazi_Icinde_OzelKarakter_Olabilir
 #define _KomutSatiri_Komut_Baslangici					"Kart"
 #define _KomutSatiri_Komut_Bitisi						"\r\n"
 #define _KomutSatiri_Cevap_Baslangici					">>"
 #define _KomutSatiri_Cevap_Bitisi						_KomutSatiri_Komut_Bitisi
 #define _KomutSatiri_Ayirac			 					' '
+#define _KomutSatiri_Ayirac_Yazi			 			'"'
+#define _KomutSatiri_Ayirac_Yazi_OzelKarakter 			'|'
 #define _KomutSatiri_DonanimAdresi						( 1 )
 #define _KomutSatiri_Komut_EnAzKaSa_Bas					(sizeof(_KomutSatiri_Komut_Baslangici) - 1) + (1 /*Ayirac*/) + (1 /*Adres*/) + (1 /*Ayirac*/) + (1 /*Komut*/) + (1 /*Ayirac*/)
 #define _KomutSatiri_Komut_EnAzKaSa_Tum					_KomutSatiri_Komut_EnAzKaSa_Bas + (sizeof(_KomutSatiri_Komut_Bitisi) - 1)
@@ -124,7 +168,9 @@ extern Tip_u32 _HataKontrol_Hatalar;
 #define _KomutSatiri_Komut_Komut2						"Komut2"
 //Ornek Tamsayi			-> 1 VEYA -1 VEYA +1
 //Ornek Hex				-> 0xAA VEYA 0x112233445566778899AABBCCDDEEFF
-//Ornek Yazi			-> "Ornek Yazi"
+//Ornek Yazi			-> "Ornek Yazi"										Alisildik bicim
+//Ornek Yazi			-> OrnekYazi										_KomutSatiri_Yazi_Ayiracsiz_TekParca_Olabilir
+//Ornek Yazi			-> "Yazi|13||10|" -> "Yazi+CR+LF"					_KomutSatiri_Yazi_Icinde_OzelKarakter_Olabilir
 //Ornek Komut 			-> Kart 0 Komut1\r\n Cevap -> >>Tamam\r\n 			Genel cagri olarak degerlendirilip calistirilir
 //Ornek Komut 			-> Kart 1 Komut1\r\n Cevap -> >>Tamam\r\n 			DonanimAdresi uygun oldugu icin calistirilir
 //Ornek Komut 			-> Kart 2 Komut1\r\n Cevap -> Gonderilmez			DonanimAdresi uygun olmad?gi icin calistirilmaz
