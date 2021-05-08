@@ -336,38 +336,6 @@ size_t pvPortMalloc_Size( void *pv )
 		pxLink = ( void * ) puc;
 
 		return pxLink->xBlockSize & ~xBlockAllocatedBit;
-
-//		/* Check the block is actually allocated. */
-//		configASSERT( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 );
-//		configASSERT( pxLink->pxNextFreeBlock == NULL );
-//
-//		if( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 )
-//		{
-//			if( pxLink->pxNextFreeBlock == NULL )
-//			{
-//				/* The block is being returned to the heap - it is no longer
-//				allocated. */
-//				pxLink->xBlockSize &= ~xBlockAllocatedBit;
-//
-////				vTaskSuspendAll();
-//				{
-//					/* Add this block to the list of free blocks. */
-//					xFreeBytesRemaining += pxLink->xBlockSize;
-////					traceFREE( pv, pxLink->xBlockSize );
-//					prvInsertBlockIntoFreeList( ( ( BlockLink_t * ) pxLink ) );
-////					xNumberOfSuccessfulFrees++;
-//				}
-////				( void ) xTaskResumeAll();
-//			}
-////			else
-////			{
-////				mtCOVERAGE_TEST_MARKER();
-////			}
-//		}
-////		else
-////		{
-////			mtCOVERAGE_TEST_MARKER();
-////		}
 	}
 
 	return 0;

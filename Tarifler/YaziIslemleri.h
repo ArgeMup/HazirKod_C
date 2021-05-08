@@ -14,8 +14,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
 ////////////////////////////////////////////////////////////////////////////////
-#define YI_Bul(Kaynak, Aranan)   AI_Bul_Blok((Tip_Isaretci)Kaynak, _Islem_strlen_(Kaynak), (Tip_Isaretci)Aranan, _Islem_strlen_(Aranan))
-Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_char * ArananBitis, Tip_char * Hedef, Tip_u32 HedefBoyut);
+#define YI_Bul(Kaynak, Aranan) AI_Bul_Blok((Tip_Isaretci)Kaynak, _Islem_strlen_(Kaynak), (Tip_Isaretci)Aranan, _Islem_strlen_(Aranan))
+Tip_i32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_char * ArananBitis, Tip_char * Hedef, Tip_u32 HedefKapasitesi);
+#define YI_Degistir(Kaynak, Aranan, YeniYazi, Hedef, HedefKapasitesi, SadeceIlkiniDegistir) AI_Degistir((Tip_Isaretci)Kaynak, _Islem_strlen_(Kaynak), (Tip_Isaretci)Aranan, _Islem_strlen_(Aranan), (Tip_Isaretci)YeniYazi, _Islem_strlen_(YeniYazi), (Tip_Isaretci)Hedef, HedefKapasitesi, SadeceIlkiniDegistir)
 
 Tip_char * YI_Yazdir(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_char * Sekil, ...);
 Tip_char * YI_Yazdir_TarihSaat(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_time An);

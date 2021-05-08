@@ -21,7 +21,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	Tip_u8 T1[] = { 4,4,4,4 };
     	Tip_u8 T2[] = { 3,4,5 };
     	Tip_u8 T10[] = { 1,2,3,     4,4,4,     5,6,     3,4,5,     7,8,     4,4,4,4,     9,10 };
-    	uint32_t Bulunan = AI_Bul_Blok(T10, sizeof(T10), T1, sizeof(T1));
+    	Tip_u32 Bulunan = AI_Bul_Blok(T10, sizeof(T10), T1, sizeof(T1));
     	Bulunan = AI_Bul_Blok(T10, sizeof(T10), T2, sizeof(T2));
     
     	Bulunan = AI_Bul_Bayt(T10, sizeof(T10), 1);
@@ -45,20 +45,20 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	Tip_Isaretci_Depo Depo =  Depo_Yeni(sizeof(Tip_u8), 100, e_IGIC_YerKalmazsa_EnEskiyiSil, Islem_Siliniyor);
     	if (Depo == NULL) return -1;
     
-    	char * Bilgi = "1234567890ABCDEF";
-    	bool sonuc = Depo_Bilgi_Ekle(Depo, Bilgi, strlen(Bilgi));
-    	uint32_t Adet = Depo_Bilgi_SiradakiAdet(Depo);
+    	Tip_char * Bilgi = "1234567890ABCDEF";
+    	Tip_bool sonuc = Depo_Bilgi_Ekle(Depo, Bilgi, strlen(Bilgi));
+    	Tip_u32 Adet = Depo_Bilgi_SiradakiAdet(Depo);
     
     	sonuc = Depo_Bilgi_Ekle(Depo, Bilgi, strlen(Bilgi)/2);
     	Adet = Depo_Bilgi_SiradakiAdet(Depo);
     
-    	char Okunan[50];
+    	Tip_char Okunan[50];
     	Adet = Depo_Bilgi_Oku(Depo, Okunan, strlen(Bilgi));
     	Adet = Depo_Bilgi_Oku(Depo, Okunan, strlen(Bilgi));
     	Adet = Depo_Bilgi_Oku(Depo, Okunan, strlen(Bilgi));
     
-    	Depo_Bilgi_Ekle(Depo, Okunan, strlen(Okunan));
-    	Depo_Bilgi_Ekle(Depo, Okunan, strlen(Okunan)); //Tasma, islem siliniyor
+    	Depo_Bilgi_Ekle(Depo, Okunan, sizeof(Okunan));
+    	Depo_Bilgi_Ekle(Depo, Okunan, sizeof(Okunan)); //Tasma, islem siliniyor
     
     	Depo_Sil(Depo);
     
@@ -66,130 +66,97 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     }
     
 ### Gorev
+    //HazirKod_C_Ayarlar.h içindeki satır açılmalı
+    //#define _An_Okuma_Islemi() _Zamanlama_An_Okuma_Islemi()
+    
     #include <windows.h>
     #include "Gorev.h"
+    
+    Tip_Isaretci_Gorev Gorev = NULL;
     
     Tip_Sure _Zamanlama_An_Okuma_Islemi()
     {
     	return GetTickCount();
     }
     
-    Tip_Isaretci_Gorev Gorev = NULL;
-    int32_t Islem_1(struct s_Gorev_Detaylar_ * Detaylar);
-    int32_t Islem_2(struct s_Gorev_Detaylar_ * Detaylar);
-    int32_t Islem_3(struct s_Gorev_Detaylar_ * Detaylar);
-    
-    int32_t Islem_1(struct s_Gorev_Detaylar_ * Detaylar)
+    Tip_i32 Islem_1(struct s_Gorev_Detaylar_ * Detaylar)
     {
-    	if (++*((uint32_t *)Detaylar->KullaniciNesnesi) > 5)
+    	printf("Islem_1, An : %d, Kullanici Nesnesi : %u\r\n", An_Simdi(), *((Tip_u32 *)Detaylar->KullaniciNesnesi));
+    	
+    	if (++*((Tip_u32 *)Detaylar->KullaniciNesnesi) > 5)
     	{
-    		bool sonuc = Gorev_Islem_Ekle(Gorev, Islem_2, Detaylar->KullaniciNesnesi);
-    
     		Gorev_Islem_CikVeSil();
     	}
-    
+    	
     	Gorev_Islem_CikVeTekrarCalistir(100);
-    }
-    
-    int32_t Islem_2(struct s_Gorev_Detaylar_ * Detaylar)
-    {
-    	bool sonuc = false;
-    
-    	switch (Detaylar->CalistirilacakAdim)
-    	{
-    	default:
-    		sonuc = Gorev_Islem_Ekle(Gorev, Islem_3, NULL);
-    		Detaylar->CalistirilacakAdim++;
-    		Gorev_Islem_CikVeTekrarCalistir(1000);
-    
-    	case 1:
-    		if (Gorev_Islem_MevcutMu(Gorev, Islem_3)) Gorev_Islem_CikVeTekrarCalistir(60000);
-    		else
-    		{
-    			*((uint32_t *)Detaylar->KullaniciNesnesi) = 0;
-    			sonuc = Gorev_Islem_Ekle(Gorev, Islem_1, Detaylar->KullaniciNesnesi);
-    			Gorev_Islem_CikVeSil();
-    		}
-    	}
-    }
-    
-    int32_t Islem_3(struct s_Gorev_Detaylar_ * Detaylar)
-    {
-    	switch (Detaylar->CalistirilacakAdim)
-    	{
-    	default:
-    		Detaylar->CalistirilacakAdim++;
-    		Gorev_Islem_CikVeTekrarCalistir(500);
-    
-    	case 5:
-    		Gorev_Islem_HemenCalistir(Gorev, Islem_2);
-    		Gorev_Islem_CikVeSil();
-    	}
     }
     
     int main(void)
     {
-    	int32_t KullaniciNesnesi = 0;
-    
+    	Tip_u32 KullaniciNesnesi = 0;
+    	
     	Gorev =  Gorev_Yeni();
     	if (Gorev == NULL) return -1;
-    
+    	
     	bool sonuc = Gorev_Islem_Ekle(Gorev, Islem_1, &KullaniciNesnesi);
-    
-    	Tip_Sure ZamanAsimi;
-    	Sure_Saniye(ZamanAsimi, 5);
-    	while (!Sure_DolduMu(ZamanAsimi))
+    	
+    	while (Gorev_Islem_MevcutMu(Gorev, Islem_1))
     	{
-    		Gorev_Calistir(Gorev);
-    		
-    		_An_KesmeIcinBekle_Islemi();
+            Gorev_Calistir(Gorev);
+            
+            _An_KesmeIcinBekle_Islemi();
     	}
-    
+    	
     	Gorev_Sil(Gorev);
-    
+    	printf("Bitti, An : %d, Kullanici Nesnesi : %d\r\n", An_Simdi(), KullaniciNesnesi);
+    	
     	return EXIT_SUCCESS;
     }
     
 ### Gunluk
-	#include <windows.h>
+    //HazirKod_C_Ayarlar.h içindeki satır açılmalı
+    //#define _An_Okuma_Islemi() _Zamanlama_An_Okuma_Islemi()
+    //#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet) _Gunluk_Aktarma_Islemi(Tampon, Adet)
+    
+    #include <windows.h>
 	
-	uint32_t _Zamanlama_An_Okuma_Islemi()
-	{
-		return GetTickCount();
-	}
+    //////////////////////////////////////////////////////////////////////////////
+    #define _Gunluk_Baslik "main"		//Kaynak kod icinde tanimlanmali
+    #include "Gunluk.h"					//Kaynak kod icinde tanimlanmali
+    //////////////////////////////////////////////////////////////////////////////
+    
+    Tip_u32 _Zamanlama_An_Okuma_Islemi()
+    {
+        return GetTickCount();
+    }
 	
-	void _Gunluk_Aktarma_Islemi(void * Tampon, uint32_t Adet)
-	{
-		char Gecici[Adet];
-		memcpy(Gecici, Tampon, Adet);
-		printf((char *)Tampon);
-	}
+    void _Gunluk_Aktarma_Islemi(void * Tampon, Tip_u32 Adet)
+    {
+        char Gecici[Adet];
+        memcpy(Gecici, Tampon, Adet);
+        printf((char *)Tampon);
+    }
 	
-	//////////////////////////////////////////////////////////////////////////////
-	#define _Gunluk_Baslik "main"		//Kaynak kod icinde tanimlanmali
-	#include "Gunluk.h"					//Kaynak kod icinde tanimlanmali
-	//////////////////////////////////////////////////////////////////////////////
+    int main(void)
+    {
+        Tip_u8 Tampon[] = { 1, 2, 3, 4, 5 };
 	
-	int main(void)
-	{
-		Tip_u8 Tampon[] = { 1, 2, 3, 4, 5 };
+        Gunluk_Baslat();
 	
-		Gunluk_Baslat();
+        Gunluk_BeklenmeyenDurum("Hesapta olmayan bir duruma dair bilgi verir");
+        Gunluk_Hata("Bilinen bir hataya dair bilgi verir");
+        Gunluk_Uyari("Bilinen bir duruma dair bilgi verir");
+        Gunluk_Bilgi("Asamalar arasi gecise dair bilgi verir");
+        Gunluk("Gelisiguzel bir bilgi verir");
 	
-		Gunluk_BeklenmeyenDurum("Hesapta olmayan bir duruma dair bilgi verir");
-		Gunluk_Hata("Bilinen bir hataya dair bilgi verir");
-		Gunluk_Uyari("Bilinen bir duruma dair bilgi verir");
-		Gunluk_Bilgi("Asamalar arasi gecise dair bilgi verir");
-		Gunluk("Gelisiguzel bir bilgi verir");
+        Gunluk_SureliDurdur(1);
+        Gunluk_BeklenmeyenDurum("1 sn boyunca durduruldugu icin hicbir bilgi veremez");
 	
-		Gunluk_SureliDurdur(1);
-		Gunluk_BeklenmeyenDurum("1 sn boyunca durduruldugu icin hicbir bilgi veremez");
+        Sleep(1500);
+        Gunluk("1 sn sonunda calisabilir");
 	
-		Sleep(1500);
-		Gunluk("1 sn sonunda calisabilir");
-	
-		return EXIT_SUCCESS;
-	}
+        return EXIT_SUCCESS;
+    }
     
 ### IlkGirenIlkCikar
     #include "IlkGirenIlkCikar.h"
@@ -208,7 +175,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	bool sonuc = IGIC_Bilgi_Ekle(IGIC, Bilgi, strlen(Bilgi));
     	sonuc = IGIC_Bilgi_Ekle(IGIC, Bilgi, strlen(Bilgi) / 2);
     
-    	uint32_t miktar = IGIC_Kapasite(IGIC);
+    	Tip_u32 miktar = IGIC_Kapasite(IGIC);
     	miktar = IGIC_DoluAlan(IGIC);
     	miktar = IGIC_BosAlan(IGIC);
     
@@ -240,7 +207,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		
 		Tip_Isaretci_Tampon Komut = Tampon_Yeni(256), Cevap = Tampon_Yeni(256), Hex, OrnekYazi1, OrnekYazi2, OrnekYazi3;
 		Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));
-		uint32_t DizidekiKonum;
+		Tip_u32 DizidekiKonum;
 		
 		if (KomutSatiri_KontrolEt_TampondakiBilgiUygunMu(Komut))
 		{
@@ -334,19 +301,19 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	if (Liste == NULL) return -1;
     
     	Tip_u8 Eleman1 = 1;
-    	uint16_t Eleman2 = 2;
+    	Tip_u16 Eleman2 = 2;
     
     	Liste_Eleman_Ekle(Liste, &Eleman1);
     	Liste_Eleman_Ekle(Liste, &Eleman2);
     
-    	uint32_t * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(uint32_t));
+    	Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32));
     	*Eleman3 = 3;
     
     	Tip_u8 Eleman1Okunan;
     	memcpy(&Eleman1Okunan, Liste_Eleman_Ilk(Liste), sizeof(Tip_u8));
     
-    	uint32_t Eleman3Okunan;
-    	memcpy(&Eleman3Okunan, Liste_Eleman_Son(Liste), sizeof(uint32_t));
+    	Tip_u32 Eleman3Okunan;
+    	memcpy(&Eleman3Okunan, Liste_Eleman_Son(Liste), sizeof(Tip_u32));
     
     	Liste_Kuyruk_DegiskeniniOlustur(Liste, KuyrukDegiskeni);
     	while (KuyrukDegiskeni)
@@ -372,22 +339,22 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	Tip_Isaretci_Tampon Tampon =  Tampon_Yeni(10);
     	if (Tampon == NULL) return -1;
     	
-    	char Kaynak[] = "ArGeMuP";
-    	bool sonuc = Tampon_Bilgi_Ekle_GecerliKonum(Tampon, Kaynak, strlen(Kaynak));
+    	Tip_char Kaynak[] = "ArGeMuP";
+    	Tip_bool sonuc = Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Tampon, Kaynak, strlen(Kaynak));
     	
-    	uint32_t Adet = Tampon_Kapasite(Tampon);
+    	Tip_u32 Adet = Tampon_Kapasite(Tampon);
     	Adet = Tampon_DoluAlan(Tampon);
     	Adet = Tampon_BosAlan(Tampon);
     	
-    	char okunan_bayt = Tampon_Icerik_Konum(Tampon, 0, char);
+    	Tip_char okunan_bayt = Tampon_Icerik_Konum(Tampon, 0, Tip_char);
     	
-    	char okunan_blok[strlen(Kaynak)];
+    	Tip_char okunan_blok[strlen(Kaynak)];
     	Adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, okunan_blok, sizeof(okunan_blok));
     	
-    	char okunan_blok2[2];
-    	Adet = Tampon_Bilgi_Oku_GecerliKonum(Tampon, okunan_blok2, sizeof(okunan_blok2));
-    	Adet = Tampon_Bilgi_Oku_GecerliKonum(Tampon, okunan_blok2, sizeof(okunan_blok2));
-    	Adet = Tampon_Bilgi_Oku_GecerliKonum(Tampon, okunan_blok2, sizeof(okunan_blok2));
+    	Tip_char okunan_blok2[2];
+    	Adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, okunan_blok2, sizeof(okunan_blok2));
+    	Adet = Tampon_Bilgi_Oku_Konum(Tampon, 2, okunan_blok2, sizeof(okunan_blok2));
+    	Adet = Tampon_Bilgi_Oku_BaslangictanGecerliKonumaKadar(Tampon, okunan_blok2, sizeof(okunan_blok2));
     	
     	Adet = Tampon_DoluAlan(Tampon);
     	
@@ -404,13 +371,13 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     	#define Kaynak1 "123456789"
     	#define Aranan1 "456"
     	
-    	uint32_t adet = YI_Bul(Kaynak1, Aranan1);
+    	Tip_u32 adet = YI_Bul(Kaynak1, Aranan1);
     	
     	#define Kaynak2 "Adres : 192.168.0.1\r\nYol : 80\r\nKapasite : 8192"
     	#define ArananBaslangic "Yol :"
     	#define ArananBitis "\r\n"
     	
-    	char Bulunan[256];
+    	Tip_char Bulunan[256];
     	
     	memset(Bulunan, 0xFF, sizeof(Bulunan));
     	adet = YI_BulAyiklaKopyala(Kaynak2, ArananBaslangic, ArananBitis, Bulunan, sizeof(Bulunan));
@@ -447,28 +414,31 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
     }
     
 ### Zamanlama
-    #include <windows.h>
-    #include "Zamanlama.h"
-    
-    Tip_Sure _Zamanlama_An_Okuma_Islemi()
-    {
-    	return GetTickCount();
-    }
-    
-    int main(void)
-    {
-    	Tip_Sure Sure = 0;
-    	Sure_MiliSaniye(Sure, 3500);
-    
-    	while(!Sure_DolduMu(Sure))
-    	{
-    		printf("Kalan sure : %d msn\r\n", Sure_KalanSure_MiliSaniye(Sure));
-    		Sleep(500);
-    	}
-    
-    	return EXIT_SUCCESS;
-    }
-
+    //HazirKod_C_Ayarlar.h içindeki satır açılmalı
+	//#define _An_Okuma_Islemi() _Zamanlama_An_Okuma_Islemi()
+	
+	#include <windows.h>
+	#include "Zamanlama.h"
+	
+	Tip_Sure _Zamanlama_An_Okuma_Islemi()
+	{
+		return GetTickCount();
+	}
+	
+	int main(void)
+	{
+		Tip_Sure Sure = 0;
+		Sure_MiliSaniye(Sure, 3500);
+	
+		while(!Sure_DolduMu(Sure))
+		{
+			printf("Kalan sure : %d msn\r\n", Sure_KalanSure_MiliSaniye(Sure));
+			Sleep(500);
+		}
+	
+		return EXIT_SUCCESS;
+	}
+	
 > HazirKod_C, derleyici include sirasinda sonda (yada mantikli bir konumda) olmali
 >
 > gcc "-IC:\\deneme\\inc" "-IC:\\deneme\\HazirKod_C\\Tarifler" -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" gibi

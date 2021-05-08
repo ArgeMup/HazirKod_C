@@ -10,6 +10,7 @@
 //Ic Kullanim
 ////////////////////////////////////////////////////////////////////////////////
 typedef Tip_u64 Tip_Sure;
+typedef Tip_u32 Tip_TickCount;
 typedef Tip_void (*Tip_Islem_Sure_AnOkuma) ();
 typedef Tip_void (*Tip_Islem_Sure_KesmeIcinBekle) ();
 

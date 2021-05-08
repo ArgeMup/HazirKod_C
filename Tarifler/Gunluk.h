@@ -116,6 +116,4 @@ Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik, Tip_Isaretci Tampon, Tip_u16 
 	#endif
 #endif
 
-
-
 #endif /*__Gunluk_H__ */

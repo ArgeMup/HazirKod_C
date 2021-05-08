@@ -9,7 +9,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
 ////////////////////////////////////////////////////////////////////////////////
-Tip_u32 AI_Bul_Bayt(Tip_Isaretci Kaynak, Tip_u32 KaynakBoyut, Tip_u8 Aranan);
-Tip_u32 AI_Bul_Blok(Tip_Isaretci Kaynak, Tip_u32 KaynakBoyut, Tip_Isaretci Aranan, Tip_u32 ArananBoyut);
+Tip_i32 AI_Bul_Bayt(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_u8 ArananBilgi);
+Tip_i32 AI_Bul_Bayt_Sondan(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_u8 ArananBilgi);
+
+Tip_i32 AI_Bul_Blok(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_Isaretci ArananBilgi, Tip_u32 ArananBilgiMiktari);
+Tip_i32 AI_Bul_Blok_Sondan(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_Isaretci ArananBilgi, Tip_u32 ArananBilgiMiktari);
+
+Tip_i32 AI_Degistir(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_Isaretci ArananBilgi, Tip_u32 ArananBilgiMiktari, Tip_Isaretci YeniBilgi, Tip_u32 YeniBilgiMiktari, Tip_Isaretci Hedef, Tip_u32 HedefKapasitesi, Tip_bool SadeceIlkBuldugunuDegistir);
 
 #endif /*__AramaIslemleri_H__ */

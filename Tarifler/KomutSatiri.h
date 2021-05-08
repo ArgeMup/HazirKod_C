@@ -12,7 +12,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
 ////////////////////////////////////////////////////////////////////////////////
-#define KomutSatiri_Cevap_Ekle(Tampon, Sekil, ...)		Tampon->Sayac += snprintf(Tampon_Isaretci_KonumSayac(Tampon, Tip_char), Tampon_BosAlan(Tampon), Sekil, ##__VA_ARGS__)
+#define KomutSatiri_Cevap_Ekle(Tampon, Sekil, ...)		Tampon->Sayac += snprintf(Tampon_Isaretci(Tampon, Tampon->Sayac, Tip_char), Tampon_BosAlan(Tampon), Sekil, ##__VA_ARGS__)
 #define KomutSatiri_Cevapla_Onay(Tampon) 				KomutSatiri_Cevap_Ekle(Tampon, "%s%s%s", _KomutSatiri_Cevap_Baslangici, _KomutSatiri_Cevap_Onay, _KomutSatiri_Cevap_Bitisi)
 #define KomutSatiri_Cevapla_Ret(Tampon, Aciklama) 		KomutSatiri_Cevap_Ekle(Tampon, "%s%s%c%s%s", _KomutSatiri_Cevap_Baslangici, _KomutSatiri_Cevap_Ret, _KomutSatiri_Ayirac, Aciklama, _KomutSatiri_Cevap_Bitisi)
 #define KomutSatiri_Cevapla_Yazi(Tampon, Yazi) 			KomutSatiri_Cevap_Ekle(Tampon, "%s\"%s\"%s", _KomutSatiri_Cevap_Baslangici, Yazi, _KomutSatiri_Cevap_Bitisi)

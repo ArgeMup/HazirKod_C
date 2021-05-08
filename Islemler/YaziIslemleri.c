@@ -3,9 +3,10 @@
 
 #include "YaziIslemleri.h"
 
-//== 0 : ise yok
-// > 0 : ise Kopyalanan karakter adedi
-Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_char * ArananBitis, Tip_char * Hedef, Tip_u32 HedefKapasite)
+// >=  0 : ise Kopyalanan karakter adedi (\0 haric)
+// == -1 : ise girdiler hatali
+// == -2 : ise Hedef kapasitesi yeterli degil
+Tip_i32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_char * ArananBitis, Tip_char * Hedef, Tip_u32 HedefKapasitesi)
 {	
 	//ABCDEFGH
 	//Baslangic 	C 			Bitis 	F 			Hedef 	DE			true	2
@@ -14,42 +15,47 @@ Tip_u32 YI_BulAyiklaKopyala(Tip_char * Kaynak, Tip_char * ArananBaslangic, Tip_c
 	//Baslangic   	Tip_null	Bitis   Tip_null	Hedef 				false	0
 	//Baslangic   	Q			Bitis   W			Hedef 				false	0
 
-	Tip_u32 KonumBaslangic, KonumBitis;
+	Tip_i32 KonumBaslangic = 0, KonumBitis = 0;
 
-	if (Kaynak == Tip_null || Hedef == Tip_null) return 0;
+	if (Kaynak == Tip_null || Hedef == Tip_null) return -1;
 
-	if (ArananBaslangic != Tip_null && ArananBitis != Tip_null)
+	if (ArananBaslangic != Tip_null)
 	{
-		KonumBaslangic = YI_Bul(Kaynak, ArananBaslangic);
-		if (KonumBaslangic == 0) return 0;
+		if (ArananBitis != Tip_null)
+		{
+			KonumBaslangic = YI_Bul(Kaynak, ArananBaslangic);
+			if (KonumBaslangic < 0) return 0;
 
-		KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
+			KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) /*Ilk karaktere gitmek icin*/;
 
-		KonumBitis = YI_Bul(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
-		if (KonumBitis == 0) return 0;
+			KonumBitis = YI_Bul(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
+			if (KonumBitis < 0) return 0;
 
-		KonumBitis = KonumBitis + KonumBaslangic - 1 /*Ilk karaktere gitmek icin*/;
-	}
-	else if (ArananBaslangic == Tip_null)
-	{
-		KonumBaslangic = 0;
-		KonumBitis = YI_Bul(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
-		if (KonumBitis == 0) return 0;
+			KonumBitis += KonumBaslangic /*Ilk karaktere gitmek icin*/;
+		}
+		else
+		{
+			KonumBaslangic = YI_Bul(Kaynak, ArananBaslangic);
+			if (KonumBaslangic < 0) return 0;
 
-		KonumBitis = KonumBitis - 1 /*Ilk karaktere gitmek icin*/;
+			KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) /*Ilk karaktere gitmek icin*/;
+
+			KonumBitis = _Islem_strlen_(Kaynak);
+		}
 	}
 	else
 	{
-		KonumBaslangic = YI_Bul(Kaynak, ArananBaslangic);
-		if (KonumBaslangic == 0) return 0;
+		if (ArananBitis != Tip_null)
+		{
+			KonumBaslangic = 0;
+			KonumBitis = YI_Bul(Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_char), ArananBitis);
 
-		KonumBaslangic = KonumBaslangic + _Islem_strlen_(ArananBaslangic) - 1 /*Ilk karaktere gitmek icin*/;
-
-		KonumBitis = _Islem_strlen_(Kaynak);
+			if (KonumBitis < 0) return 0;
+		}
 	}
 
 	Tip_u32 Adet = KonumBitis - KonumBaslangic;
-	if ( (Adet + 1 /*\0*/) > HedefKapasite) Adet = HedefKapasite - 1;
+	if ( (Adet + 1 /*\0*/) > HedefKapasitesi) return -2;
 
 	_Islem_memcpy_(Hedef, Isaretci_Konumlandir(Kaynak, KonumBaslangic, Tip_u8), Adet);
 	Isaretci_Icerigi(Hedef, Adet, Tip_char) = '\0';

@@ -47,7 +47,7 @@ Tip_u32 Tampon_Bilgi_Oku_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKonu
 	if (Tampon == Tip_null) return 0;
 	if ( (Tampon->Kapasite - BaslangicKonumu) < HedefKapasitesi) HedefKapasitesi = Tampon->Kapasite - BaslangicKonumu;
 
-	_Islem_memcpy_(Hedef, Tampon_Isaretci_Konum(Tampon, BaslangicKonumu, Tip_u8), HedefKapasitesi);
+	_Islem_memcpy_(Hedef, Tampon_Isaretci(Tampon, BaslangicKonumu, Tip_u8), HedefKapasitesi);
 	return HedefKapasitesi;
 }
 Tip_bool Tampon_Bilgi_Ekle_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKonumu, Tip_Isaretci Kaynak, Tip_u32 Adet)
@@ -55,7 +55,7 @@ Tip_bool Tampon_Bilgi_Ekle_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKo
 	if (Tampon == Tip_null) return false;
 	if ( (Tampon->Kapasite - BaslangicKonumu) < Adet) return false;
 
-	_Islem_memcpy_(Tampon_Isaretci_Konum(Tampon, BaslangicKonumu, Tip_u8), Kaynak, Adet);
+	_Islem_memcpy_(Tampon_Isaretci(Tampon, BaslangicKonumu, Tip_u8), Kaynak, Adet);
 	return true;
 }
 
@@ -66,7 +66,7 @@ Tip_u32 Tampon_Bilgi_Oku_BaslangictanGecerliKonumaKadar(Tip_Isaretci_Tampon Tamp
 	if (adet > 0)
 	{
 		Tampon->Sayac -= adet;
-		if (Tampon->Sayac > 0) _Islem_memcpy_(Tampon_Isaretci_KonumIlk(Tampon, Tip_u8), Tampon_Isaretci_Konum(Tampon, adet, Tip_u8), Tampon->Sayac);
+		if (Tampon->Sayac > 0) _Islem_memcpy_(Tampon->Isaretci, Tampon_Isaretci(Tampon, adet, Tip_u8), Tampon->Sayac);
 	}
 
 	return adet;

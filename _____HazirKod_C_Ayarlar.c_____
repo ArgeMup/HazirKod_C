@@ -52,3 +52,23 @@ Tip_void HazirKod_C_Baslat()
 		_An_KesmeIcinBekle_Islemi();
 	}
 }
+
+Tip_void _Gunluk_Aktarma_Islemi(Tip_void * Tampon, Tip_u32 Adet)
+{
+	printf(Tampon);
+	fflush(stdout);
+}
+
+#ifndef _Zamanlama_IsletimSistemi_TickCount_8Bayt_
+Tip_Sure _Zamanlama_GuncelDegeri_HazirKod_C_ = 0;
+Tip_TickCount _Zamanlama_OncekiDegeri_TickCount_ = 0;
+Tip_Sure _Zamanlama_An_Okuma_Islemi()
+{
+	Tip_TickCount Simdi = GetTickCount(); //4 baytlik tick bilgisinin okundugu islem eklenmeli
+
+	_Zamanlama_GuncelDegeri_HazirKod_C_ += Simdi - _Zamanlama_OncekiDegeri_TickCount_;
+	_Zamanlama_OncekiDegeri_TickCount_ = Simdi;
+
+	return _Zamanlama_GuncelDegeri_HazirKod_C_;
+}
+#endif

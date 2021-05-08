@@ -23,18 +23,12 @@ struct s_Tampon_
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct s_Tampon_ * Tip_Isaretci_Tampon;
 
-#define Tampon_Isaretci_Konum(s_Tampon, Konum, Tip)		Isaretci_Konumlandir(s_Tampon->Isaretci, Konum, Tip)
-#define Tampon_Icerik_Konum(s_Tampon, Konum, Tip)		Isaretci_Icerigi(s_Tampon->Isaretci, Konum, Tip)
+#define Tampon_Isaretci(s_Tampon, Konum, Tip)	Isaretci_Konumlandir(s_Tampon->Isaretci, Konum, Tip)
+#define Tampon_Icerik(s_Tampon, Konum, Tip)		Isaretci_Icerigi(s_Tampon->Isaretci, Konum, Tip)
 
-#define Tampon_Isaretci_KonumSayac(s_Tampon, Tip)		Tampon_Isaretci_Konum(s_Tampon, s_Tampon->Sayac, Tip)
-#define Tampon_Icerik_KonumSayac(s_Tampon, Tip)       Tampon_Icerik_Konum(s_Tampon, s_Tampon->Sayac, Tip)
-
-#define Tampon_Isaretci_KonumIlk(s_Tampon, Tip)			( (Tip *)(s_Tampon->Isaretci) )
-#define Tampon_Icerik_KonumIlk(s_Tampon, Tip)			( *Tampon_Isaretci_KonumIlk(s_Tampon, Tip) )
-
-#define Tampon_Kapasite(s_Tampon)						( s_Tampon->Kapasite )
-#define Tampon_DoluAlan(s_Tampon)						( s_Tampon->Sayac )
-#define Tampon_BosAlan(s_Tampon)						( Tampon_Kapasite(s_Tampon) - Tampon_DoluAlan(s_Tampon) )
+#define Tampon_Kapasite(s_Tampon)				( s_Tampon->Kapasite )
+#define Tampon_DoluAlan(s_Tampon)				( s_Tampon->Sayac )
+#define Tampon_BosAlan(s_Tampon)				( Tampon_Kapasite(s_Tampon) - Tampon_DoluAlan(s_Tampon) )
 
 Tip_Isaretci_Tampon Tampon_Yeni(Tip_u32 Kapasite);
 Tip_void Tampon_Paketle(Tip_Isaretci_Tampon Tampon);
