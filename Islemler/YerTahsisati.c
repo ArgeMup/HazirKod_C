@@ -12,10 +12,15 @@ Tip_Isaretci YT_Yeni(Tip_u32 Adet)
 {
 	Tip_u32 Uretilen = (Tip_u32)_YT_Islem_malloc_(Adet);
 
+#ifdef _YT_Tahsis_Edilen_Alani_Kontrol_Et
 	if (Uretilen >= _YT_Ram_Baslangic && (Uretilen + Adet) <= _YT_Ram_Bitis)
 	{
+#endif
+
 		HazirKod_C_Gunluk("+++ 0x%X - 0x%X - Adet : %d", Uretilen, Uretilen + Adet, Adet);
 		return (Tip_Isaretci)Uretilen;
+
+#ifdef _YT_Tahsis_Edilen_Alani_Kontrol_Et
 	}
 	else
 	{
@@ -25,6 +30,7 @@ Tip_Isaretci YT_Yeni(Tip_u32 Adet)
 		HazirKod_C_Gunluk("!!! 0x%X - 0x%X - Adet : %d", Uretilen, Uretilen + Adet, Adet);
 		return Tip_null;
 	}
+#endif
 }
 Tip_void YT_Sil(Tip_Isaretci Isaretci)
 {

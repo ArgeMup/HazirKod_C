@@ -71,8 +71,9 @@ typedef Tip_u8 											_Tip_Gorev_CalistirilacakAdim;
 ////////////////////////////////////////////////////////////////////////////////
 //Gunluk.h
 ////////////////////////////////////////////////////////////////////////////////
+#define _Gunluk_Tip_Sure_Sablon							"%llu"	// 4 Baytlýk Tip_Sure için "%lu"
 #define _Gunluk_Renkli_Cikti_Uretsin
-#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//_Gunluk_Aktarma_Islemi(Tampon, Adet)
+#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//printf("%s", Tampon ) //_Gunluk_Aktarma_Islemi(Tampon, Adet)
 #define _Gunluk_Cikti_Onem_Seviyesi 					_Gunluk_Cikti_Onem_Seviye_Geveze
 #define _Gunluk_Renk_BeklenmeyenDurum					( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi )
 #define _Gunluk_Renk_Hata								( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah )
@@ -136,12 +137,6 @@ extern Tip_u32 _HataKontrol_Hatalar;
 #define HataKontrol_HataDevamEdiyorMu(e_HataKontrol_Hatalar_)	( !Bit_Oku(_HataKontrol_Hatalar, e_HataKontrol_Hatalar_) )
 #define	HataKontrol_Hatasiz(e_HataKontrol_Hatalar_)				Bit_Yaz_1(_HataKontrol_Hatalar, e_HataKontrol_Hatalar_)
 #define	HataKontrol_Hatali(e_HataKontrol_Hatalar_)				Bit_Yaz_0(_HataKontrol_Hatalar, e_HataKontrol_Hatalar_)
-
-////////////////////////////////////////////////////////////////////////////////
-//Heap_4.h
-////////////////////////////////////////////////////////////////////////////////
-#define configTOTAL_HEAP_SIZE 							( 2 * 1024 )
-#define portBYTE_ALIGNMENT 								( 8 )
 
 ////////////////////////////////////////////////////////////////////////////////
 //IlkGirenIlkCikar.h
@@ -212,8 +207,18 @@ extern Tip_u32 _HataKontrol_Hatalar;
 #ifndef _YT_Heap_Kullanimini_HazirKod_C_Duzenlesin
 	#define _YT_Islem_malloc_(x)						malloc(x)
 	#define _YT_Islem_free_(x)							free(x)
-	#define _YT_Ram_Baslangic 							( (Tip_u32)0 )							//(Tip_u32)&__heap_start__
-	#define _YT_Ram_Bitis								( (Tip_u32)( _YT_Ram_Baslangic - 1 ) )	//(Tip_u32)&__heap_end__
+
+	//#define _YT_Tahsis_Edilen_Alani_Kontrol_Et
+	#ifdef _YT_Tahsis_Edilen_Alani_Kontrol_Et
+		#define _YT_Ram_Baslangic 							( (Tip_u32)0 )							//(Tip_u32)&__heap_start__
+		#define _YT_Ram_Bitis								( (Tip_u32)( _YT_Ram_Baslangic - 1 ) )	//(Tip_u32)&__heap_end__
+	#endif
+#else
+	////////////////////////////////////////////////////////////////////////////////
+	//Heap_4.h
+	////////////////////////////////////////////////////////////////////////////////
+	#define configTOTAL_HEAP_SIZE 							( 2 * 1024 )
+	#define portBYTE_ALIGNMENT 								( 8 )
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////

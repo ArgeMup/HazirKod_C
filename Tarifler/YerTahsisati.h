@@ -19,8 +19,11 @@ Tip_void YT_Sil(Tip_Isaretci Isaretci);
 	#define _YT_Islem_malloc_(Adet)		pvPortMalloc(Adet)
 	#define _YT_Islem_free_(Isaretci)	vPortFree(Isaretci)
 	extern Tip_u8 ucHeap[];
-	#define _YT_Ram_Baslangic			( (Tip_u32)Isaretci_Konumlandir(ucHeap, 0, Tip_u8) )
-	#define _YT_Ram_Bitis				( (Tip_u32)Isaretci_Konumlandir(ucHeap, configTOTAL_HEAP_SIZE, Tip_u8) )
+
+	#ifdef _YT_Tahsis_Edilen_Alani_Kontrol_Et
+		#define _YT_Ram_Baslangic			( (Tip_u32)Isaretci_Konumlandir(ucHeap, 0, Tip_u8) )
+		#define _YT_Ram_Bitis				( (Tip_u32)Isaretci_Konumlandir(ucHeap, configTOTAL_HEAP_SIZE, Tip_u8) )
+	#endif
 #endif
 
 #endif /*__YerTahsisati_H__ */

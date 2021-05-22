@@ -68,7 +68,7 @@ Tip_u32 KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Tip_Isaretci_T
 {
 	for (Tip_u32 i = 0; i < ElemanSayisi; i++)
 	{
-		if (KomutSatiri_KontrolEt_Siradaki_BuMu(Tampon, Dizi[i])) return i;
+		if (KomutSatiri_KontrolEt_Siradaki_BuMu(Tampon, (Tip_char *)Dizi[i])) return i;
 	}
 
 	return ElemanSayisi;

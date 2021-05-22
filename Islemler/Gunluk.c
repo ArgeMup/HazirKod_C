@@ -31,7 +31,7 @@ Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, c
 		Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "m");
 	}
 
-	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%lu ", An_Simdi());
+	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, _Gunluk_Tip_Sure_Sablon " ", An_Simdi());
 	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", Baslik);
 	Konum += vsnprintf(&Yazi[Konum], Kapasite - Konum, Sekil, valist);
 
@@ -52,7 +52,7 @@ Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik, Tip_Isaretci Tampon, Tip_u16 
 	Tip_u16 YazdirilanAdet = 0;
 	Tip_u16 Konum = 0;
 	
-	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%lu ", An_Simdi());
+	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, _Gunluk_Tip_Sure_Sablon " ", An_Simdi());
 	Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s Adet:%.5d | Hex | Konum | Ascii\r\n", Baslik, Adet);
 	_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 	
@@ -63,7 +63,7 @@ Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik, Tip_Isaretci Tampon, Tip_u16 
 		
 		Konum = 0;
 
-		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%lu %s ", An_Simdi(), Baslik);
+		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, _Gunluk_Tip_Sure_Sablon " %s ", An_Simdi(), Baslik);
 
 		for (Tip_u16 i = 0; i < AnlikAdet; i++)
 		{
