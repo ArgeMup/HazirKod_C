@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #include "Liste.h"
 
@@ -25,6 +25,12 @@ Tip_void Liste_Sil(Tip_Isaretci_Liste Liste, Tip_bool ElemanlaridaSil)
 	YT_Sil(Liste);
 }
 
+Tip_u32 Liste_Eleman_Sayisi(Tip_Isaretci_Liste Liste)
+{
+	if (Liste == Tip_null) return 0;
+	
+	return _Liste_ElemanSayisi(Liste);
+}
 Tip_bool Liste_Eleman_Ekle(Tip_Isaretci_Liste Liste, Tip_Isaretci EklenecekEleman)
 {
 	if (Liste == Tip_null || EklenecekEleman == Tip_null) return false;
@@ -39,6 +45,7 @@ Tip_bool Liste_Eleman_Ekle(Tip_Isaretci_Liste Liste, Tip_Isaretci EklenecekElema
 	else _Liste_SonEleman(Liste)->SonrakiListeElemani = Eleman;
 
 	_Liste_SonEleman(Liste) = Eleman;
+	_Liste_ElemanSayisi(Liste)++;
 
 	return true;
 }
@@ -75,6 +82,8 @@ Tip_void Liste_Eleman_Sil(Tip_Isaretci_Liste Liste, Tip_Isaretci SilinecekEleman
 
 			if (TahsisEdilenAlanidaSil) YT_Sil(Simdiki->Isaretci);
 			YT_Sil(Simdiki);
+
+			_Liste_ElemanSayisi(Liste)--;
 			return;
 		}
 		

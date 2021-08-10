@@ -207,7 +207,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		
 		Tip_Isaretci_Tampon Komut = Tampon_Yeni(256), Cevap = Tampon_Yeni(256), Hex, OrnekYazi1, OrnekYazi2, OrnekYazi3;
 		Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));
-		Tip_u32 DizidekiKonum;
+		Tip_i32 DizidekiKonum;
 		
 		if (KomutSatiri_KontrolEt_TampondakiBilgiUygunMu(Komut))
 		{

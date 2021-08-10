@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.7
+// V1.8
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -80,31 +80,50 @@ typedef Tip_u8 											_Tip_Gorev_CalistirilacakAdim;
 #define _Gunluk_Renk_Uyari								( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah )
 #define _Gunluk_Renk_Bilgi								( e_Gunluk_Gorunum_Yazi_Yesil | e_Gunluk_Gorunum_Yuzey_Siyah )
 #define _Gunluk_Renk_Geveze								( e_Gunluk_Gorunum_Duzyazi )
+//#define _Gunluk_Tampon_Kapasitesi_Sabit					256 //Sabit miktarda stack dan temin edilen alan için bu satýrý ac
+#ifndef _Gunluk_Tampon_Kapasitesi_Sabit
+	#define _Gunluk_Tampon_Azami_Kapasitesi				512 //Degisken miktarda heap den temin edilen alan icin usttekini kapat
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 //#define _Gunluk_KullaniciTanimliIslemleriKullan
 #ifdef _Gunluk_KullaniciTanimliIslemleriKullan
 	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_BeklenmeyenDurum
 		#define Gunluk_BeklenmeyenDurum(Yazi , ...)
+	#else
+		#define Gunluk_BeklenmeyenDurum(Yazi , ...)
 	#endif
 
 	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Hata
+		#define Gunluk_Hata(Yazi , ...)
+	#else
 		#define Gunluk_Hata(Yazi , ...)
 	#endif
 
 	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Uyari
 		#define Gunluk_Uyari(Yazi , ...)
+	#else
+		#define Gunluk_Uyari(Yazi , ...)
 	#endif
 
 	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Bilgi
+		#define Gunluk_Bilgi(Yazi , ...)
+	#else
 		#define Gunluk_Bilgi(Yazi , ...)
 	#endif
 
 	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Geveze
 		#define Gunluk(Yazi , ...)
 		#define Gunluk_Hex(Tampon, Adet)
+	#else
+		#define Gunluk(Yazi , ...)
+		#define Gunluk_Hex(Tampon, Adet)
 	#endif
 
 	#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_HazirKod_C
+		#define HazirKod_C_Gunluk(Yazi , ...)
+		#define HazirKod_C_Gunluk_Hex(Tampon, Adet)
+	#else
 		#define HazirKod_C_Gunluk(Yazi , ...)
 		#define HazirKod_C_Gunluk_Hex(Tampon, Adet)
 	#endif

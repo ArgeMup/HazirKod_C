@@ -12,6 +12,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 struct _s_Liste_
 {
+	uint32_t ElemanSayisi;
+
 	struct _s_Liste_Elemani_
 	{
 		Tip_Isaretci Isaretci;
@@ -21,6 +23,7 @@ struct _s_Liste_
 
 #define _Liste_IlkEleman(s_Liste)								(((struct _s_Liste_ *)s_Liste)->IlkEleman)
 #define _Liste_SonEleman(s_Liste)								(((struct _s_Liste_ *)s_Liste)->SonEleman)
+#define _Liste_ElemanSayisi(s_Liste)							(((struct _s_Liste_ *)s_Liste)->ElemanSayisi)
 
 ////////////////////////////////////////////////////////////////////////////////
 //Genel Goruse Acik Tanimlamalar
@@ -31,6 +34,7 @@ typedef Tip_Isaretci Tip_Isaretci_Liste_Kuyruk;
 Tip_Isaretci_Liste Liste_Yeni();
 Tip_void Liste_Sil(Tip_Isaretci_Liste Liste, Tip_bool ElemanlaridaSil);
 
+Tip_u32 Liste_Eleman_Sayisi(Tip_Isaretci_Liste Liste);
 Tip_bool Liste_Eleman_Ekle(Tip_Isaretci_Liste Liste, Tip_Isaretci EklenecekEleman);
 Tip_Isaretci Liste_Eleman_Ekle_VeYerTahsisEt(Tip_Isaretci_Liste Liste, Tip_u32 Adet);
 Tip_void Liste_Eleman_Sil(Tip_Isaretci_Liste Liste, Tip_Isaretci SilinecekEleman, Tip_bool TahsisEdilenAlanidaSil);

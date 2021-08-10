@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.3
+// V1.4
 
 #include "KomutSatiri.h"
 
@@ -64,14 +64,14 @@ Tip_bool KomutSatiri_KontrolEt_Siradaki_BuMu(Tip_Isaretci_Tampon Tampon, Tip_cha
 
 	return false;
 }
-Tip_u32 KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Tip_Isaretci_Tampon Tampon, const Tip_char ** Dizi, Tip_u32 ElemanSayisi)
+Tip_i32 KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Tip_Isaretci_Tampon Tampon, const Tip_char ** Dizi, Tip_u32 ElemanSayisi)
 {
 	for (Tip_u32 i = 0; i < ElemanSayisi; i++)
 	{
 		if (KomutSatiri_KontrolEt_Siradaki_BuMu(Tampon, (Tip_char *)Dizi[i])) return i;
 	}
 
-	return ElemanSayisi;
+	return -1;
 }
 
 //Okuma Islemleri

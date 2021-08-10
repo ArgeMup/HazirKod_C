@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #include "AramaIslemleri.h"
 
@@ -8,7 +8,7 @@
 // == -2 : ise bulunamadi
 Tip_i32 AI_Bul_Bayt(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_u8 ArananBilgi)
 {
-	if (Kaynak == Tip_null) return -1;
+	if (Kaynak == Tip_null || KaynaktakiBilgiMiktari == 0) return -1;
 
 	for (Tip_u32 i = 0; i < KaynaktakiBilgiMiktari; i++)
 	{
@@ -19,7 +19,7 @@ Tip_i32 AI_Bul_Bayt(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_u8 
 }
 Tip_i32 AI_Bul_Bayt_Sondan(Tip_Isaretci Kaynak, Tip_u32 KaynaktakiBilgiMiktari, Tip_u8 ArananBilgi)
 {
-	if (Kaynak == Tip_null) return -1;
+	if (Kaynak == Tip_null || KaynaktakiBilgiMiktari == 0) return -1;
 
 	for (Tip_i32 i = KaynaktakiBilgiMiktari - 1 ; i >= 0; i--)
 	{

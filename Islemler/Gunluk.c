@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.5
+// V1.6
 #define _Gunluk_Baslik "Gunluk"
 #include "Gunluk.h"
 
@@ -19,8 +19,17 @@ Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, c
 	va_list valist;
 	va_start(valist, Sekil);
 
-	Tip_char Yazi[256];
-	Tip_u16 Kapasite = sizeof(Yazi) - 2 /*\r\n*/;
+	#ifdef _Gunluk_Tampon_Kapasitesi_Sabit
+		Tip_char Yazi[_Gunluk_Tampon_Kapasitesi_Sabit];
+		Tip_u32 Kapasite = _Gunluk_Tampon_Kapasitesi_Sabit - 2 /*\r\n*/;
+	#else
+		Tip_u32 Kapasite = vsnprintf(NULL, 0, Sekil, valist);
+		Kapasite += Gorunum == e_Gunluk_Gorunum_Duzyazi ? 0 : 32;
+		Kapasite += 12 /*Zaman Damgasi*/ + 32 /*Tahmini Baslik*/ + 2 /*son*/;
+		if (Kapasite > _Gunluk_Tampon_Azami_Kapasitesi) Kapasite = _Gunluk_Tampon_Azami_Kapasitesi;
+		Tip_char Yazi[Kapasite];
+	#endif
+
 	Tip_u16 Konum = 0;
 
 	if (Gorunum != e_Gunluk_Gorunum_Duzyazi)
