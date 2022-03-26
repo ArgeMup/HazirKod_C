@@ -1,81 +1,124 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #include "Gorev.h"
 
-//ZamanAsimi_msn  < 0 Gorevi sil
-//ZamanAsimi_msn == 0 Gorevi hemen calisacak sekilde kur
-//ZamanAsimi_msn  > 0 Gorevi msn sonra calistir
+#ifdef HazirKod_C_Kullan_Gorev
 
-struct _s_Gorev_
-{
-	struct s_Gorev_Detaylar_ Detaylar;
-	Tip_Islem_Gorev Islem;
-	enum e_Gorev_Bitler_
+	//ZamanAsimi_msn  < 0 Gorevi sil
+	//ZamanAsimi_msn == 0 Gorevi hemen calisacak sekilde kur
+	//ZamanAsimi_msn  > 0 Gorevi msn sonra calistir
+
+	struct _s_Gorev_
 	{
-		e_Gorev_Bitler_HemenCalistir
-	}Bitler;
-};
-
-Tip_bool Gorev_Islem_Ekle(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem, Tip_Isaretci KullaniciNesnesi)
-{
-	if (Gorev == Tip_null || Islem == Tip_null) return false;
-
-	struct _s_Gorev_ * Yeni = Liste_Eleman_Ekle_VeYerTahsisEt(Gorev, sizeof(struct _s_Gorev_));
-	if (Yeni == Tip_null) return false;
-
-	_Islem_memset_(Yeni, 0, sizeof(struct _s_Gorev_));
-	Yeni->Islem = Islem;
-	Yeni->Detaylar.KullaniciNesnesi = KullaniciNesnesi;
-
-	return true;
-}
-Tip_bool Gorev_Islem_MevcutMu(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem)
-{
-	if (Gorev == Tip_null || Islem == Tip_null) return false;
-
-	Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
-	while(KuyrukDegiskeni != NULL)
-	{
-		struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
-		if (Eleman->Islem == Islem) return true;
-	}
-
-	return false;
-}
-Tip_void Gorev_Islem_HemenCalistir(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem)
-{
-	if (Gorev == Tip_null || Islem == Tip_null) return;
-
-	Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
-	while(KuyrukDegiskeni != NULL)
-	{
-		struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
-		if (Eleman->Islem == Islem)
+		struct s_Gorev_Detaylar_ Detaylar;
+		Tip_Islem_Gorev Islem;
+		struct
 		{
-			Bit_Yaz_1(Eleman->Bitler, e_Gorev_Bitler_HemenCalistir);
-			return;
+			Tip_bool HemenCalistir;
+			Tip_u32 Gecikme_msn;
+		} ZamanlamayaMudahaleEt;
+	};
+
+	Tip_bool Gorev_Islem_Ekle(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem, Tip_Isaretci KullaniciNesnesi)
+	{
+		if (Gorev == Tip_null || Islem == Tip_null) return false;
+
+		struct _s_Gorev_ * Yeni = Liste_Eleman_Ekle_VeYerTahsisEt(Gorev, sizeof(struct _s_Gorev_));
+		if (Yeni == Tip_null) return false;
+
+		_Islem_memset_(Yeni, 0, sizeof(struct _s_Gorev_));
+		Yeni->Islem = Islem;
+		Yeni->Detaylar.KullaniciNesnesi = KullaniciNesnesi;
+
+		return true;
+	}
+	Tip_bool Gorev_Islem_MevcutMu(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem)
+	{
+		if (Gorev == Tip_null || Islem == Tip_null) return false;
+
+		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
+		while(KuyrukDegiskeni != NULL)
+		{
+			struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			if (Eleman->Islem == Islem) return true;
+		}
+
+		return false;
+	}
+	Tip_void Gorev_Islem_HemenCalistir(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem, Tip_u32 Gecikme_msn)
+	{
+		if (Gorev == Tip_null || Islem == Tip_null) return;
+
+		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
+		while(KuyrukDegiskeni != NULL)
+		{
+			struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			if (Eleman->Islem == Islem)
+			{
+				Eleman->ZamanlamayaMudahaleEt.Gecikme_msn = Gecikme_msn;
+				Eleman->ZamanlamayaMudahaleEt.HemenCalistir = true;
+				return;
+			}
 		}
 	}
-}
-Tip_void Gorev_Calistir(Tip_Isaretci_Gorev Gorev)
-{
-	if (Gorev == Tip_null) return;
 
-	Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
-	while(KuyrukDegiskeni != NULL)
+	//Gorev_Calistir islemini cok sik cagirmak islemci yuku olusturur
+	//Buradan dondurulen deger kadar milisaniye bekleyip, tekrar cagirmak daha uygundur
+	//Eger Gorev_Islem_HemenCalistir islemi kullaniliyorsa, buradan dondurulen deger anlamsizlasir,
+	//Mekanizma tahmin disinda uzun bir bekleme suresi ureteceginden HemenCalistirma mumkun olamaz.
+	//Bu islemden dondurulen deger sadece liste icerisindeki islemler degerlendirilerek olusturulur
+	Tip_u32 Gorev_Calistir(Tip_Isaretci_Gorev Gorev)
 	{
-		struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+		Tip_u32 EnKisaBekleme = (Tip_u32)0 - 1; //azami deger
+		
+		if (Gorev == Tip_null) return EnKisaBekleme;
 
-		if (Sure_DolduMu(Eleman->Detaylar.An) ||
-			Bit_Oku(Eleman->Bitler, e_Gorev_Bitler_HemenCalistir) )
+		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
+		while(KuyrukDegiskeni != NULL)
 		{
-			Bit_Yaz_0(Eleman->Bitler, e_Gorev_Bitler_HemenCalistir);
+			struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
 
-			Tip_i32 ZamanAsimi_msn = Eleman->Islem(&Eleman->Detaylar);
+			Tip_bool Calistir = false;
 
-			if (ZamanAsimi_msn < 0) Liste_Eleman_Sil(Gorev, Eleman, true);	//Sil
-			else Sure_MiliSaniye(Eleman->Detaylar.An, ZamanAsimi_msn);		//Kur
+			if (Eleman->ZamanlamayaMudahaleEt.HemenCalistir)
+			{
+				Eleman->ZamanlamayaMudahaleEt.HemenCalistir = false;
+
+				if (Eleman->ZamanlamayaMudahaleEt.Gecikme_msn > 0)
+				{
+					Sure_MiliSaniye(Eleman->Detaylar.An, Eleman->ZamanlamayaMudahaleEt.Gecikme_msn);
+
+					if (Eleman->ZamanlamayaMudahaleEt.Gecikme_msn < EnKisaBekleme) EnKisaBekleme = Eleman->ZamanlamayaMudahaleEt.Gecikme_msn;
+				}
+				else Calistir = true;
+			}
+			else
+			{
+				Tip_u32 KalanSure = Sure_KalanSure_MiliSaniye(Eleman->Detaylar.An);
+
+				if (KalanSure > 0)
+				{
+					if (KalanSure < EnKisaBekleme) EnKisaBekleme = KalanSure;
+				}
+				else Calistir = true;
+			}
+
+			if (Calistir)
+			{
+				Tip_i32 ZamanAsimi_msn = Eleman->Islem(&Eleman->Detaylar);
+
+				if (ZamanAsimi_msn < 0) Liste_Eleman_Sil(Gorev, Eleman, true);	//Sil
+				else
+				{
+					Sure_MiliSaniye(Eleman->Detaylar.An, ZamanAsimi_msn);		//Kur
+
+					if (ZamanAsimi_msn < EnKisaBekleme) EnKisaBekleme = ZamanAsimi_msn;
+				}
+			}
 		}
+
+		return EnKisaBekleme;
 	}
-}
+
+#endif
