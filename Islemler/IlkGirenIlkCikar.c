@@ -13,13 +13,11 @@
 		if (Kapasite == 0 ||
 			YerKalmazsa > e_IGIC_YerKalmazsa_TalebiReddet) return Tip_null;
 
-		struct _s_IGIC_ * Yeni = YT_Yeni(sizeof(struct _s_IGIC_) + Kapasite);
+		_Tip_s_IGIC * Yeni = YT_Yeni(sizeof(_Tip_s_IGIC) + Kapasite, true);
 		if (Yeni == Tip_null) return Tip_null;
 
-		_Islem_memset_(Yeni, 0, sizeof(struct _s_IGIC_));
-
 		Yeni->Kapasite = Kapasite;
-		Yeni->Tampon = Isaretci_Konumlandir(Yeni, sizeof(struct _s_IGIC_), Tip_u8, Tip_void);
+		Yeni->Tampon = Isaretci_Konumlandir(Yeni, sizeof(_Tip_s_IGIC), Tip_u8, Tip_void);
 		Yeni->YerKalmazsa = YerKalmazsa;
 		Yeni->Islem_Siliniyor = Islem_Siliniyor;
 

@@ -1040,14 +1040,14 @@ Ornek_YerTahsisati
 	{
 		Gunluk("-----Ornek_YerTahsisati-----");
 	
-		Tip_Isaretci Isrtc =  YT_Yeni(10);
+		Tip_Isaretci Isrtc =  YT_Yeni(10, true);
 		if (Isrtc == NULL) return;
 	
-		Gunluk("Tip_Isaretci Isrtc =  YT_Yeni(10); -> 0x%X", (Tip_Isaretci_SayiKarsiligi)Isrtc);
+		Gunluk("Tip_Isaretci Isrtc =  YT_Yeni(10, true); -> 0x%X", (Tip_Isaretci_SayiKarsiligi)Isrtc);
 		YT_Sil(Isrtc);
 	
 	//	0-7005875 KaynakKod.c -----Ornek_YerTahsisati-----
-	//	0-7005875 KaynakKod.c Tip_Isaretci Isrtc =  YT_Yeni(10); -> 0x18CC4090
+	//	0-7005875 KaynakKod.c Tip_Isaretci Isrtc =  YT_Yeni(10, true); -> 0x18CC4090
 	}
 	
 Ornek_Zamanlama	
@@ -1058,10 +1058,10 @@ Ornek_Zamanlama
 		char Tampon[128];
 	
 		Sure_DegiskeniniOlustur(Sure);
-		Gunluk("Sure_DegiskeniniOlustur(Sure); -> %s", Sure_Yazdir(&Sure, Tampon, sizeof(Tampon)));
+		Gunluk("Sure_DegiskeniniOlustur(Sure); -> %s", Sure_Yazdir(Sure, Tampon, sizeof(Tampon)));
 	
 		Sure_MiliSaniye(Sure, 3500);
-		Gunluk("Sure_MiliSaniye(Sure, 3500); -> %s", Sure_Yazdir(&Sure, Tampon, sizeof(Tampon)));
+		Gunluk("Sure_MiliSaniye(Sure, 3500); -> %s", Sure_Yazdir(Sure, Tampon, sizeof(Tampon)));
 	
 		while(!Sure_DolduMu(Sure))
 		{

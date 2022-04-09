@@ -14,12 +14,15 @@
 			//Ic Kullanim
 			////////////////////////////////////////////////////////////////////////////////
 			void *pvPortMalloc( size_t xWantedSize );
-			size_t pvPortMalloc_Size( void *pv );
 			void vPortFree( void *pv );
 			size_t xPortGetFreeHeapSize( void );
 
-			#define configASSERT(Kistas)		if ( !(Kistas) ) HazirKod_C_Gunluk("Beklenmeyen Durum");
+			#define configASSERT(Kistas)		if ( !(Kistas) ) HazirKod_C_Gunluk("Beklenmeyen Durum %d", __LINE__);
 			#define portBYTE_ALIGNMENT_MASK		( (Tip_u16)(portBYTE_ALIGNMENT - 1) )
+
+			#ifdef HazirKod_C_Kullan_DeneyselEklentiler
+				size_t pvPortMalloc_Size( void *pv );
+			#endif
 
 		#endif
 

@@ -13,14 +13,14 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim
 		////////////////////////////////////////////////////////////////////////////////
-		struct _s_Depo_
+		typedef struct
 		{
 			Tip_Isaretci_IGIC IGIC;
 			Tip_u8 AyirmaBirimi_KapladigiAlan_Bayt;
 			Tip_u32 AyirmaBirimi_TamKapasitesi;
-		};
+		} _Tip_s_Depo;
 
-		#define _Depo_(s_Depo)				( (struct _s_Depo_ *)s_Depo )
+		#define _Depo_(s_Depo)				( (_Tip_s_Depo *)s_Depo )
 		#define _Depo_IGIC_(s_Depo)			( _IGIC_(_Depo_(s_Depo)->IGIC) )
 
 		////////////////////////////////////////////////////////////////////////////////

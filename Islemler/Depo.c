@@ -15,7 +15,7 @@
 			AyirmaBirimi_KapladigiAlan_Bayt > sizeof(Tip_u32) ||
 			YerKalmazsa > e_IGIC_YerKalmazsa_TalebiReddet) return Tip_null; //HataliParametre
 
-		struct _s_Depo_ * Yeni = YT_Yeni(sizeof(struct _s_Depo_));
+		_Tip_s_Depo * Yeni = YT_Yeni(sizeof(_Tip_s_Depo), false);
 		if (Yeni == Tip_null) return Tip_null;
 
 		Yeni->IGIC = IGIC_Yeni(Kapasite, YerKalmazsa, Islem_Siliniyor);

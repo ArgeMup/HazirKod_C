@@ -13,18 +13,16 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim
 		////////////////////////////////////////////////////////////////////////////////
-		struct s_Tampon_
+		typedef struct
 		{
 			Tip_Isaretci Isaretci;
 			Tip_u32 Kapasite;
 			Tip_u32 Sayac;
-		};
+		} * Tip_Isaretci_Tampon, _Tip_s_Tampon;
 
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
-		typedef struct s_Tampon_ * Tip_Isaretci_Tampon;
-
 		#define Tampon_Kapasite(s_Tampon)										( s_Tampon->Kapasite )
 		#define Tampon_DoluAlan(s_Tampon)										( s_Tampon->Sayac )
 		#define Tampon_BosAlan(s_Tampon)										( Tampon_Kapasite(s_Tampon) - Tampon_DoluAlan(s_Tampon) )
@@ -41,7 +39,13 @@
 		Tip_bool Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Tip_Isaretci_Tampon Tampon, Tip_Isaretci Kaynak, Tip_u32 Adet);
 
 		#ifdef _YT_Tanimli_HEAP_Kutuphanesini_kullanMA
+
+			#ifdef HazirKod_C_Kullan_DeneyselEklentiler
+
 			Tip_void Tampon_Yenile(Tip_Isaretci_Tampon Tampon);
+
+			#endif
+
 		#endif
 
 	#endif

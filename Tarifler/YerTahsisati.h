@@ -11,16 +11,20 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
-		Tip_Isaretci YT_Yeni(Tip_u32 Adet);
+		Tip_Isaretci YT_Yeni(Tip_u32 Adet, Tip_bool Sifirla);
 		Tip_void YT_Sil(Tip_Isaretci Isaretci);
 
 		#ifdef _YT_Tanimli_HEAP_Kutuphanesini_kullanMA
 
 		#include "heap_4.h"
 			#define	YT_BosAlan() 				xPortGetFreeHeapSize()
-			#define	YT_Kapasite(Isaretci) 		( (Tip_u32)pvPortMalloc_Size(Isaretci) )
+
 			#define _YT_Islem_malloc_(Adet)		pvPortMalloc(Adet)
 			#define _YT_Islem_free_(Isaretci)	vPortFree(Isaretci)
+
+			#ifdef HazirKod_C_Kullan_DeneyselEklentiler
+				#define	YT_Kapasite(Isaretci) 		( (Tip_u32)pvPortMalloc_Size(Isaretci) )
+			#endif
 
 			#ifdef _YT_Tahsis_Edilen_Alani_Kontrol_Et
 				extern Tip_u8 ucHeap[];

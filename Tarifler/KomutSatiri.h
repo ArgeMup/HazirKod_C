@@ -21,8 +21,9 @@
 		#define KomutSatiri_Cevapla_Yazi(Tampon, Yazi) 			KomutSatiri_Cevap_Ekle(Tampon, "%s\"%s\"%s", _KomutSatiri_Cevap_Baslangici, Yazi, _KomutSatiri_Cevap_Bitisi)
 		#define KomutSatiri_Cevapla_TamSayi(Tampon, TamSayi)	KomutSatiri_Cevap_Ekle(Tampon, "%s%d%s", _KomutSatiri_Cevap_Baslangici, TamSayi, _KomutSatiri_Cevap_Bitisi)
 
-		Tip_bool KomutSatiri_KontrolEt_TampondakiBilgiUygunMu(Tip_Isaretci_Tampon Tampon);
-		Tip_bool KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Tip_Isaretci_Tampon Tampon);
+		Tip_bool KomutSatiri_Tampon_BilgiUygunMu(Tip_Isaretci_Tampon Tampon, Tip_bool UzunKomut);
+		Tip_bool KomutSatiri_Tampon_Baslat(Tip_Isaretci_Tampon Tampon, Tip_bool UzunKomut, Tip_i32 DonanimAdresi);
+
 		Tip_bool KomutSatiri_KontrolEt_Siradaki_BuMu(Tip_Isaretci_Tampon Tampon, Tip_char * Bu);
 		Tip_i32 KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Tip_Isaretci_Tampon Tampon, const Tip_char ** Dizi, Tip_u32 ElemanSayisi);
 

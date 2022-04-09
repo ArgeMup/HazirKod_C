@@ -13,7 +13,7 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
-		Tip_i32 LedKontrol_Gorev(struct s_Gorev_Detaylar_ * Detaylar);
+		Tip_i32 LedKontrol_Gorev(Tip_Isaretci_Gorev_Detaylar Detaylar);
 		Tip_void LedKontrol_HataDurumunuGuncelle(Tip_u32 HataDurumu);
 		Tip_void LedKontrol_AnlikBildirim();
 

@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #include "Gorev.h"
 
@@ -9,25 +9,24 @@
 	//ZamanAsimi_msn == 0 Gorevi hemen calisacak sekilde kur
 	//ZamanAsimi_msn  > 0 Gorevi msn sonra calistir
 
-	struct _s_Gorev_
+	typedef struct
 	{
-		struct s_Gorev_Detaylar_ Detaylar;
+		_Tip_s_Gorev_Detaylar Detaylar;
 		Tip_Islem_Gorev Islem;
 		struct
 		{
 			Tip_bool HemenCalistir;
 			Tip_u32 Gecikme_msn;
 		} ZamanlamayaMudahaleEt;
-	};
+	} _Tip_s_Gorev;
 
 	Tip_bool Gorev_Islem_Ekle(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem, Tip_Isaretci KullaniciNesnesi)
 	{
 		if (Gorev == Tip_null || Islem == Tip_null) return false;
 
-		struct _s_Gorev_ * Yeni = Liste_Eleman_Ekle_VeYerTahsisEt(Gorev, sizeof(struct _s_Gorev_));
+		_Tip_s_Gorev * Yeni = Liste_Eleman_Ekle_VeYerTahsisEt(Gorev, sizeof(_Tip_s_Gorev), true);
 		if (Yeni == Tip_null) return false;
 
-		_Islem_memset_(Yeni, 0, sizeof(struct _s_Gorev_));
 		Yeni->Islem = Islem;
 		Yeni->Detaylar.KullaniciNesnesi = KullaniciNesnesi;
 
@@ -40,7 +39,7 @@
 		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
 		while(KuyrukDegiskeni != NULL)
 		{
-			struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			_Tip_s_Gorev * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
 			if (Eleman->Islem == Islem) return true;
 		}
 
@@ -53,7 +52,7 @@
 		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
 		while(KuyrukDegiskeni != NULL)
 		{
-			struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			_Tip_s_Gorev * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
 			if (Eleman->Islem == Islem)
 			{
 				Eleman->ZamanlamayaMudahaleEt.Gecikme_msn = Gecikme_msn;
@@ -77,7 +76,7 @@
 		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
 		while(KuyrukDegiskeni != NULL)
 		{
-			struct _s_Gorev_ * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			_Tip_s_Gorev * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
 
 			Tip_bool Calistir = false;
 

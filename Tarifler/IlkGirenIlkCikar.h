@@ -13,9 +13,14 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim
 		////////////////////////////////////////////////////////////////////////////////
+
+		////////////////////////////////////////////////////////////////////////////////
+		//Genel Goruse Acik Tanimlamalar
+		////////////////////////////////////////////////////////////////////////////////
 		typedef Tip_Isaretci Tip_Isaretci_IGIC;
 		typedef Tip_bool (*Tip_Islem_IGIC_Siliniyor) (Tip_Isaretci_IGIC, Tip_u32);
-		struct _s_IGIC_
+
+		typedef struct
 		{
 			Tip_Isaretci Tampon;
 			Tip_u32 Kapasite;
@@ -30,12 +35,9 @@
 
 			Tip_u32 Konum_Ekleme;
 			Tip_u32 Konum_Okuma;
-		};
-		#define _IGIC_(s_IGIC)				((struct _s_IGIC_ *)s_IGIC)
+		} _Tip_s_IGIC;
+		#define _IGIC_(s_IGIC)				((_Tip_s_IGIC *)s_IGIC)
 
-		////////////////////////////////////////////////////////////////////////////////
-		//Genel Goruse Acik Tanimlamalar
-		////////////////////////////////////////////////////////////////////////////////
 		#define IGIC_Kapasite(s_IGIC)		(_IGIC_(s_IGIC)->Kapasite)
 		#define IGIC_DoluAlan(s_IGIC)		(_IGIC_(s_IGIC)->DoluAlan)
 		#define IGIC_BosAlan(s_IGIC)		(IGIC_Kapasite(s_IGIC) - IGIC_DoluAlan(s_IGIC))

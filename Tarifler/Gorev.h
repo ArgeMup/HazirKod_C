@@ -14,14 +14,16 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
-		struct s_Gorev_Detaylar_
+		typedef struct
 		{
 			Tip_Sure An;
 			_Tip_Gorev_CalistirilacakAdim CalistirilacakAdim;
 			Tip_Isaretci KullaniciNesnesi;
-		};
+		} _Tip_s_Gorev_Detaylar;
+
 		typedef Tip_Isaretci Tip_Isaretci_Gorev;
-		typedef Tip_i32 (*Tip_Islem_Gorev) (struct s_Gorev_Detaylar_ *);
+		typedef _Tip_s_Gorev_Detaylar * Tip_Isaretci_Gorev_Detaylar;
+		typedef Tip_i32 (*Tip_Islem_Gorev) (Tip_Isaretci_Gorev_Detaylar);
 
 		#define Gorev_Yeni()							Liste_Yeni()
 		#define Gorev_Sil(s_Gorev)						Liste_Sil(s_Gorev, true)

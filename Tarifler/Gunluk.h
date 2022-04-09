@@ -56,7 +56,6 @@
 
 		Tip_void Gunluk_Baslat();
 		Tip_void Gunluk_SureliDurdur(Tip_u32 Saniye);
-		typedef Tip_void (*Tip_Islem_Gunluk_DisariAktarma) (Tip_Isaretci, Tip_u32);
 
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim

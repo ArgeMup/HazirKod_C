@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.9
+// V1.10
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -38,6 +38,7 @@
 
 	#define Bit_Uret_Ters(Bit)													( !( Bit ) )
 	#define BitDizisi_Uret_Ters(Degisken) 										( ~( Degisken ) )
+	#define BitDizisi_Yaz_Ters(Degisken) 										Degisken = BitDizisi_Uret_Ters( Degisken )
 	#define Bit_SolaKaydir_1(Adet)												( 1 << ( Adet ) )
 	#define Bit_SolaKaydir_0(Adet)												( BitDizisi_Uret_Ters( Bit_SolaKaydir_1( Adet ) ) )
 	#define Bit_Oku(Degisken, No)												( ( ( Degisken ) & Bit_SolaKaydir_1( No ) ) > 0 )
@@ -68,22 +69,31 @@
 	#define Isaretci_Icerigi_u64(Isaretci, Konum)								Isaretci_Icerigi( Isaretci, Konum, Tip_u8, Tip_u64 )
 	#define Isaretci_Icerigi_i64(Isaretci, Konum)								Isaretci_Icerigi( Isaretci, Konum, Tip_u8, Tip_i64 )
 	#define Isaretci_Icerigi_float(Isaretci, Konum)								Isaretci_Icerigi( Isaretci, Konum, Tip_u8, Tip_float )
+	#define Isaretci_KapladigiAlan_Bayt											( sizeof(Tip_Isaretci_SayiKarsiligi) )
 
 	#define Hesapla_Yuzde(Kullanim, Butun)										( ( ( Kullanim ) * 100 ) / ( Butun ) )
 	#define Hesapla_Dolgu(Kullanim, Butun)										( ( Butun ) - ( ( Kullanim ) & ( ( Butun ) - 1 ) ) )
 
-	#define YenidenBaslat(Sebep)												//abort()
-	#define Bekle_MiliSaniye(Sure)												//Sleep(Sure)
+	#define EnKucuk(x, y)														( ( x ) < ( y ) ? ( x ) : ( y ) )
+	#define EnBuyuk(x, y)														( ( x ) > ( y ) ? ( x ) : ( y ) )
+
+	#define YenidenBaslat(Sebep)												//{ Gunluk_BeklenmeyenDurum("Satir : %d, Sebep : %d", __LINE__, Sebep); abort(); }
+	#define Bekle_MiliSaniye(Sure)												//Sleep(Sure)																			\
 
 	#define Bacak_Yaz_1(Bacak)
 	#define Bacak_Yaz_0(Bacak)
 	#define Bacak_Oku(Bacak)
+
+	#define _KontrolEt_(BeklenenSonuc, KarsilastirmaIslemi, IslemVeyaDegisken, SonucunYazilacagiDegisken, HataDurumundakiIslemler) if ( Bit_Uret_Ters( ( SonucunYazilacagiDegisken = ( IslemVeyaDegisken ) ) KarsilastirmaIslemi ( BeklenenSonuc ) ) ) { HataDurumundakiIslemler }
+	#define KontrolEt_YenidenBaslat(IslemVeyaDegisken) { Tip_Isaretci_SayiKarsiligi SonucunYazilacagiDegisken; _KontrolEt_(0, ==, IslemVeyaDegisken, SonucunYazilacagiDegisken, YenidenBaslat(SonucunYazilacagiDegisken) )	}
+	#define KontrolEt_Dallan(IslemVeyaDegisken, Etiket) { Tip_Isaretci_SayiKarsiligi SonucunYazilacagiDegisken; _KontrolEt_(0, ==, IslemVeyaDegisken, SonucunYazilacagiDegisken, goto Etiket; )	}																									\
 
 	////////////////////////////////////////////////////////////////////////////////
 	//Kullanilmayan Kutuphanelerin Kapatilabilmesi için Anahtarlar // Acik Birakildiginda Ýhtiyac Duyulan Diger Kutuphaneler
 	////////////////////////////////////////////////////////////////////////////////
 	#define HazirKod_C_Kullan_AramaIslemleri	//
 	#define HazirKod_C_Kullan_Depo				//Gunluk IlkGÝrenIlkCikar
+	#define HazirKod_C_Kullan_Dizi				//YerTahsisati
 	#define HazirKod_C_Kullan_Gorev				//Zamanlama Liste
 	#define HazirKod_C_Kullan_Gunluk			//Zamanlama
 	#define HazirKod_C_Kullan_IlkGirenIlkCikar	//Gunluk YerTahsisati
@@ -94,6 +104,7 @@
 	#define HazirKod_C_Kullan_YaziIslemleri		//AramaIslemleri
 	#define HazirKod_C_Kullan_YerTahsisati		//Gunluk
 	#define HazirKod_C_Kullan_Zamanlama			//
+	//#define HazirKod_C_Kullan_DeneyselEklentiler
 
 	////////////////////////////////////////////////////////////////////////////////
 	//AramaIslemleri.h
@@ -108,6 +119,12 @@
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
+	//Dizi.h
+	////////////////////////////////////////////////////////////////////////////////
+	#ifdef HazirKod_C_Kullan_Dizi
+	#endif
+
+	////////////////////////////////////////////////////////////////////////////////
 	//Gorev.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Gorev
@@ -118,9 +135,9 @@
 	//Gunluk.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Gunluk
-		#define _Gunluk_Renkli_Cikti_Uretsin
-		#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		printf("%s", Tampon) //fwrite (Tampon, sizeof(Tip_u8), Adet, stdout);
 		#define _Gunluk_Cikti_Onem_Seviyesi 					_Gunluk_Cikti_Onem_Seviye_Geveze
+		#define _Gunluk_Renkli_Cikti_Uretsin
+		#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//{ printf("%s", Tampon); fflush(stdout); } //fwrite (Tampon, sizeof(Tip_u8), Adet, stdout);
 		#define _Gunluk_Renk_BeklenmeyenDurum					( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi )
 		#define _Gunluk_Renk_Hata								( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah )
 		#define _Gunluk_Renk_Uyari								( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah )
@@ -173,22 +190,23 @@
 		#define _KomutSatiri_Ayirac			 					' '
 		#define _KomutSatiri_Ayirac_Yazi			 			'"'
 		#define _KomutSatiri_Ayirac_Yazi_OzelKarakter 			'|'
-		#define _KomutSatiri_DonanimAdresi						( 1 )
-		#define _KomutSatiri_Komut_EnAzKaSa_Bas					(sizeof(_KomutSatiri_Komut_Baslangici) - 1) + (1 /*Ayirac*/) + (1 /*Adres*/) + (1 /*Ayirac*/) + (1 /*Komut*/) + (1 /*Ayirac*/)
-		#define _KomutSatiri_Komut_EnAzKaSa_Tum					_KomutSatiri_Komut_EnAzKaSa_Bas + (sizeof(_KomutSatiri_Komut_Bitisi) - 1)
+		#define _KomutSatiri_DonanimAdresi_GenelCagri			( 0 )
+		#define _KomutSatiri_KisaKomut_EnAzKaSa					( (1 /*Komut*/) + (sizeof(_KomutSatiri_Komut_Bitisi) - 1) )
+		#define _KomutSatiri_UzunKomut_EnAzKaSa					( (sizeof(_KomutSatiri_Komut_Baslangici) - 1) + (1 /*Ayirac*/) + (1 /*Adres*/) + (1 /*Ayirac*/) + (1 /*Komut*/) + (sizeof(_KomutSatiri_Komut_Bitisi) - 1) )
 		#define _KomutSatiri_Cevap_Onay							"Tamam"
 		#define _KomutSatiri_Cevap_Ret							"Hata"
 		#define _KomutSatiri_Komut_Komut1						"Komut1"
 		#define _KomutSatiri_Komut_Komut2						"Komut2"
-		//Ornek Tamsayi			-> 1 VEYA -1 VEYA +1
-		//Ornek Hex				-> 0xAA VEYA 0x112233445566778899AABBCCDDEEFF
-		//Ornek Yazi			-> "Ornek Yazi"										Alisildik bicim
-		//Ornek Yazi			-> OrnekYazi										_KomutSatiri_Yazi_Ayiracsiz_TekParca_Olabilir
-		//Ornek Yazi			-> "Yazi|13||10|" -> "Yazi+CR+LF"					_KomutSatiri_Yazi_Icinde_OzelKarakter_Olabilir
-		//Ornek Komut 			-> Kart 0 Komut1\r\n Cevap -> >>Tamam\r\n 			Genel cagri olarak degerlendirilip calistirilir
-		//Ornek Komut 			-> Kart 1 Komut1\r\n Cevap -> >>Tamam\r\n 			DonanimAdresi uygun oldugu icin calistirilir
-		//Ornek Komut 			-> Kart 2 Komut1\r\n Cevap -> Gonderilmez			DonanimAdresi uygun olmad?gi icin calistirilmaz
-		//Ornek Hatali Komut 	-> Kart 1 KoXYZ\r\n  Cevap -> >>Hata PARAMETRE\r\n	Calistirilir, fazladan sebep gonderilir
+		//Ornek Tamsayi				-> 1 VEYA -1 VEYA +1
+		//Ornek Hex					-> 0xAA VEYA 0x112233445566778899AABBCCDDEEFF
+		//Ornek Yazi				-> "Ornek Yazi"										Alisildik bicim
+		//Ornek Yazi				-> OrnekYazi										_KomutSatiri_Yazi_Ayiracsiz_TekParca_Olabilir
+		//Ornek Yazi				-> "Yazi|13||10|" -> "Yazi+CR+LF"					_KomutSatiri_Yazi_Icinde_OzelKarakter_Olabilir
+		//Ornek Kisa Komut 			-> Komut1\r\n Cevap -> >>Tamam\r\n 					Genel cagri olarak degerlendirilip calistirilir
+		//Ornek Uzun Komut 			-> Kart 0 Komut1\r\n Cevap -> >>Tamam\r\n 			Genel cagri olarak degerlendirilip calistirilir
+		//Ornek Uzun Komut 			-> Kart 1 Komut1\r\n Cevap -> >>Tamam\r\n 			DonanimAdresi uygun oldugu icin calistirilir
+		//Ornek Uzun Komut 			-> Kart 2 Komut1\r\n Cevap -> Gonderilmez			DonanimAdresi uygun olmad?gi icin calistirilmaz
+		//Ornek Uzun Hatali Komut	-> Kart 1 KoXYZ\r\n  Cevap -> >>Hata PARAMETRE\r\n	Calistirilir, fazladan sebep gonderilir
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -246,7 +264,7 @@
 			////////////////////////////////////////////////////////////////////////////////
 			//Heap_4.h
 			////////////////////////////////////////////////////////////////////////////////
-			#define configTOTAL_HEAP_SIZE 						( 2 * 1024 )
+			#define configTOTAL_HEAP_SIZE 						( 5 * 1024 )
 			#define portBYTE_ALIGNMENT 							( 8 )
 		#endif
 	#endif

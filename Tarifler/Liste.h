@@ -13,7 +13,7 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim
 		////////////////////////////////////////////////////////////////////////////////
-		struct _s_Liste_
+		typedef struct
 		{
 			uint32_t ElemanSayisi;
 
@@ -22,12 +22,9 @@
 				Tip_Isaretci Isaretci;
 				struct _s_Liste_Elemani_ * SonrakiListeElemani;
 			} * IlkEleman, * SonEleman;
-		};
+		} _Tip_s_Liste;
 
-		#define _Liste_IlkEleman(s_Liste)								(((struct _s_Liste_ *)s_Liste)->IlkEleman)
-		#define _Liste_SonEleman(s_Liste)								(((struct _s_Liste_ *)s_Liste)->SonEleman)
-		#define _Liste_ElemanSayisi(s_Liste)							(((struct _s_Liste_ *)s_Liste)->ElemanSayisi)
-
+		#define _Liste_(s_Liste)										((_Tip_s_Liste *)s_Liste)
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
@@ -39,15 +36,15 @@
 
 		Tip_u32 Liste_Eleman_Sayisi(Tip_Isaretci_Liste Liste);
 		Tip_bool Liste_Eleman_Ekle(Tip_Isaretci_Liste Liste, Tip_Isaretci EklenecekEleman);
-		Tip_Isaretci Liste_Eleman_Ekle_VeYerTahsisEt(Tip_Isaretci_Liste Liste, Tip_u32 Adet);
-		Tip_void Liste_Eleman_Sil(Tip_Isaretci_Liste Liste, Tip_Isaretci SilinecekEleman, Tip_bool TahsisEdilenAlanidaSil);
+		Tip_Isaretci Liste_Eleman_Ekle_VeYerTahsisEt(Tip_Isaretci_Liste Liste, Tip_u32 Adet, Tip_bool Sifirla);
+		Tip_bool Liste_Eleman_Sil(Tip_Isaretci_Liste Liste, Tip_Isaretci SilinecekEleman, Tip_bool TahsisEdilenAlanidaSil);
 
 		Tip_Isaretci _Liste_Kuyruk_SonrakiEleman(Tip_Isaretci_Liste Liste, Tip_Isaretci_Liste_Kuyruk * KuyrukDegiskeni);
-		#define Liste_Kuyruk_DegiskeniniOlustur(s_Liste, Degisken)		Tip_Isaretci_Liste_Kuyruk Degisken = _Liste_IlkEleman(s_Liste)
+		#define Liste_Kuyruk_DegiskeniniOlustur(s_Liste, Degisken)		Tip_Isaretci_Liste_Kuyruk Degisken = _Liste_(s_Liste)->IlkEleman
 		#define Liste_Kuyruk_SonrakiEleman(s_Liste, KuyrukDegiskeni)	_Liste_Kuyruk_SonrakiEleman(s_Liste, &KuyrukDegiskeni)
 
-		#define Liste_Eleman_Ilk(s_Liste)								(_Liste_IlkEleman(s_Liste)->Isaretci)
-		#define Liste_Eleman_Son(s_Liste)								(_Liste_SonEleman(s_Liste)->Isaretci)
+		#define Liste_Eleman_Ilk(s_Liste)								(_Liste_(s_Liste)->IlkEleman->Isaretci)
+		#define Liste_Eleman_Son(s_Liste)								(_Liste_(s_Liste)->SonEleman->Isaretci)
 
 	#endif
 

@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #include "Zamanlama.h"
 
@@ -67,17 +67,11 @@
 			}
 		}
 
-		Tip_char * Sure_Yazdir(Tip_Sure * Degisken, Tip_char * Hedef, Tip_u32 HedefKapasite)
+		Tip_char * Sure_Yazdir(Tip_Sure Degisken, Tip_char * Hedef, Tip_u32 HedefKapasite)
 		{
 			if (Hedef == NULL || HedefKapasite == 0) return NULL;
 
-			if (Degisken == NULL)
-			{
-				_An_Guncelle();
-				Degisken = &s_Zamanlama.GuncelDeger;
-			}
-
-			snprintf(Hedef, HedefKapasite, _Zamanlama_Yazdir_Sablon_TamSayi "-" _Zamanlama_Yazdir_Sablon_TamSayi, Degisken->Yuksek, Degisken->Dusuk * _An_Aralik_Msn_);
+			snprintf(Hedef, HedefKapasite, _Zamanlama_Yazdir_Sablon_TamSayi "-" _Zamanlama_Yazdir_Sablon_TamSayi, Degisken.Yuksek, Degisken.Dusuk * _An_Aralik_Msn_);
 
 			return Hedef;
 		}
@@ -87,11 +81,6 @@
 		Tip_char * Sure_Yazdir(Tip_Sure Degisken, Tip_char * Hedef, Tip_u32 HedefKapasite)
 		{
 			if (Hedef == NULL || HedefKapasite == 0) return NULL;
-
-			if (Degisken == 0)
-			{
-				Degisken = _Sure_Ekle(0);
-			}
 
 			snprintf(Hedef, HedefKapasite, _Zamanlama_Yazdir_Sablon_TamSayi, Degisken * _An_Aralik_Msn_);
 

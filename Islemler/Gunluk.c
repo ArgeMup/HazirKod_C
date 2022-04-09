@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.8
+// V1.9
 #define _Gunluk_Baslik "Gunluk"
 #include "Gunluk.h"
 
@@ -47,10 +47,12 @@
 			Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "m");
 		}
 	
-		char ZamanDamgasi[24];
-		Sure_Yazdir(0, ZamanDamgasi, sizeof(ZamanDamgasi));
+		Tip_char ZamanDamgasiYazisi[24];
+		Sure_DegiskeniniOlustur(Zaman_Damgasi);
+		Sure_Simdi(Zaman_Damgasi);
+		Sure_Yazdir(Zaman_Damgasi, ZamanDamgasiYazisi, sizeof(ZamanDamgasiYazisi));
 
-		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", ZamanDamgasi);
+		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", ZamanDamgasiYazisi);
 		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s %s", Baslik, ( Kirpildi ? "KIRPILDI " : "" ) );
 		Konum += vsnprintf(&Yazi[Konum], Kapasite - Konum, Sekil, valist);
 
@@ -71,10 +73,12 @@
 		Tip_u16 YazdirilanAdet = 0;
 		Tip_u16 Konum = 0;
 
-		char ZamanDamgasi[24];
-		Sure_Yazdir(0, ZamanDamgasi, sizeof(ZamanDamgasi));
+		char ZamanDamgasiYazisi[24];
+		Sure_DegiskeniniOlustur(Zaman_Damgasi);
+		Sure_Simdi(Zaman_Damgasi);
+		Sure_Yazdir(Zaman_Damgasi, ZamanDamgasiYazisi, sizeof(ZamanDamgasiYazisi));
 
-		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", ZamanDamgasi);
+		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", ZamanDamgasiYazisi);
 		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s Adet:%.5d | Hex | Konum | Ascii\r\n", Baslik, Adet);
 		_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 		
@@ -85,7 +89,7 @@
 
 			Konum = 0;
 
-			Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s %s ", ZamanDamgasi, Baslik);
+			Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s %s ", ZamanDamgasiYazisi, Baslik);
 
 			for (Tip_u16 i = 0; i < AnlikAdet; i++)
 			{

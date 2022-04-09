@@ -44,7 +44,7 @@
 		_LedKontrol.AnlikBildirim_Isteniyor = true;
 	}
 
-	Tip_i32 LedKontrol_Gorev(struct s_Gorev_Detaylar_ * Detaylar)
+	Tip_i32 LedKontrol_Gorev(Tip_Isaretci_Gorev_Detaylar Detaylar)
 	{
 		YenidenCalistir:
 		switch (Detaylar->CalistirilacakAdim)

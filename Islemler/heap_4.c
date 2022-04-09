@@ -327,6 +327,7 @@
 			}
 		}
 		/*-----------------------------------------------------------*/
+		#ifdef HazirKod_C_Kullan_DeneyselEklentiler
 
 		size_t pvPortMalloc_Size( void *pv )
 		{
@@ -342,11 +343,17 @@
 				/* This casting is to keep the compiler from issuing warnings. */
 				pxLink = ( void * ) puc;
 
-				return pxLink->xBlockSize & ~xBlockAllocatedBit;
+					if( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 )
+					{
+						size_t Kapasite = ( pxLink->xBlockSize & ~xBlockAllocatedBit );
+						if (Kapasite > xHeapStructSize) return Kapasite - xHeapStructSize;
+					}
 			}
 
 			return 0;
 		}
+
+		#endif
 		/*-----------------------------------------------------------*/
 
 		size_t xPortGetFreeHeapSize( void )

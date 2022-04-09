@@ -7,12 +7,12 @@
 
 	Tip_Isaretci_Tampon Tampon_Yeni(Tip_u32 Kapasite)
 	{
-		struct s_Tampon_ * Yeni = YT_Yeni(sizeof(struct s_Tampon_) + Kapasite);
+		Tip_Isaretci_Tampon Yeni = YT_Yeni(sizeof(_Tip_s_Tampon) + Kapasite, false);
 		if (Yeni == Tip_null) return Tip_null;
 
 		Yeni->Sayac = 0;
 		Yeni->Kapasite = Kapasite;
-		Yeni->Isaretci = Isaretci_Konumlandir(Yeni, sizeof(struct s_Tampon_), Tip_u8, Tip_void);
+		Yeni->Isaretci = Isaretci_Konumlandir(Yeni, sizeof(_Tip_s_Tampon), Tip_u8, Tip_void);
 
 		return Yeni;
 	}
@@ -39,8 +39,6 @@
 	}
 	Tip_void Tampon_Sil(Tip_Isaretci_Tampon Tampon)
 	{
-		if (Tampon == Tip_null) return;
-
 		YT_Sil(Tampon);
 	}
 
@@ -83,14 +81,20 @@
 	}
 
 	#ifdef _YT_Tanimli_HEAP_Kutuphanesini_kullanMA
+
+		#ifdef HazirKod_C_Kullan_DeneyselEklentiler
+
 		Tip_void Tampon_Yenile(Tip_Isaretci_Tampon Tampon)
 		{
 			if (Tampon == Tip_null) return;
 
 			Tampon->Sayac = 0;
-			Tampon->Kapasite = YT_Kapasite(Tampon) - sizeof(struct s_Tampon_);
-			Tampon->Isaretci = Isaretci_Konumlandir(Tampon, sizeof(struct s_Tampon_), Tip_u8, Tip_void);
+				Tampon->Kapasite = YT_Kapasite(Tampon) - sizeof(_Tip_s_Tampon);
+				Tampon->Isaretci = Isaretci_Konumlandir(Tampon, sizeof(_Tip_s_Tampon), Tip_u8, Tip_void);
 		}
+
+		#endif
+
 	#endif
 
 #endif
