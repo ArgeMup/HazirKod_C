@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.5
+// V1.6
 
 #ifndef __HazirKod_C_Tampon_H__
 #define __HazirKod_C_Tampon_H__
@@ -27,7 +27,7 @@
 		#define Tampon_DoluAlan(s_Tampon)										( s_Tampon->Sayac )
 		#define Tampon_BosAlan(s_Tampon)										( Tampon_Kapasite(s_Tampon) - Tampon_DoluAlan(s_Tampon) )
 
-		Tip_Isaretci_Tampon Tampon_Yeni(Tip_u32 Kapasite);
+		Tip_Isaretci_Tampon Tampon_Yeni(Tip_u32 Kapasite, Tip_bool Sifirla);
 		Tip_void Tampon_Paketle(Tip_Isaretci_Tampon Tampon);
 		Tip_bool Tampon_Kirp(Tip_Isaretci_Tampon Tampon, Tip_u32 Bastan, Tip_u32 Sondan);
 		Tip_void Tampon_Sil(Tip_Isaretci_Tampon Tampon);

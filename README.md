@@ -1116,17 +1116,17 @@ Ornek_HazirKod_C_Ayarlar_h
 		Gunluk("Hesapla_Dolgu(35, 8) -> %d", Hesapla_Dolgu(35, 8));
 	
 		Tip_u32 Tutucu;
-		HataKontrol_Baslat(Tutucu);
-		Gunluk("HataKontrol_Baslat(Tutucu); -> %d", Tutucu);
-		Gunluk("HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1) -> %d", HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1));
+		HataDurumu_Baslat(Tutucu);
+		Gunluk("HataDurumu_Baslat(Tutucu); -> %d", Tutucu);
+		Gunluk("HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> %d", HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1));
 	
-		HataKontrol_Hatasiz(Tutucu, e_HataKontrol_Hata_Hata1);
-		Gunluk("HataKontrol_Hatasiz(Tutucu, e_HataKontrol_Hata_Hata1); -> %d", Tutucu);
-		Gunluk("HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1) -> %d", HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1));
+		HataDurumu_Hatasiz(Tutucu, e_HataDurumu_Hata_Hata1);
+		Gunluk("HataDurumu_Hatasiz(Tutucu, e_HataDurumu_Hata_Hata1); -> %d", Tutucu);
+		Gunluk("HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> %d", HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1));
 	
-		HataKontrol_Hatali(Tutucu, e_HataKontrol_Hata_Hata1);
-		Gunluk("HataKontrol_Hatali(Tutucu, e_HataKontrol_Hata_Hata1); -> %d", Tutucu);
-		Gunluk("HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1) -> %d", HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1));
+		HataDurumu_Hatali(Tutucu, e_HataDurumu_Hata_Hata1);
+		Gunluk("HataDurumu_Hatali(Tutucu, e_HataDurumu_Hata_Hata1); -> %d", Tutucu);
+		Gunluk("HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> %d", HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1));
 	
 	//	0-12772500 KaynakKod.c -----Ornek_HazirKod_C_Ayarlar_h-----
 	//	0-12772500 KaynakKod.c Bit_Uret_Ters(false) -> 0x1
@@ -1145,10 +1145,10 @@ Ornek_HazirKod_C_Ayarlar_h
 	//	0-12772500 KaynakKod.c 05 00 00 00 04 50 | 0000 - 0005 |      P
 	//	0-12772500 KaynakKod.c Hesapla_Yuzde(15, 1000) -> 1
 	//	0-12772500 KaynakKod.c Hesapla_Dolgu(35, 8) -> 5
-	//	0-12772500 KaynakKod.c HataKontrol_Baslat(Tutucu); -> 0
-	//	0-12772500 KaynakKod.c HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1) -> 1
-	//	0-12772500 KaynakKod.c HataKontrol_Hatasiz(Tutucu, e_HataKontrol_Hata_Hata1); -> 1
-	//	0-12772500 KaynakKod.c HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1) -> 0
-	//	0-12772500 KaynakKod.c HataKontrol_Hatali(Tutucu, e_HataKontrol_Hata_Hata1); -> 0
-	//	0-12772500 KaynakKod.c HataKontrol_HataDevamEdiyorMu(Tutucu, e_HataKontrol_Hata_Hata1) -> 1
+	//	0-12772500 KaynakKod.c HataDurumu_Baslat(Tutucu); -> 0
+	//	0-12772500 KaynakKod.c HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> 1
+	//	0-12772500 KaynakKod.c HataDurumu_Hatasiz(Tutucu, e_HataDurumu_Hata_Hata1); -> 1
+	//	0-12772500 KaynakKod.c HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> 0
+	//	0-12772500 KaynakKod.c HataDurumu_Hatali(Tutucu, e_HataDurumu_Hata_Hata1); -> 0
+	//	0-12772500 KaynakKod.c HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> 1
 	}

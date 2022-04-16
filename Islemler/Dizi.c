@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #include "Dizi.h"
 
@@ -50,12 +50,6 @@
 		YT_Sil(Dizi);
 	}
 	
-	Tip_u32 Dizi_Eleman_Sayisi(Tip_Isaretci_Dizi Dizi)
-	{
-		if (Dizi == Tip_null) return 0;
-
-		return _Dizi_(Dizi)->ElemanSayisi;
-	}
 	Tip_bool Dizi_Eleman_Ekle(Tip_Isaretci_Dizi Dizi, Tip_Isaretci EklenecekEleman)
 	{
 		if (Dizi == Tip_null || EklenecekEleman == Tip_null) return false;

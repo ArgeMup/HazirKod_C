@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.0
+// V1.1
 
 #ifndef __HazirKod_C_Liste_H__
 #define __HazirKod_C_Liste_H__
@@ -34,7 +34,7 @@
 		Tip_Isaretci_Liste Liste_Yeni();
 		Tip_void Liste_Sil(Tip_Isaretci_Liste Liste, Tip_bool ElemanlaridaSil);
 
-		Tip_u32 Liste_Eleman_Sayisi(Tip_Isaretci_Liste Liste);
+		#define Liste_Eleman_Sayisi(s_Liste)							( _Liste_(s_Liste)->ElemanSayisi )
 		Tip_bool Liste_Eleman_Ekle(Tip_Isaretci_Liste Liste, Tip_Isaretci EklenecekEleman);
 		Tip_Isaretci Liste_Eleman_Ekle_VeYerTahsisEt(Tip_Isaretci_Liste Liste, Tip_u32 Adet, Tip_bool Sifirla);
 		Tip_bool Liste_Eleman_Sil(Tip_Isaretci_Liste Liste, Tip_Isaretci SilinecekEleman, Tip_bool TahsisEdilenAlanidaSil);

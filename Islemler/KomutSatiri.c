@@ -27,10 +27,10 @@
 		{
 			if (Tampon->Sayac < _KomutSatiri_UzunKomut_EnAzKaSa) return false;
 
-			Konum = AI_Bul_Blok(Tampon->Isaretci, Tampon->Sayac, _KomutSatiri_Komut_Baslangici, sizeof(_KomutSatiri_Komut_Baslangici) - 1);
+			Konum = AI_Bul_Blok(Tampon->Isaretci, Tampon->Sayac, _KomutSatiri_UzunKomut_Baslangici, sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1);
 		if (Konum < 0) return false;
 
-		Konum += sizeof(_KomutSatiri_Komut_Baslangici) + 1 /*Ayirac*/;
+		Konum += sizeof(_KomutSatiri_UzunKomut_Baslangici) + 1 /*Ayirac*/;
 		}
 		else
 		{
@@ -48,10 +48,10 @@
 
 		if (UzunKomut)
 		{
-			Konum = AI_Bul_Blok(Tampon->Isaretci, Tampon->Kapasite, _KomutSatiri_Komut_Baslangici, sizeof(_KomutSatiri_Komut_Baslangici) - 1);
+			Konum = AI_Bul_Blok(Tampon->Isaretci, Tampon->Kapasite, _KomutSatiri_UzunKomut_Baslangici, sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1);
 		if (Konum < 0) return false;
 
-		_KomutSatiri_Tampon_Kirp(Tampon, Konum + sizeof(_KomutSatiri_Komut_Baslangici)); /*Ayirac uzerine denk gelecek*/
+		_KomutSatiri_Tampon_Kirp(Tampon, Konum + sizeof(_KomutSatiri_UzunKomut_Baslangici)); /*Ayirac uzerine denk gelecek*/
 		}
 		else Tampon_Paketle(Tampon);
 
@@ -119,7 +119,7 @@
 		_KomutSatiri_KarakterSayisi(Tampon, _KomutSatiri_Ayirac);
 		if (Tampon->Sayac == 0 || (Tampon->Sayac & ((Tip_u32)1) )) return Tip_null; //Karakter sayisi 0 veya tek sayi, hex icin cift olmali
 
-		Tip_Isaretci_Tampon YazilacakTampon = Tampon_Yeni(Tampon->Sayac / 2);
+		Tip_Isaretci_Tampon YazilacakTampon = Tampon_Yeni(Tampon->Sayac / 2, false);
 		if (YazilacakTampon == Tip_null) return Tip_null;
 
 		Tip_char Okunan[3] = { 0 }; //HH\0
@@ -161,7 +161,7 @@
 
 		if (Tampon->Sayac == 0) return Tip_null; //Karakter sayisi 0
 
-		Tip_Isaretci_Tampon YazilacakTampon = Tampon_Yeni(Tampon->Sayac + 1 /* \0 */);
+		Tip_Isaretci_Tampon YazilacakTampon = Tampon_Yeni(Tampon->Sayac + 1 /* \0 */, false);
 		if (YazilacakTampon == Tip_null) return Tip_null;
 
 		_Islem_memcpy_(YazilacakTampon->Isaretci, Tampon->Isaretci, Tampon->Sayac);

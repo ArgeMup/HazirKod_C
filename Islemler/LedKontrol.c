@@ -58,7 +58,7 @@
 				else
 				{
 					_LedKontrol.SayacGenel = 0;
-					for (; _LedKontrol.SayacGenel < _LedKontrol_SonEleman; _LedKontrol.SayacGenel++) if (HataKontrol_HataDevamEdiyorMu(_LedKontrol.HataDurumu, _LedKontrol.SayacGenel)) break;
+					for (; _LedKontrol.SayacGenel < _LedKontrol_SonEleman; _LedKontrol.SayacGenel++) if (HataDurumu_HataDevamEdiyorMu(_LedKontrol.HataDurumu, _LedKontrol.SayacGenel)) break;
 
 					if (_LedKontrol.SayacGenel == _LedKontrol_SonEleman) Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_HerseyYolunda_0;
 					else Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_HataVar_0;

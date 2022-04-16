@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.5
+// V1.6
 
 #ifndef __HazirKod_C_Gorev_H__
 #define __HazirKod_C_Gorev_H__
@@ -9,7 +9,7 @@
 	#ifdef HazirKod_C_Kullan_Gorev
 
 		#include "Zamanlama.h"
-		#include "Liste.h"
+		#include "Dizi.h"
 
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
@@ -25,8 +25,8 @@
 		typedef _Tip_s_Gorev_Detaylar * Tip_Isaretci_Gorev_Detaylar;
 		typedef Tip_i32 (*Tip_Islem_Gorev) (Tip_Isaretci_Gorev_Detaylar);
 
-		#define Gorev_Yeni()							Liste_Yeni()
-		#define Gorev_Sil(s_Gorev)						Liste_Sil(s_Gorev, true)
+		#define Gorev_Yeni()							Dizi_Yeni()
+		#define Gorev_Sil(s_Gorev)						Dizi_Sil(s_Gorev, true)
 		Tip_u32 Gorev_Calistir(Tip_Isaretci_Gorev Gorev);
 
 		Tip_bool Gorev_Islem_Ekle(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem, Tip_Isaretci KullaniciNesnesi);

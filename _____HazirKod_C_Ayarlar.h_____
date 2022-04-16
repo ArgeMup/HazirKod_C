@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.10
+// V1.11
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -36,19 +36,6 @@
 	#define _Islem_strtol_(x,y,z)												strtol( ( x ), ( y ), ( z ) )
 	#define _Islem_strtoul_(x,y,z)												strtoul( ( x ), ( y ), ( z ) )
 
-	#define Bit_Uret_Ters(Bit)													( !( Bit ) )
-	#define BitDizisi_Uret_Ters(Degisken) 										( ~( Degisken ) )
-	#define BitDizisi_Yaz_Ters(Degisken) 										Degisken = BitDizisi_Uret_Ters( Degisken )
-	#define Bit_SolaKaydir_1(Adet)												( 1 << ( Adet ) )
-	#define Bit_SolaKaydir_0(Adet)												( BitDizisi_Uret_Ters( Bit_SolaKaydir_1( Adet ) ) )
-	#define Bit_Oku(Degisken, No)												( ( ( Degisken ) & Bit_SolaKaydir_1( No ) ) > 0 )
-	#define BitDizisi_Uret_Bit_1(Degisken, No)									Degisken | Bit_SolaKaydir_1( No )
-	#define BitDizisi_Uret_Bit_0(Degisken, No)									Degisken & Bit_SolaKaydir_0( No )
-	#define BitDizisi_Uret_Bit_Ters(Degisken, No)								( Bit_Oku( ( Degisken ), ( No ) ) ? BitDizisi_Uret_Bit_0( ( Degisken ), ( No ) ) : BitDizisi_Uret_Bit_1( ( Degisken ), ( No ) ) )
-	#define Bit_Yaz_1(Degisken, No)												Degisken = BitDizisi_Uret_Bit_1( ( Degisken ), ( No ) )
-	#define Bit_Yaz_0(Degisken, No)												Degisken = BitDizisi_Uret_Bit_0( ( Degisken ), ( No ) )
-	#define Bit_Yaz_Ters(Degisken, No)											Degisken = BitDizisi_Uret_Bit_Ters( ( Degisken ), ( No ) )
-
 	#define Isaretci_Konumlandir(Isaretci, Konum, Arttirma_Tipi, Cikti_Tipi)	( (Cikti_Tipi *)( ( (Arttirma_Tipi *)( Isaretci ) ) + ( Konum ) ) )
 	#define Isaretci_Konumlandir_u8(Isaretci, Konum)							Isaretci_Konumlandir( Isaretci, Konum, Tip_u8, Tip_u8 )
 	#define Isaretci_Konumlandir_i8(Isaretci, Konum)							Isaretci_Konumlandir( Isaretci, Konum, Tip_u8, Tip_i8 )
@@ -71,22 +58,37 @@
 	#define Isaretci_Icerigi_float(Isaretci, Konum)								Isaretci_Icerigi( Isaretci, Konum, Tip_u8, Tip_float )
 	#define Isaretci_KapladigiAlan_Bayt											( sizeof(Tip_Isaretci_SayiKarsiligi) )
 
+	#define Bit_Uret_Ters(Bit)													( !( Bit ) )
+	#define BitDizisi_Uret_Ters(Degisken) 										( ~( Degisken ) )
+	#define BitDizisi_Yaz_Ters(Degisken) 										Degisken = BitDizisi_Uret_Ters( Degisken )
+	#define Bit_SolaKaydir_1(Adet)												( 1 << ( Adet ) )
+	#define Bit_SolaKaydir_0(Adet)												( BitDizisi_Uret_Ters( Bit_SolaKaydir_1( Adet ) ) )
+	#define Bit_Oku(Degisken, No)												( ( ( Degisken ) & Bit_SolaKaydir_1( No ) ) > 0 )
+	#define BitDizisi_Uret_Bit_1(Degisken, No)									Degisken | Bit_SolaKaydir_1( No )
+	#define BitDizisi_Uret_Bit_0(Degisken, No)									Degisken & Bit_SolaKaydir_0( No )
+	#define BitDizisi_Uret_Bit_Ters(Degisken, No)								( Bit_Oku( ( Degisken ), ( No ) ) ? BitDizisi_Uret_Bit_0( ( Degisken ), ( No ) ) : BitDizisi_Uret_Bit_1( ( Degisken ), ( No ) ) )
+	#define Bit_Yaz_1(Degisken, No)												Degisken = BitDizisi_Uret_Bit_1( ( Degisken ), ( No ) )
+	#define Bit_Yaz_0(Degisken, No)												Degisken = BitDizisi_Uret_Bit_0( ( Degisken ), ( No ) )
+	#define Bit_Yaz_Ters(Degisken, No)											Degisken = BitDizisi_Uret_Bit_Ters( ( Degisken ), ( No ) )
+	#define BaytDizisi_Yaz_Ters(Isaretci_Hedef, Isaretci_Kaynak, Adet)  		for (Tip_u8 i = 0; i < Adet; i++) { Isaretci_Icerigi_u8(Isaretci_Hedef, i) = Isaretci_Icerigi_u8(Isaretci_Kaynak, Adet - 1 - i); }
+
 	#define Hesapla_Yuzde(Kullanim, Butun)										( ( ( Kullanim ) * 100 ) / ( Butun ) )
 	#define Hesapla_Dolgu(Kullanim, Butun)										( ( Butun ) - ( ( Kullanim ) & ( ( Butun ) - 1 ) ) )
 
 	#define EnKucuk(x, y)														( ( x ) < ( y ) ? ( x ) : ( y ) )
 	#define EnBuyuk(x, y)														( ( x ) > ( y ) ? ( x ) : ( y ) )
 
-	#define YenidenBaslat(Sebep)												//{ Gunluk_BeklenmeyenDurum("Satir : %d, Sebep : %d", __LINE__, Sebep); abort(); }
-	#define Bekle_MiliSaniye(Sure)												//Sleep(Sure)																			\
+	#define YenidenBaslat(Sebep)												//abort()
+	#define Bekle_MiliSaniye(Sure)												//Sleep(Sure)
 
 	#define Bacak_Yaz_1(Bacak)
 	#define Bacak_Yaz_0(Bacak)
 	#define Bacak_Oku(Bacak)
 
-	#define _KontrolEt_(BeklenenSonuc, KarsilastirmaIslemi, IslemVeyaDegisken, SonucunYazilacagiDegisken, HataDurumundakiIslemler) if ( Bit_Uret_Ters( ( SonucunYazilacagiDegisken = ( IslemVeyaDegisken ) ) KarsilastirmaIslemi ( BeklenenSonuc ) ) ) { HataDurumundakiIslemler }
-	#define KontrolEt_YenidenBaslat(IslemVeyaDegisken) { Tip_Isaretci_SayiKarsiligi SonucunYazilacagiDegisken; _KontrolEt_(0, ==, IslemVeyaDegisken, SonucunYazilacagiDegisken, YenidenBaslat(SonucunYazilacagiDegisken) )	}
-	#define KontrolEt_Dallan(IslemVeyaDegisken, Etiket) { Tip_Isaretci_SayiKarsiligi SonucunYazilacagiDegisken; _KontrolEt_(0, ==, IslemVeyaDegisken, SonucunYazilacagiDegisken, goto Etiket; )	}																									\
+	#define _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Hataliysa_SonIslemler) { Tip_Isaretci_SayiKarsiligi SonucunYazilacagiDegisken; if ( Bit_Uret_Ters( ( SonucunYazilacagiDegisken = ( IslemVeyaDegisken ) ) KarsilastirmaIslemi ( BeklenenSonuc ) ) ) { Hataliysa_SonIslemler } }
+	#define Hataliysa_YenidenBaslat(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc) _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Gunluk_BeklenmeyenDurum("Satir : %d, Sebep : %d", __LINE__, SonucunYazilacagiDegisken); YenidenBaslat(SonucunYazilacagiDegisken); )
+	#define Hataliysa_GeriDon(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc) _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Gunluk_Hata("Satir : %d, Sebep : %d", __LINE__, SonucunYazilacagiDegisken); return; )
+	#define Hataliysa_EtiketeGit(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Etiket) _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Gunluk_Hata("Satir : %d, Sebep : %d", __LINE__, SonucunYazilacagiDegisken); goto Etiket; )																								\
 
 	////////////////////////////////////////////////////////////////////////////////
 	//Kullanilmayan Kutuphanelerin Kapatilabilmesi için Anahtarlar // Acik Birakildiginda Ýhtiyac Duyulan Diger Kutuphaneler
@@ -157,19 +159,19 @@
 	////////////////////////////////////////////////////////////////////////////////
 	//HataKontrol
 	////////////////////////////////////////////////////////////////////////////////
-	enum e_HataKontrol_Hatalar_
+	enum e_HataDurumu_Hatalar_
 	{
 		//Uygulama Hatalari
-		e_HataKontrol_Hata_Hata1,
-		e_HataKontrol_Hata_Hata2,
+		e_HataDurumu_Hata_Hata1,
+		e_HataDurumu_Hata_Hata2,
 
 		//Sabit
-		e_HataKontrol_Hata_SonEleman //Ilk eleman en onemli hatadir
+		e_HataDurumu_Hata_SonEleman //Ilk eleman en onemli hatadir
 	};
-	#define HataKontrol_Baslat(Degisken)									Degisken = 0 //senaryo olarak, cihaz ilk kez calistiginda herseyin hatalý oldugunu varsayýp kontrol ede ede hatalarý silmesi icin 0 yazildi
-	#define HataKontrol_HataDevamEdiyorMu(Degisken, e_HataKontrol_Hatalar_)	( !Bit_Oku(Degisken, e_HataKontrol_Hatalar_) )
-	#define	HataKontrol_Hatasiz(Degisken, e_HataKontrol_Hatalar_)			Bit_Yaz_1(Degisken, e_HataKontrol_Hatalar_)
-	#define	HataKontrol_Hatali(Degisken, e_HataKontrol_Hatalar_)			Bit_Yaz_0(Degisken, e_HataKontrol_Hatalar_)
+	#define HataDurumu_Baslat(Degisken)									Degisken = 0 //senaryo olarak, cihaz ilk kez calistiginda herseyin hatalý oldugunu varsayýp kontrol ede ede hatalarý silmesi icin 0 yazildi
+	#define HataDurumu_HataDevamEdiyorMu(Degisken, e_HataDurumu_Hatalar_)	( !Bit_Oku(Degisken, e_HataDurumu_Hatalar_) )
+	#define	HataDurumu_Hatasiz(Degisken, e_HataDurumu_Hatalar_)			Bit_Yaz_1(Degisken, e_HataDurumu_Hatalar_)
+	#define	HataDurumu_Hatali(Degisken, e_HataDurumu_Hatalar_)			Bit_Yaz_0(Degisken, e_HataDurumu_Hatalar_)
 
 	////////////////////////////////////////////////////////////////////////////////
 	//IlkGirenIlkCikar.h
@@ -183,7 +185,7 @@
 	#ifdef HazirKod_C_Kullan_KomutSatiri
 		#define _KomutSatiri_Yazi_Ayiracsiz_TekParca_Olabilir
 		#define _KomutSatiri_Yazi_Icinde_OzelKarakter_Olabilir
-		#define _KomutSatiri_Komut_Baslangici					"Kart"
+		#define _KomutSatiri_UzunKomut_Baslangici				"Kart"
 		#define _KomutSatiri_Komut_Bitisi						"\r\n"
 		#define _KomutSatiri_Cevap_Baslangici					">>"
 		#define _KomutSatiri_Cevap_Bitisi						_KomutSatiri_Komut_Bitisi
@@ -192,11 +194,9 @@
 		#define _KomutSatiri_Ayirac_Yazi_OzelKarakter 			'|'
 		#define _KomutSatiri_DonanimAdresi_GenelCagri			( 0 )
 		#define _KomutSatiri_KisaKomut_EnAzKaSa					( (1 /*Komut*/) + (sizeof(_KomutSatiri_Komut_Bitisi) - 1) )
-		#define _KomutSatiri_UzunKomut_EnAzKaSa					( (sizeof(_KomutSatiri_Komut_Baslangici) - 1) + (1 /*Ayirac*/) + (1 /*Adres*/) + (1 /*Ayirac*/) + (1 /*Komut*/) + (sizeof(_KomutSatiri_Komut_Bitisi) - 1) )
+		#define _KomutSatiri_UzunKomut_EnAzKaSa					( (sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1) + (1 /*Ayirac*/) + (1 /*Adres*/) + (1 /*Ayirac*/) + (1 /*Komut*/) + (sizeof(_KomutSatiri_Komut_Bitisi) - 1) )
 		#define _KomutSatiri_Cevap_Onay							"Tamam"
 		#define _KomutSatiri_Cevap_Ret							"Hata"
-		#define _KomutSatiri_Komut_Komut1						"Komut1"
-		#define _KomutSatiri_Komut_Komut2						"Komut2"
 		//Ornek Tamsayi				-> 1 VEYA -1 VEYA +1
 		//Ornek Hex					-> 0xAA VEYA 0x112233445566778899AABBCCDDEEFF
 		//Ornek Yazi				-> "Ornek Yazi"										Alisildik bicim

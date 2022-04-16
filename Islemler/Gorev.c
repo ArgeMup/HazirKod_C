@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.3
+// V1.4
 
 #include "Gorev.h"
 
@@ -24,7 +24,7 @@
 	{
 		if (Gorev == Tip_null || Islem == Tip_null) return false;
 
-		_Tip_s_Gorev * Yeni = Liste_Eleman_Ekle_VeYerTahsisEt(Gorev, sizeof(_Tip_s_Gorev), true);
+		_Tip_s_Gorev * Yeni = Dizi_Eleman_Ekle_VeYerTahsisEt(Gorev, sizeof(_Tip_s_Gorev), true);
 		if (Yeni == Tip_null) return false;
 
 		Yeni->Islem = Islem;
@@ -36,10 +36,9 @@
 	{
 		if (Gorev == Tip_null || Islem == Tip_null) return false;
 
-		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
-		while(KuyrukDegiskeni != NULL)
+		for (Tip_u32 i = 0; i < Dizi_Eleman_Sayisi(Gorev); i++)
 		{
-			_Tip_s_Gorev * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			_Tip_s_Gorev * Eleman = Dizi_Elemani(Gorev, i);
 			if (Eleman->Islem == Islem) return true;
 		}
 
@@ -49,10 +48,9 @@
 	{
 		if (Gorev == Tip_null || Islem == Tip_null) return;
 
-		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
-		while(KuyrukDegiskeni != NULL)
+		for (Tip_u32 i = 0; i < Dizi_Eleman_Sayisi(Gorev); i++)
 		{
-			_Tip_s_Gorev * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			_Tip_s_Gorev * Eleman = Dizi_Elemani(Gorev, i);
 			if (Eleman->Islem == Islem)
 			{
 				Eleman->ZamanlamayaMudahaleEt.Gecikme_msn = Gecikme_msn;
@@ -66,17 +64,16 @@
 	//Buradan dondurulen deger kadar milisaniye bekleyip, tekrar cagirmak daha uygundur
 	//Eger Gorev_Islem_HemenCalistir islemi kullaniliyorsa, buradan dondurulen deger anlamsizlasir,
 	//Mekanizma tahmin disinda uzun bir bekleme suresi ureteceginden HemenCalistirma mumkun olamaz.
-	//Bu islemden dondurulen deger sadece liste icerisindeki islemler degerlendirilerek olusturulur
+	//Bu islemden dondurulen deger sadece dizi icerisindeki islemler degerlendirilerek olusturulur
 	Tip_u32 Gorev_Calistir(Tip_Isaretci_Gorev Gorev)
 	{
 		Tip_u32 EnKisaBekleme = (Tip_u32)0 - 1; //azami deger
 		
 		if (Gorev == Tip_null) return EnKisaBekleme;
 
-		Liste_Kuyruk_DegiskeniniOlustur(Gorev, KuyrukDegiskeni);
-		while(KuyrukDegiskeni != NULL)
+		for (Tip_u32 i = 0; i < Dizi_Eleman_Sayisi(Gorev); i++)
 		{
-			_Tip_s_Gorev * Eleman = Liste_Kuyruk_SonrakiEleman(Gorev, KuyrukDegiskeni);
+			_Tip_s_Gorev * Eleman = Dizi_Elemani(Gorev, i);
 
 			Tip_bool Calistir = false;
 
@@ -107,7 +104,7 @@
 			{
 				Tip_i32 ZamanAsimi_msn = Eleman->Islem(&Eleman->Detaylar);
 
-				if (ZamanAsimi_msn < 0) Liste_Eleman_Sil(Gorev, Eleman, true);	//Sil
+				if (ZamanAsimi_msn < 0) Dizi_Eleman_Sil(Gorev, i, true);		//Sil
 				else
 				{
 					Sure_MiliSaniye(Eleman->Detaylar.An, ZamanAsimi_msn);		//Kur

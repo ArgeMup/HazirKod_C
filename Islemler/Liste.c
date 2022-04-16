@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #include "Liste.h"
 
@@ -26,12 +26,6 @@
 		YT_Sil(Liste);
 	}
 	
-	Tip_u32 Liste_Eleman_Sayisi(Tip_Isaretci_Liste Liste)
-	{
-		if (Liste == Tip_null) return 0;
-
-		return _Liste_(Liste)->ElemanSayisi;
-	}
 	Tip_bool Liste_Eleman_Ekle(Tip_Isaretci_Liste Liste, Tip_Isaretci EklenecekEleman)
 	{
 		if (Liste == Tip_null || EklenecekEleman == Tip_null) return false;
