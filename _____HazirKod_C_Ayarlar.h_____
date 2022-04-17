@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.11
+// V1.12
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -74,9 +74,8 @@
 
 	#define Hesapla_Yuzde(Kullanim, Butun)										( ( ( Kullanim ) * 100 ) / ( Butun ) )
 	#define Hesapla_Dolgu(Kullanim, Butun)										( ( Butun ) - ( ( Kullanim ) & ( ( Butun ) - 1 ) ) )
-
-	#define EnKucuk(x, y)														( ( x ) < ( y ) ? ( x ) : ( y ) )
-	#define EnBuyuk(x, y)														( ( x ) > ( y ) ? ( x ) : ( y ) )
+	#define Hesapla_EnKucuk(x, y)												( ( x ) < ( y ) ? ( x ) : ( y ) )
+	#define Hesapla_EnBuyuk(x, y)												( ( x ) > ( y ) ? ( x ) : ( y ) )
 
 	#define YenidenBaslat(Sebep)												//abort()
 	#define Bekle_MiliSaniye(Sure)												//Sleep(Sure)
@@ -85,13 +84,13 @@
 	#define Bacak_Yaz_0(Bacak)
 	#define Bacak_Oku(Bacak)
 
-	#define _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Hataliysa_SonIslemler) { Tip_Isaretci_SayiKarsiligi SonucunYazilacagiDegisken; if ( Bit_Uret_Ters( ( SonucunYazilacagiDegisken = ( IslemVeyaDegisken ) ) KarsilastirmaIslemi ( BeklenenSonuc ) ) ) { Hataliysa_SonIslemler } }
-	#define Hataliysa_YenidenBaslat(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc) _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Gunluk_BeklenmeyenDurum("Satir : %d, Sebep : %d", __LINE__, SonucunYazilacagiDegisken); YenidenBaslat(SonucunYazilacagiDegisken); )
-	#define Hataliysa_GeriDon(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc) _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Gunluk_Hata("Satir : %d, Sebep : %d", __LINE__, SonucunYazilacagiDegisken); return; )
-	#define Hataliysa_EtiketeGit(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Etiket) _Hataliysa_(IslemVeyaDegisken, KarsilastirmaIslemi, BeklenenSonuc, Gunluk_Hata("Satir : %d, Sebep : %d", __LINE__, SonucunYazilacagiDegisken); goto Etiket; )																								\
+	#define _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Hataliysa_SonIslemler) if ( Bit_Uret_Ters( ( SonucunYazilacagiDegisken = ( Islem ) ) KarsilastirmaIslemi ( BeklenenSonuc ) ) ) { Hataliysa_SonIslemler }
+	#define Hataliysa_YenidenBaslat(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_BeklenmeyenDurum("Satir : %d, Sebep : %ld", __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); YenidenBaslat((Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); )
+	#define Hataliysa_GeriDon(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_Hata("Satir : %d, Sebep : %ld", __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); return; )
+	#define Hataliysa_EtiketeGit(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Etiket) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_Hata("Satir : %d, Sebep : %ld", __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); goto Etiket; )
 
 	////////////////////////////////////////////////////////////////////////////////
-	//Kullanilmayan Kutuphanelerin Kapatilabilmesi için Anahtarlar // Acik Birakildiginda Ýhtiyac Duyulan Diger Kutuphaneler
+	//Kullanilmayan Kutuphanelerin Kapatilabilmesi icin Anahtarlar // Acik Birakildiginda Ýhtiyac Duyulan Diger Kutuphaneler
 	////////////////////////////////////////////////////////////////////////////////
 	#define HazirKod_C_Kullan_AramaIslemleri	//
 	#define HazirKod_C_Kullan_Depo				//Gunluk IlkGÝrenIlkCikar
@@ -193,6 +192,7 @@
 		#define _KomutSatiri_Ayirac_Yazi			 			'"'
 		#define _KomutSatiri_Ayirac_Yazi_OzelKarakter 			'|'
 		#define _KomutSatiri_DonanimAdresi_GenelCagri			( 0 )
+		#define _KomutSatiri_DonanimAdresi_Kendisi				( 1 ) //( Ayarlar.Cihaz.DonanimAdresi )
 		#define _KomutSatiri_KisaKomut_EnAzKaSa					( (1 /*Komut*/) + (sizeof(_KomutSatiri_Komut_Bitisi) - 1) )
 		#define _KomutSatiri_UzunKomut_EnAzKaSa					( (sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1) + (1 /*Ayirac*/) + (1 /*Adres*/) + (1 /*Ayirac*/) + (1 /*Komut*/) + (sizeof(_KomutSatiri_Komut_Bitisi) - 1) )
 		#define _KomutSatiri_Cevap_Onay							"Tamam"

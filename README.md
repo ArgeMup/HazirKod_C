@@ -3,6 +3,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 
 	#include "AramaIslemleri.h"
 	#include "Depo.h"
+	#include "Dizi.h"
 	#include "Gorev.h"
 	#include "IlkGirenIlkCikar.h"
 	#include "KomutSatiri.h"
@@ -20,6 +21,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	
 	void Ornek_AramaIslemleri();
 	void Ornek_Depo();
+	void Ornek_Dizi();
 	void Ornek_Gorev();
 	void Ornek_Gunluk();
 	void Ornek_IlkGirenIlkCikar();
@@ -30,12 +32,14 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	void Ornek_YerTahsisati();
 	void Ornek_Zamanlama();
 	void Ornek_HazirKod_C_Ayarlar_h();
+	void Kiyaslama_Dizi_Liste();
 	
 	int main(void)
 	{
 		Ornek_Gunluk();
 		Ornek_AramaIslemleri();
 		Ornek_Depo();
+		Ornek_Dizi();
 		Ornek_Gorev();
 		Ornek_IlkGirenIlkCikar();
 		Ornek_KomutSatiri();
@@ -45,12 +49,11 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		Ornek_YerTahsisati();
 		Ornek_Zamanlama();
 		Ornek_HazirKod_C_Ayarlar_h();
+		//Kiyaslama_Dizi_Liste();
 	
 		return EXIT_SUCCESS;
 	}
 	
-Ornek_Gunluk
-
 	void Ornek_Gunluk()
 	{
 		//Sure Sayacini baslatmak için gerekli
@@ -80,8 +83,6 @@ Ornek_Gunluk
 	//	0-19699968 KaynakKod.c Bunu yazdiracak
 	}
 	
-Ornek_AramaIslemleri
-
 	void Ornek_AramaIslemleri()
 	{
 		Gunluk("-----Ornek_AramaIslemleri-----");
@@ -220,8 +221,6 @@ Ornek_AramaIslemleri
 	//	0-28180812 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
 	}
 	
-Ornek_Depo
-	
 	Tip_bool Ornek_Depo_Islem_Siliniyor_IkinciSefer = false;
 	Tip_bool Ornek_Depo_Islem_Siliniyor(Tip_Isaretci_IGIC IGIC, Tip_u32 Adet)
 	{
@@ -316,10 +315,77 @@ Ornek_Depo
 	//	0-28515734 KaynakKod.c Adet = Depo_Kapasite(Depo); -> 100
 	}
 	
-Ornek_Gorev	
+	void Ornek_Dizi()
+	{
+		Gunluk("-----Ornek_Dizi-----");
+	
+		Tip_u8 * 	a1 = YT_Yeni(sizeof(Tip_u8), false);
+		Tip_float *	a2 = YT_Yeni(sizeof(Tip_float), false);
+		Tip_u16     a3 = 555;
+	
+		Tip_Isaretci_Dizi Dizi = Dizi_Yeni();
+		if (Dizi == Tip_null) return;
+		Gunluk("Dizi_Eleman_Sayisi(Dizi) : %d", Dizi_Eleman_Sayisi(Dizi));
+	
+		Gunluk("Dizi_Eleman_Ekle(Dizi, a1); -> %d", Dizi_Eleman_Ekle(Dizi, a1));
+		Gunluk("TDizi_Eleman_Ekle(Dizi, a2); -> %d", Dizi_Eleman_Ekle(Dizi, a2));
+		Gunluk("TDizi_Eleman_Ekle(Dizi, &a3); -> %d", Dizi_Eleman_Ekle(Dizi, &a3));
+	
+		Gunluk("Dizi_Eleman_Sayisi(Dizi) : %d", Dizi_Eleman_Sayisi(Dizi));
+	
+		Tip_u8 * 	b1 = Dizi_Elemani(Dizi, 0);
+		Tip_float *	b2 = Dizi_Elemani(Dizi, 1);
+		Gunluk("Tip_u8 * 	b1 = Dizi_Elemani(Dizi, Konum_a1); -> %d", *b1);
+		Gunluk("Tip_float *	b2 = Dizi_Elemani(Dizi, Konum_a2); -> %d", *b2);
+	
+		*a1 = 95;
+		*a2 = 987.654;
+	
+		Gunluk("*a1 = 95; -> %d", *b1);
+		Gunluk("*a2 = 987.654; -> %f", *b2);
+	
+		Gunluk_Hex(_Dizi_(Dizi)->Isaretci, Dizi_Eleman_Sayisi(Dizi) * Isaretci_KapladigiAlan_Bayt);
+	
+		Gunluk("Dizi_Eleman_Sayisi(Dizi) : %d", Dizi_Eleman_Sayisi(Dizi));
+		Gunluk("Dizi_Eleman_Sil(Dizi, 1, true); -> %d", Dizi_Eleman_Sil(Dizi, 1, true));
+	
+		Gunluk_Hex(_Dizi_(Dizi)->Isaretci, Dizi_Eleman_Sayisi(Dizi) * Isaretci_KapladigiAlan_Bayt);
+	
+		Gunluk("Dizi_Eleman_Sayisi(Dizi) : %d", Dizi_Eleman_Sayisi(Dizi));
+	
+		Gunluk("Dizi_Eleman_Sil(Dizi, 0, true); -> %d", Dizi_Eleman_Sil(Dizi, 0, true));
+		Gunluk("Dizi_Eleman_Sayisi(Dizi) : %d", Dizi_Eleman_Sayisi(Dizi));
+	
+		Gunluk_Hex(_Dizi_(Dizi)->Isaretci, Dizi_Eleman_Sayisi(Dizi) * Isaretci_KapladigiAlan_Bayt);
+	
+		Dizi_Sil(Dizi, false);
+	
+	//	0-12872515 KaynakKod.c -----Ornek_Dizi-----
+	//	0-12872515 KaynakKod.c Dizi->ElemanSayisi : 0
+	//	0-12872515 KaynakKod.c Dizi_Eleman_Ekle(Dizi, a1); -> 1
+	//	0-12872515 KaynakKod.c TDizi_Eleman_Ekle(Dizi, a2); -> 1
+	//	0-12872515 KaynakKod.c TDizi_Eleman_Ekle(Dizi, &a3); -> 1
+	//	0-12872515 KaynakKod.c Dizi->ElemanSayisi : 3
+	//	0-12872515 KaynakKod.c Tip_u8 * 	b1 = Dizi_Elemani(Dizi, Konum_a1); -> 0
+	//	0-12872515 KaynakKod.c Tip_float *	b2 = Dizi_Elemani(Dizi, Konum_a2); -> 0
+	//	0-12872515 KaynakKod.c *a1 = 95; -> 95
+	//	0-12872515 KaynakKod.c *a2 = 987.654; -> 987.653992
+	//	0-12872515 KaynakKod.c Adet:00024 | Hex | Konum | Ascii
+	//	0-12872515 KaynakKod.c 90 60 49 91 F6 7F 00 00 A8 60 49 91 F6 7F 00 00 | 0000 - 000F |  `I      `I
+	//	0-12872515 KaynakKod.c A6 F8 7F F5 CD 00 00 00 | 0010 - 0017 |
+	//	0-12872515 KaynakKod.c Dizi->ElemanSayisi : 3
+	//	0-12872515 KaynakKod.c Dizi_Eleman_Sil(Dizi, 1, true); -> 1
+	//	0-12872515 KaynakKod.c Adet:00016 | Hex | Konum | Ascii
+	//	0-12872515 KaynakKod.c 90 60 49 91 F6 7F 00 00 A6 F8 7F F5 CD 00 00 00 | 0000 - 000F |  `I
+	//	0-12872515 KaynakKod.c Dizi->ElemanSayisi : 2
+	//	0-12872515 KaynakKod.c Dizi_Eleman_Sil(Dizi, 0, true); -> 1
+	//	0-12872515 KaynakKod.c Dizi->ElemanSayisi : 1
+	//	0-12872515 KaynakKod.c Adet:00008 | Hex | Konum | Ascii
+	//	0-12872515 KaynakKod.c A6 F8 7F F5 CD 00 00 00 | 0000 - 0007 |
+	}
 	
 	Tip_bool Ornek_Gorev_Islem_BirKez_HemenCalistirildi = false;
-	Tip_i32 Ornek_Gorev_Islem(struct s_Gorev_Detaylar_ * Detaylar)
+	Tip_i32 Ornek_Gorev_Islem(Tip_Isaretci_Gorev_Detaylar Detaylar)
 	{
 		Gunluk("Ornek_Gorev_Islem, Kullanici Nesnesi : %u\r\n", *((Tip_u32 *)Detaylar->KullaniciNesnesi));
 	
@@ -385,8 +451,6 @@ Ornek_Gorev
 	//	0-30700703 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 4294967295
 	//	0-30700703 KaynakKod.c Bitti, Kullanici Nesnesi : 6
 	}
-	
-Ornek_IlkGirenIlkCikar	
 	
 	Tip_bool Ornek_IlkGirenIlkCikar_Islem_Siliniyor(Tip_Isaretci_IGIC IGIC, Tip_u32 Adet)
 	{
@@ -454,8 +518,7 @@ Ornek_IlkGirenIlkCikar
 	//	0-21856437 KaynakKod.c sonuc = IGIC_Bilgi_Ekle(IGIC, Bilgi, strlen(Bilgi)); -> 1
 	}
 	
-Ornek_KomutSatiri	
-	
+	Tip_u32 KomutSatiri_DonanimAdresi = 1;
 	void Ornek_KomutSatiri()
 	{
 		Gunluk("-----Ornek_KomutSatiri-----");
@@ -469,105 +532,116 @@ Ornek_KomutSatiri
 		    "Komut5",
 		};
 	
-		#define KomutMetni "GuRuLtu Kart 1 Komut1 -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF OrnekYazi2 OrnekYazi|51| Komut3\r\n GuRuLtu"
-	    //#define KomutMetni "GuRuLtu Kart 2 Komut1 -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF\r\n GuRuLtu"
-	    //#define KomutMetni "GuRuLtu Kart 1 ASDF -987654 Komut2 \"Ornek Yazi ornegidir\" 0x112233445566778899AABBCCDDEEFF\r\n GuRuLtu"
+		#define UzunKomutuKullan
+	
+		#ifdef UzunKomutuKullan
+			bool UzunKomut = true;
+			#define KomutMetni "GuRuLtu Kart 1 Komut1 -987654 Komut2 \"Alisildik yazi ornegi\" 0x112233445566778899AABBCCDDEEFF AyiracsizTekParcaYaziOrnegi OzelKarakterli_AyiracsizTekParcaYaziOrnegi|51| \"Alisildik ozel karakterli yazi ornegi|52|\" Komut3\r\n GuRuLtu"
+		#else
+			bool UzunKomut = false;
+			#define KomutMetni "Komut1 -987654 Komut2 \"Alisildik yazi ornegi\" 0x112233445566778899AABBCCDDEEFF AyiracsizTekParcaYaziOrnegi OzelKarakterli_AyiracsizTekParcaYaziOrnegi|51| \"Alisildik ozel karakterli yazi ornegi|52|\" Komut3\r\n GuRuLtu"
+		#endif
 		Gunluk("#define KomutMetni \"GuRuLtu Kart 1 ... ");
 		Gunluk("%s", KomutMetni);
 	
-	    Tip_Isaretci_Tampon Komut = Tampon_Yeni(256), Cevap = Tampon_Yeni(256), Hex, OrnekYazi1, OrnekYazi2, OrnekYazi3;
+	    Tip_Isaretci_Tampon Komut = Tampon_Yeni(256, false), Cevap = Tampon_Yeni(256, false), Hex, OrnekYazi1 = NULL, OrnekYazi2 = NULL, OrnekYazi3 = NULL, OrnekYazi4 = NULL;
 	    Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));
 	    Tip_i32 DizidekiKonum;
 	
 	    Gunluk("Komut --- Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));");
 	    Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+	    Tip_s_KomutSatiri_Tampon_Detaylar Detaylar;
 	
-	    if (KomutSatiri_KontrolEt_TampondakiBilgiUygunMu(Komut))
+	    if (KomutSatiri_Baslat(Komut, UzunKomut, &Detaylar))
 	    {
-	        Tampon_Paketle(Komut);
-	        Gunluk("Komut --- Tampon_Paketle(Komut);");
-	        Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+			Gunluk("Komut --- if (KomutSatiri_Baslat(Komut, UzunKomut, &Detaylar))");
+			Gunluk("Komut_Baslangici %p, Komut_Bitisi %p, YeterliSayidaKarakterVarMi %d, DonanimAdresi %d", Detaylar.Komut_Baslangici, Detaylar.Komut_Bitisi, Detaylar.YeterliSayidaKarakterVarMi, Detaylar.DonanimAdresi);
+			Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	        if (KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Komut))
-	        {
-	        	 Gunluk("Komut --- if (KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Komut))");
-	        	 Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+			if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, "Komut1"))
+			{
+				Gunluk("Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut1))");
+				Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	            if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut1))
-	            {
-	            	Gunluk("Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut1))");
-	            	Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+				Tip_i32 Tamsayi;
+				if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))
+				{
+					Gunluk("Komut --- if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))");
+					Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	                Tip_i32 Tamsayi;
-	                if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))
-	                {
-	                	Gunluk("Komut --- if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))");
-	                	Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+					if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, "Komut2"))
+					{
+						Gunluk("Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut2))");
+						Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	                    if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut2))
-	                    {
-	                    	Gunluk("Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut2))");
-	                    	Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+						OrnekYazi1 = KomutSatiri_Oku_Yazi(Komut);
+						Gunluk("OrnekYazi1 --- OrnekYazi1 = KomutSatiri_Oku_Yazi(Komut);");
+						Gunluk_Hex(OrnekYazi1->Isaretci, OrnekYazi1->Kapasite);
 	
-	                        OrnekYazi1 = KomutSatiri_Oku_Yazi(Komut);
-	                        Gunluk("OrnekYazi1 --- OrnekYazi1 = KomutSatiri_Oku_Yazi(Komut);");
-	                        Gunluk_Hex(OrnekYazi1->Isaretci, OrnekYazi1->Kapasite);
+						Gunluk("Komut --- Komut");
+						Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	                        Gunluk("Komut --- Komut");
-	                        Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+						if (OrnekYazi1)
+						{
+							Hex = KomutSatiri_Oku_Hex(Komut);
+							Gunluk("Hex --- Hex = KomutSatiri_Oku_Hex(Komut);");
+							Gunluk_Hex(Hex->Isaretci, Hex->Kapasite);
 	
-	                        if (OrnekYazi1)
-	                        {
-	                            char * _OrnekYazi1_ = Isaretci_Konumlandir(OrnekYazi1->Isaretci, 0, char, char); (void)_OrnekYazi1_;
+							Gunluk("Komut --- Komut");
+							Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	                            Hex = KomutSatiri_Oku_Hex(Komut);
-	                            Gunluk("Hex --- Hex = KomutSatiri_Oku_Hex(Komut);");
-								Gunluk_Hex(Hex->Isaretci, Hex->Kapasite);
+							OrnekYazi2 = KomutSatiri_Oku_Yazi(Komut);
+							Gunluk("OrnekYazi2 --- OrnekYazi2 = KomutSatiri_Oku_Yazi(Komut);");
+							Gunluk_Hex(OrnekYazi2->Isaretci, OrnekYazi2->Kapasite);
+	
+							Gunluk("Komut --- Komut");
+							Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
+	
+							if (OrnekYazi2)
+							{
+								OrnekYazi3 = KomutSatiri_Oku_Yazi(Komut);
+								Gunluk("OrnekYazi3 --- OrnekYazi3 = KomutSatiri_Oku_Yazi(Komut);");
+								Gunluk_Hex(OrnekYazi3->Isaretci, OrnekYazi3->Kapasite);
 	
 								Gunluk("Komut --- Komut");
 								Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	                            OrnekYazi2 = KomutSatiri_Oku_Yazi(Komut);
-	                            Gunluk("OrnekYazi2 --- OrnekYazi2 = KomutSatiri_Oku_Yazi(Komut);");
-								Gunluk_Hex(OrnekYazi2->Isaretci, OrnekYazi2->Kapasite);
-	
-								Gunluk("Komut --- Komut");
-								Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
-	
-	                            if (OrnekYazi2)
-	                            {
-	                                char * _OrnekYazi2_ = Isaretci_Konumlandir(OrnekYazi2->Isaretci, 0, char, char); (void)_OrnekYazi2_;
-	
-	                                OrnekYazi3 = KomutSatiri_Oku_Yazi(Komut);
-	                                Gunluk("OrnekYazi3 --- OrnekYazi3 = KomutSatiri_Oku_Yazi(Komut);");
-									Gunluk_Hex(OrnekYazi3->Isaretci, OrnekYazi3->Kapasite);
+								if (OrnekYazi3)
+								{
+									OrnekYazi4 = KomutSatiri_Oku_Yazi(Komut);
+									Gunluk("OrnekYazi4 --- OrnekYazi4 = KomutSatiri_Oku_Yazi(Komut);");
+									Gunluk_Hex(OrnekYazi4->Isaretci, OrnekYazi4->Kapasite);
 	
 									Gunluk("Komut --- Komut");
 									Gunluk_Hex(Komut->Isaretci, Komut->Kapasite);
 	
-	                                if (OrnekYazi3)
-	                                {
-	                                    char * _OrnekYazi3_ = Isaretci_Konumlandir(OrnekYazi3->Isaretci, 0, char, char); (void)_OrnekYazi3_;
+									if (OrnekYazi4)
+									{
+										Gunluk("OrnekYazi1 %s", OrnekYazi1->Isaretci);
+										Gunluk("OrnekYazi2 %s", OrnekYazi2->Isaretci);
+										Gunluk("OrnekYazi3 %s", OrnekYazi3->Isaretci);
+										Gunluk("OrnekYazi4 %s", OrnekYazi4->Isaretci);
 	
-	                                    DizidekiKonum = KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Komut, dizi, 5);
-	                                    Gunluk("DizidekiKonum = KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Komut, dizi, 5); -> %d", DizidekiKonum);
+										DizidekiKonum = KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Komut, dizi, 5);
+										Gunluk("DizidekiKonum = KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Komut, dizi, 5); -> %d", DizidekiKonum);
 	
-	                                    if (Hex)
+										if (Hex)
 										{
-	                                    	KomutSatiri_Cevapla_Onay(Cevap);
-	                                    	Gunluk("Cevap --- KomutSatiri_Cevapla_Onay(Cevap);");
-	                                    	Gunluk_Hex(Cevap->Isaretci, Cevap->Kapasite);
+											KomutSatiri_Cevapla_Onay(Cevap);
+											Gunluk("Cevap --- KomutSatiri_Cevapla_Onay(Cevap);");
+											Gunluk_Hex(Cevap->Isaretci, Cevap->Kapasite);
 										}
-	                                }
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	        }
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 	    }
+	    else Gunluk("Komut_Baslangici %p, Komut_Bitisi %p, YeterliSayidaKarakterVarMi %d, DonanimAdresi %d", Detaylar.Komut_Baslangici, Detaylar.Komut_Bitisi, Detaylar.YeterliSayidaKarakterVarMi, Detaylar.DonanimAdresi);
 	
-	    char * _Cevap_ = Isaretci_Konumlandir(Cevap, 0, char, char); (void)_Cevap_;
+	    char * _Cevap_ = Isaretci_Konumlandir(Cevap->Isaretci, 0, char, char); (void)_Cevap_;
 	
 	    if (Tampon_DoluAlan(Cevap) == 0)
 		{
@@ -611,216 +685,264 @@ Ornek_KomutSatiri
 	    Tampon_Sil(OrnekYazi1);
 	    Tampon_Sil(OrnekYazi2);
 	    Tampon_Sil(OrnekYazi3);
+	    Tampon_Sil(OrnekYazi4);
 	
-	//    0-23968296 KaynakKod.c -----Ornek_KomutSatiri-----
-	//    0-23968296 KaynakKod.c #define KomutMetni "GuRuLtu Kart 1 ...
-	//    0-23968296 KaynakKod.c GuRuLtu Kart 1 Komut1 -987654 Komut2 "Ornek Yazi ornegidir" 0x112233445566778899AABBCCDDEEFF OrnekYazi2 OrnekYazi|51| Komut3
+	//    0-9697797 KaynakKod.c -----Ornek_KomutSatiri-----
+	//    0-9697797 KaynakKod.c #define KomutMetni "GuRuLtu Kart 1 ...
+	//    0-9697797 KaynakKod.c GuRuLtu Kart 1 Komut1 -987654 Komut2 "Alisildik yazi ornegi" 0x112233445566778899AABBCCDDEEFF AyiracsizTekParcaYaziOrnegi OzelKarakterli_AyiracsizTekParcaYaziOrnegi|51| "Alisildik ozel karakterli yazi ornegi|52|" Komut3
 	//     GuRuLtu
-	//    0-23968296 KaynakKod.c Komut --- Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));
-	//    0-23968296 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 47 75 52 75 4C 74 75 20 4B 61 72 74 20 31 20 4B | 0000 - 000F | GuRuLtu Kart 1 K
-	//    0-23968296 KaynakKod.c 6F 6D 75 74 31 20 2D 39 38 37 36 35 34 20 4B 6F | 0010 - 001F | omut1 -987654 Ko
-	//    0-23968296 KaynakKod.c 6D 75 74 32 20 22 4F 72 6E 65 6B 20 59 61 7A 69 | 0020 - 002F | mut2 "Ornek Yazi
-	//    0-23968296 KaynakKod.c 20 6F 72 6E 65 67 69 64 69 72 22 20 30 78 31 31 | 0030 - 003F |  ornegidir" 0x11
-	//    0-23968296 KaynakKod.c 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 | 0040 - 004F | 2233445566778899
-	//    0-23968296 KaynakKod.c 41 41 42 42 43 43 44 44 45 45 46 46 20 4F 72 6E | 0050 - 005F | AABBCCDDEEFF Orn
-	//    0-23968296 KaynakKod.c 65 6B 59 61 7A 69 32 20 4F 72 6E 65 6B 59 61 7A | 0060 - 006F | ekYazi2 OrnekYaz
-	//    0-23968296 KaynakKod.c 69 7C 35 31 7C 20 4B 6F 6D 75 74 33 0D 0A 20 47 | 0070 - 007F | i|51| Komut3   G
-	//    0-23968296 KaynakKod.c 75 52 75 4C 74 75 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F | uRuLtu
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
-	//    0-23968296 KaynakKod.c Komut --- Tampon_Paketle(Komut);
-	//    0-23968296 KaynakKod.c Adet:00134 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 47 75 52 75 4C 74 75 20 4B 61 72 74 20 31 20 4B | 0000 - 000F | GuRuLtu Kart 1 K
-	//    0-23968296 KaynakKod.c 6F 6D 75 74 31 20 2D 39 38 37 36 35 34 20 4B 6F | 0010 - 001F | omut1 -987654 Ko
-	//    0-23968296 KaynakKod.c 6D 75 74 32 20 22 4F 72 6E 65 6B 20 59 61 7A 69 | 0020 - 002F | mut2 "Ornek Yazi
-	//    0-23968296 KaynakKod.c 20 6F 72 6E 65 67 69 64 69 72 22 20 30 78 31 31 | 0030 - 003F |  ornegidir" 0x11
-	//    0-23968296 KaynakKod.c 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 | 0040 - 004F | 2233445566778899
-	//    0-23968296 KaynakKod.c 41 41 42 42 43 43 44 44 45 45 46 46 20 4F 72 6E | 0050 - 005F | AABBCCDDEEFF Orn
-	//    0-23968296 KaynakKod.c 65 6B 59 61 7A 69 32 20 4F 72 6E 65 6B 59 61 7A | 0060 - 006F | ekYazi2 OrnekYaz
-	//    0-23968296 KaynakKod.c 69 7C 35 31 7C 20 4B 6F 6D 75 74 33 0D 0A 20 47 | 0070 - 007F | i|51| Komut3   G
-	//    0-23968296 KaynakKod.c 75 52 75 4C 74 75 | 0080 - 0085 | uRuLtu
-	//    0-23968296 KaynakKod.c Komut --- if (KomutSatiri_KontrolEt_DonanimAdresiUygunMu(Komut))
-	//    0-23968296 KaynakKod.c Adet:00109 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4B 6F 6D 75 74 31 20 2D 39 38 37 36 35 34 20 4B | 0000 - 000F | Komut1 -987654 K
-	//    0-23968296 KaynakKod.c 6F 6D 75 74 32 20 22 4F 72 6E 65 6B 20 59 61 7A | 0010 - 001F | omut2 "Ornek Yaz
-	//    0-23968296 KaynakKod.c 69 20 6F 72 6E 65 67 69 64 69 72 22 20 30 78 31 | 0020 - 002F | i ornegidir" 0x1
-	//    0-23968296 KaynakKod.c 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 | 0030 - 003F | 1223344556677889
-	//    0-23968296 KaynakKod.c 39 41 41 42 42 43 43 44 44 45 45 46 46 20 4F 72 | 0040 - 004F | 9AABBCCDDEEFF Or
-	//    0-23968296 KaynakKod.c 6E 65 6B 59 61 7A 69 32 20 4F 72 6E 65 6B 59 61 | 0050 - 005F | nekYazi2 OrnekYa
-	//    0-23968296 KaynakKod.c 7A 69 7C 35 31 7C 20 4B 6F 6D 75 74 33 | 0060 - 006C | zi|51| Komut3
-	//    0-23968296 KaynakKod.c Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut1))
-	//    0-23968296 KaynakKod.c Adet:00102 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 2D 39 38 37 36 35 34 20 4B 6F 6D 75 74 32 20 22 | 0000 - 000F | -987654 Komut2 "
-	//    0-23968296 KaynakKod.c 4F 72 6E 65 6B 20 59 61 7A 69 20 6F 72 6E 65 67 | 0010 - 001F | Ornek Yazi orneg
-	//    0-23968296 KaynakKod.c 69 64 69 72 22 20 30 78 31 31 32 32 33 33 34 34 | 0020 - 002F | idir" 0x11223344
-	//    0-23968296 KaynakKod.c 35 35 36 36 37 37 38 38 39 39 41 41 42 42 43 43 | 0030 - 003F | 5566778899AABBCC
-	//    0-23968296 KaynakKod.c 44 44 45 45 46 46 20 4F 72 6E 65 6B 59 61 7A 69 | 0040 - 004F | DDEEFF OrnekYazi
-	//    0-23968296 KaynakKod.c 32 20 4F 72 6E 65 6B 59 61 7A 69 7C 35 31 7C 20 | 0050 - 005F | 2 OrnekYazi|51|
-	//    0-23968296 KaynakKod.c 4B 6F 6D 75 74 33 | 0060 - 0065 | Komut3
-	//    0-23968296 KaynakKod.c Komut --- if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))
-	//    0-23968296 KaynakKod.c Adet:00094 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4B 6F 6D 75 74 32 20 22 4F 72 6E 65 6B 20 59 61 | 0000 - 000F | Komut2 "Ornek Ya
-	//    0-23968296 KaynakKod.c 7A 69 20 6F 72 6E 65 67 69 64 69 72 22 20 30 78 | 0010 - 001F | zi ornegidir" 0x
-	//    0-23968296 KaynakKod.c 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 | 0020 - 002F | 1122334455667788
-	//    0-23968296 KaynakKod.c 39 39 41 41 42 42 43 43 44 44 45 45 46 46 20 4F | 0030 - 003F | 99AABBCCDDEEFF O
-	//    0-23968296 KaynakKod.c 72 6E 65 6B 59 61 7A 69 32 20 4F 72 6E 65 6B 59 | 0040 - 004F | rnekYazi2 OrnekY
-	//    0-23968296 KaynakKod.c 61 7A 69 7C 35 31 7C 20 4B 6F 6D 75 74 33 | 0050 - 005D | azi|51| Komut3
-	//    0-23968296 KaynakKod.c Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut2))
-	//    0-23968296 KaynakKod.c Adet:00087 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 22 4F 72 6E 65 6B 20 59 61 7A 69 20 6F 72 6E 65 | 0000 - 000F | "Ornek Yazi orne
-	//    0-23968296 KaynakKod.c 67 69 64 69 72 22 20 30 78 31 31 32 32 33 33 34 | 0010 - 001F | gidir" 0x1122334
-	//    0-23968296 KaynakKod.c 34 35 35 36 36 37 37 38 38 39 39 41 41 42 42 43 | 0020 - 002F | 45566778899AABBC
-	//    0-23968296 KaynakKod.c 43 44 44 45 45 46 46 20 4F 72 6E 65 6B 59 61 7A | 0030 - 003F | CDDEEFF OrnekYaz
-	//    0-23968296 KaynakKod.c 69 32 20 4F 72 6E 65 6B 59 61 7A 69 7C 35 31 7C | 0040 - 004F | i2 OrnekYazi|51|
-	//    0-23968296 KaynakKod.c 20 4B 6F 6D 75 74 33 | 0050 - 0056 |  Komut3
-	//    0-23968296 KaynakKod.c OrnekYazi1 --- OrnekYazi1 = KomutSatiri_Oku_Yazi(Komut);
-	//    0-23968296 KaynakKod.c Adet:00021 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4F 72 6E 65 6B 20 59 61 7A 69 20 6F 72 6E 65 67 | 0000 - 000F | Ornek Yazi orneg
-	//    0-23968296 KaynakKod.c 69 64 69 72 00 | 0010 - 0014 | idir
-	//    0-23968296 KaynakKod.c Komut --- Komut
-	//    0-23968296 KaynakKod.c Adet:00064 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 30 78 31 31 32 32 33 33 34 34 35 35 36 36 37 37 | 0000 - 000F | 0x11223344556677
-	//    0-23968296 KaynakKod.c 38 38 39 39 41 41 42 42 43 43 44 44 45 45 46 46 | 0010 - 001F | 8899AABBCCDDEEFF
-	//    0-23968296 KaynakKod.c 20 4F 72 6E 65 6B 59 61 7A 69 32 20 4F 72 6E 65 | 0020 - 002F |  OrnekYazi2 Orne
-	//    0-23968296 KaynakKod.c 6B 59 61 7A 69 7C 35 31 7C 20 4B 6F 6D 75 74 33 | 0030 - 003F | kYazi|51| Komut3
-	//    0-23968296 KaynakKod.c Hex --- Hex = KomutSatiri_Oku_Hex(Komut);
-	//    0-23968296 KaynakKod.c Adet:00015 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF | 0000 - 000E |  "3DUfw
-	//    0-23968296 KaynakKod.c Komut --- Komut
-	//    0-23968296 KaynakKod.c Adet:00031 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4F 72 6E 65 6B 59 61 7A 69 32 20 4F 72 6E 65 6B | 0000 - 000F | OrnekYazi2 Ornek
-	//    0-23968296 KaynakKod.c 59 61 7A 69 7C 35 31 7C 20 4B 6F 6D 75 74 33 | 0010 - 001E | Yazi|51| Komut3
-	//    0-23968296 KaynakKod.c OrnekYazi2 --- OrnekYazi2 = KomutSatiri_Oku_Yazi(Komut);
-	//    0-23968296 KaynakKod.c Adet:00011 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4F 72 6E 65 6B 59 61 7A 69 32 00 | 0000 - 000A | OrnekYazi2
-	//    0-23968296 KaynakKod.c Komut --- Komut
-	//    0-23968296 KaynakKod.c Adet:00020 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4F 72 6E 65 6B 59 61 7A 69 7C 35 31 7C 20 4B 6F | 0000 - 000F | OrnekYazi|51| Ko
-	//    0-23968296 KaynakKod.c 6D 75 74 33 | 0010 - 0013 | mut3
-	//    0-23968296 KaynakKod.c OrnekYazi3 --- OrnekYazi3 = KomutSatiri_Oku_Yazi(Komut);
-	//    0-23968296 KaynakKod.c Adet:00011 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4F 72 6E 65 6B 59 61 7A 69 33 00 | 0000 - 000A | OrnekYazi3
-	//    0-23968296 KaynakKod.c Komut --- Komut
-	//    0-23968296 KaynakKod.c Adet:00006 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 4B 6F 6D 75 74 33 | 0000 - 0005 | Komut3
-	//    0-23968296 KaynakKod.c DizidekiKonum = KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Komut, dizi, 5); -> 2
-	//    0-23968296 KaynakKod.c Cevap --- KomutSatiri_Cevapla_Onay(Cevap);
-	//    0-23968296 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 3E 3E 54 61 6D 61 6D 0D 0A 00 00 00 00 00 00 00 | 0000 - 000F | >>Tamam
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0010 - 001F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
-	//    0-23968296 KaynakKod.c KomutSatiri_Cevap_Ekle(Cevap, "Serbest Cevap -858993459", 35);
-	//    0-23968296 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 53 65 72 62 65 73 74 20 43 65 76 61 70 20 33 35 | 0000 - 000F | Serbest Cevap 35
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0010 - 001F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
-	//    0-23968296 KaynakKod.c KomutSatiri_Cevapla_Hex(Cevap, Hex);
-	//    0-23968296 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 3E 3E 30 78 31 31 32 32 33 33 34 34 35 35 36 36 | 0000 - 000F | >>0x112233445566
-	//    0-23968296 KaynakKod.c 37 37 38 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F | 778899AABBCCDDEE
-	//    0-23968296 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
-	//    0-23968296 KaynakKod.c KomutSatiri_Cevapla_Onay(Cevap);
-	//    0-23968296 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 3E 3E 54 61 6D 61 6D 0D 0A 00 34 34 35 35 36 36 | 0000 - 000F | >>Tamam   445566
-	//    0-23968296 KaynakKod.c 37 37 38 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F | 778899AABBCCDDEE
-	//    0-23968296 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
-	//    0-23968296 KaynakKod.c KomutSatiri_Cevapla_TamSayi(Cevap, 35);
-	//    0-23968296 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 3E 3E 33 35 0D 0A 00 0D 0A 00 34 34 35 35 36 36 | 0000 - 000F | >>35      445566
-	//    0-23968296 KaynakKod.c 37 37 38 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F | 778899AABBCCDDEE
-	//    0-23968296 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
-	//    0-23968296 KaynakKod.c KomutSatiri_Cevapla_Yazi(Cevap, "Serbest Yazi");
-	//    0-23968296 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
-	//    0-23968296 KaynakKod.c 3E 3E 22 53 65 72 62 65 73 74 20 59 61 7A 69 22 | 0000 - 000F | >>"Serbest Yazi"
-	//    0-23968296 KaynakKod.c 0D 0A 00 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F |    899AABBCCDDEE
-	//    0-23968296 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
-	//    0-23968296 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
+	//    0-9697797 KaynakKod.c Komut --- Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));
+	//    0-9697797 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 47 75 52 75 4C 74 75 20 4B 61 72 74 20 31 20 4B | 0000 - 000F | GuRuLtu Kart 1 K
+	//    0-9697797 KaynakKod.c 6F 6D 75 74 31 20 2D 39 38 37 36 35 34 20 4B 6F | 0010 - 001F | omut1 -987654 Ko
+	//    0-9697797 KaynakKod.c 6D 75 74 32 20 22 41 6C 69 73 69 6C 64 69 6B 20 | 0020 - 002F | mut2 "Alisildik
+	//    0-9697797 KaynakKod.c 79 61 7A 69 20 6F 72 6E 65 67 69 22 20 30 78 31 | 0030 - 003F | yazi ornegi" 0x1
+	//    0-9697797 KaynakKod.c 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 | 0040 - 004F | 1223344556677889
+	//    0-9697797 KaynakKod.c 39 41 41 42 42 43 43 44 44 45 45 46 46 20 41 79 | 0050 - 005F | 9AABBCCDDEEFF Ay
+	//    0-9697797 KaynakKod.c 69 72 61 63 73 69 7A 54 65 6B 50 61 72 63 61 59 | 0060 - 006F | iracsizTekParcaY
+	//    0-9697797 KaynakKod.c 61 7A 69 4F 72 6E 65 67 69 20 4F 7A 65 6C 4B 61 | 0070 - 007F | aziOrnegi OzelKa
+	//    0-9697797 KaynakKod.c 72 61 6B 74 65 72 6C 69 5F 41 79 69 72 61 63 73 | 0080 - 008F | rakterli_Ayiracs
+	//    0-9697797 KaynakKod.c 69 7A 54 65 6B 50 61 72 63 61 59 61 7A 69 4F 72 | 0090 - 009F | izTekParcaYaziOr
+	//    0-9697797 KaynakKod.c 6E 65 67 69 7C 35 31 7C 20 22 41 6C 69 73 69 6C | 00A0 - 00AF | negi|51| "Alisil
+	//    0-9697797 KaynakKod.c 64 69 6B 20 6F 7A 65 6C 20 6B 61 72 61 6B 74 65 | 00B0 - 00BF | dik ozel karakte
+	//    0-9697797 KaynakKod.c 72 6C 69 20 79 61 7A 69 20 6F 72 6E 65 67 69 7C | 00C0 - 00CF | rli yazi ornegi|
+	//    0-9697797 KaynakKod.c 35 32 7C 22 20 4B 6F 6D 75 74 33 0D 0A 20 47 75 | 00D0 - 00DF | 52|" Komut3   Gu
+	//    0-9697797 KaynakKod.c 52 75 4C 74 75 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF | RuLtu
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
+	//    0-9697797 KaynakKod.c Komut --- if (KomutSatiri_Baslat(Komut, UzunKomut, &Detaylar))
+	//    0-9697797 KaynakKod.c Komut_Baslangici 00007ff6152c60a8, Komut_Bitisi 00007ff6152c617b, YeterliSayidaKarakterVarMi 1, DonanimAdresi 1
+	//    0-9697797 KaynakKod.c Adet:00204 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 4B 6F 6D 75 74 31 20 2D 39 38 37 36 35 34 20 4B | 0000 - 000F | Komut1 -987654 K
+	//    0-9697797 KaynakKod.c 6F 6D 75 74 32 20 22 41 6C 69 73 69 6C 64 69 6B | 0010 - 001F | omut2 "Alisildik
+	//    0-9697797 KaynakKod.c 20 79 61 7A 69 20 6F 72 6E 65 67 69 22 20 30 78 | 0020 - 002F |  yazi ornegi" 0x
+	//    0-9697797 KaynakKod.c 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 | 0030 - 003F | 1122334455667788
+	//    0-9697797 KaynakKod.c 39 39 41 41 42 42 43 43 44 44 45 45 46 46 20 41 | 0040 - 004F | 99AABBCCDDEEFF A
+	//    0-9697797 KaynakKod.c 79 69 72 61 63 73 69 7A 54 65 6B 50 61 72 63 61 | 0050 - 005F | yiracsizTekParca
+	//    0-9697797 KaynakKod.c 59 61 7A 69 4F 72 6E 65 67 69 20 4F 7A 65 6C 4B | 0060 - 006F | YaziOrnegi OzelK
+	//    0-9697797 KaynakKod.c 61 72 61 6B 74 65 72 6C 69 5F 41 79 69 72 61 63 | 0070 - 007F | arakterli_Ayirac
+	//    0-9697797 KaynakKod.c 73 69 7A 54 65 6B 50 61 72 63 61 59 61 7A 69 4F | 0080 - 008F | sizTekParcaYaziO
+	//    0-9697797 KaynakKod.c 72 6E 65 67 69 7C 35 31 7C 20 22 41 6C 69 73 69 | 0090 - 009F | rnegi|51| "Alisi
+	//    0-9697797 KaynakKod.c 6C 64 69 6B 20 6F 7A 65 6C 20 6B 61 72 61 6B 74 | 00A0 - 00AF | ldik ozel karakt
+	//    0-9697797 KaynakKod.c 65 72 6C 69 20 79 61 7A 69 20 6F 72 6E 65 67 69 | 00B0 - 00BF | erli yazi ornegi
+	//    0-9697797 KaynakKod.c 7C 35 32 7C 22 20 4B 6F 6D 75 74 33 | 00C0 - 00CB | |52|" Komut3
+	//    0-9697797 KaynakKod.c Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut1))
+	//    0-9697797 KaynakKod.c Adet:00197 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 2D 39 38 37 36 35 34 20 4B 6F 6D 75 74 32 20 22 | 0000 - 000F | -987654 Komut2 "
+	//    0-9697797 KaynakKod.c 41 6C 69 73 69 6C 64 69 6B 20 79 61 7A 69 20 6F | 0010 - 001F | Alisildik yazi o
+	//    0-9697797 KaynakKod.c 72 6E 65 67 69 22 20 30 78 31 31 32 32 33 33 34 | 0020 - 002F | rnegi" 0x1122334
+	//    0-9697797 KaynakKod.c 34 35 35 36 36 37 37 38 38 39 39 41 41 42 42 43 | 0030 - 003F | 45566778899AABBC
+	//    0-9697797 KaynakKod.c 43 44 44 45 45 46 46 20 41 79 69 72 61 63 73 69 | 0040 - 004F | CDDEEFF Ayiracsi
+	//    0-9697797 KaynakKod.c 7A 54 65 6B 50 61 72 63 61 59 61 7A 69 4F 72 6E | 0050 - 005F | zTekParcaYaziOrn
+	//    0-9697797 KaynakKod.c 65 67 69 20 4F 7A 65 6C 4B 61 72 61 6B 74 65 72 | 0060 - 006F | egi OzelKarakter
+	//    0-9697797 KaynakKod.c 6C 69 5F 41 79 69 72 61 63 73 69 7A 54 65 6B 50 | 0070 - 007F | li_AyiracsizTekP
+	//    0-9697797 KaynakKod.c 61 72 63 61 59 61 7A 69 4F 72 6E 65 67 69 7C 35 | 0080 - 008F | arcaYaziOrnegi|5
+	//    0-9697797 KaynakKod.c 31 7C 20 22 41 6C 69 73 69 6C 64 69 6B 20 6F 7A | 0090 - 009F | 1| "Alisildik oz
+	//    0-9697797 KaynakKod.c 65 6C 20 6B 61 72 61 6B 74 65 72 6C 69 20 79 61 | 00A0 - 00AF | el karakterli ya
+	//    0-9697797 KaynakKod.c 7A 69 20 6F 72 6E 65 67 69 7C 35 32 7C 22 20 4B | 00B0 - 00BF | zi ornegi|52|" K
+	//    0-9697797 KaynakKod.c 6F 6D 75 74 33 | 00C0 - 00C4 | omut3
+	//    0-9697797 KaynakKod.c Komut --- if (KomutSatiri_Oku_TamSayi(Komut, &Tamsayi))
+	//    0-9697797 KaynakKod.c Adet:00189 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 4B 6F 6D 75 74 32 20 22 41 6C 69 73 69 6C 64 69 | 0000 - 000F | Komut2 "Alisildi
+	//    0-9697797 KaynakKod.c 6B 20 79 61 7A 69 20 6F 72 6E 65 67 69 22 20 30 | 0010 - 001F | k yazi ornegi" 0
+	//    0-9697797 KaynakKod.c 78 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 | 0020 - 002F | x112233445566778
+	//    0-9697797 KaynakKod.c 38 39 39 41 41 42 42 43 43 44 44 45 45 46 46 20 | 0030 - 003F | 899AABBCCDDEEFF
+	//    0-9697797 KaynakKod.c 41 79 69 72 61 63 73 69 7A 54 65 6B 50 61 72 63 | 0040 - 004F | AyiracsizTekParc
+	//    0-9697797 KaynakKod.c 61 59 61 7A 69 4F 72 6E 65 67 69 20 4F 7A 65 6C | 0050 - 005F | aYaziOrnegi Ozel
+	//    0-9697797 KaynakKod.c 4B 61 72 61 6B 74 65 72 6C 69 5F 41 79 69 72 61 | 0060 - 006F | Karakterli_Ayira
+	//    0-9697797 KaynakKod.c 63 73 69 7A 54 65 6B 50 61 72 63 61 59 61 7A 69 | 0070 - 007F | csizTekParcaYazi
+	//    0-9697797 KaynakKod.c 4F 72 6E 65 67 69 7C 35 31 7C 20 22 41 6C 69 73 | 0080 - 008F | Ornegi|51| "Alis
+	//    0-9697797 KaynakKod.c 69 6C 64 69 6B 20 6F 7A 65 6C 20 6B 61 72 61 6B | 0090 - 009F | ildik ozel karak
+	//    0-9697797 KaynakKod.c 74 65 72 6C 69 20 79 61 7A 69 20 6F 72 6E 65 67 | 00A0 - 00AF | terli yazi orneg
+	//    0-9697797 KaynakKod.c 69 7C 35 32 7C 22 20 4B 6F 6D 75 74 33 | 00B0 - 00BC | i|52|" Komut3
+	//    0-9697797 KaynakKod.c Komut --- if (KomutSatiri_KontrolEt_Siradaki_BuMu(Komut, _KomutSatiri_Komut_Komut2))
+	//    0-9697797 KaynakKod.c Adet:00182 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 22 41 6C 69 73 69 6C 64 69 6B 20 79 61 7A 69 20 | 0000 - 000F | "Alisildik yazi
+	//    0-9697797 KaynakKod.c 6F 72 6E 65 67 69 22 20 30 78 31 31 32 32 33 33 | 0010 - 001F | ornegi" 0x112233
+	//    0-9697797 KaynakKod.c 34 34 35 35 36 36 37 37 38 38 39 39 41 41 42 42 | 0020 - 002F | 445566778899AABB
+	//    0-9697797 KaynakKod.c 43 43 44 44 45 45 46 46 20 41 79 69 72 61 63 73 | 0030 - 003F | CCDDEEFF Ayiracs
+	//    0-9697797 KaynakKod.c 69 7A 54 65 6B 50 61 72 63 61 59 61 7A 69 4F 72 | 0040 - 004F | izTekParcaYaziOr
+	//    0-9697797 KaynakKod.c 6E 65 67 69 20 4F 7A 65 6C 4B 61 72 61 6B 74 65 | 0050 - 005F | negi OzelKarakte
+	//    0-9697797 KaynakKod.c 72 6C 69 5F 41 79 69 72 61 63 73 69 7A 54 65 6B | 0060 - 006F | rli_AyiracsizTek
+	//    0-9697797 KaynakKod.c 50 61 72 63 61 59 61 7A 69 4F 72 6E 65 67 69 7C | 0070 - 007F | ParcaYaziOrnegi|
+	//    0-9697797 KaynakKod.c 35 31 7C 20 22 41 6C 69 73 69 6C 64 69 6B 20 6F | 0080 - 008F | 51| "Alisildik o
+	//    0-9697797 KaynakKod.c 7A 65 6C 20 6B 61 72 61 6B 74 65 72 6C 69 20 79 | 0090 - 009F | zel karakterli y
+	//    0-9697797 KaynakKod.c 61 7A 69 20 6F 72 6E 65 67 69 7C 35 32 7C 22 20 | 00A0 - 00AF | azi ornegi|52|"
+	//    0-9697797 KaynakKod.c 4B 6F 6D 75 74 33 | 00B0 - 00B5 | Komut3
+	//    0-9697797 KaynakKod.c OrnekYazi1 --- OrnekYazi1 = KomutSatiri_Oku_Yazi(Komut);
+	//    0-9697797 KaynakKod.c Adet:00022 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 41 6C 69 73 69 6C 64 69 6B 20 79 61 7A 69 20 6F | 0000 - 000F | Alisildik yazi o
+	//    0-9697797 KaynakKod.c 72 6E 65 67 69 00 | 0010 - 0015 | rnegi
+	//    0-9697797 KaynakKod.c Komut --- Komut
+	//    0-9697797 KaynakKod.c Adet:00158 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 30 78 31 31 32 32 33 33 34 34 35 35 36 36 37 37 | 0000 - 000F | 0x11223344556677
+	//    0-9697797 KaynakKod.c 38 38 39 39 41 41 42 42 43 43 44 44 45 45 46 46 | 0010 - 001F | 8899AABBCCDDEEFF
+	//    0-9697797 KaynakKod.c 20 41 79 69 72 61 63 73 69 7A 54 65 6B 50 61 72 | 0020 - 002F |  AyiracsizTekPar
+	//    0-9697797 KaynakKod.c 63 61 59 61 7A 69 4F 72 6E 65 67 69 20 4F 7A 65 | 0030 - 003F | caYaziOrnegi Oze
+	//    0-9697797 KaynakKod.c 6C 4B 61 72 61 6B 74 65 72 6C 69 5F 41 79 69 72 | 0040 - 004F | lKarakterli_Ayir
+	//    0-9697797 KaynakKod.c 61 63 73 69 7A 54 65 6B 50 61 72 63 61 59 61 7A | 0050 - 005F | acsizTekParcaYaz
+	//    0-9697797 KaynakKod.c 69 4F 72 6E 65 67 69 7C 35 31 7C 20 22 41 6C 69 | 0060 - 006F | iOrnegi|51| "Ali
+	//    0-9697797 KaynakKod.c 73 69 6C 64 69 6B 20 6F 7A 65 6C 20 6B 61 72 61 | 0070 - 007F | sildik ozel kara
+	//    0-9697797 KaynakKod.c 6B 74 65 72 6C 69 20 79 61 7A 69 20 6F 72 6E 65 | 0080 - 008F | kterli yazi orne
+	//    0-9697797 KaynakKod.c 67 69 7C 35 32 7C 22 20 4B 6F 6D 75 74 33 | 0090 - 009D | gi|52|" Komut3
+	//    0-9697797 KaynakKod.c Hex --- Hex = KomutSatiri_Oku_Hex(Komut);
+	//    0-9697797 KaynakKod.c Adet:00015 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF | 0000 - 000E |  "3DUfw
+	//    0-9697797 KaynakKod.c Komut --- Komut
+	//    0-9697797 KaynakKod.c Adet:00125 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 41 79 69 72 61 63 73 69 7A 54 65 6B 50 61 72 63 | 0000 - 000F | AyiracsizTekParc
+	//    0-9697797 KaynakKod.c 61 59 61 7A 69 4F 72 6E 65 67 69 20 4F 7A 65 6C | 0010 - 001F | aYaziOrnegi Ozel
+	//    0-9697797 KaynakKod.c 4B 61 72 61 6B 74 65 72 6C 69 5F 41 79 69 72 61 | 0020 - 002F | Karakterli_Ayira
+	//    0-9697797 KaynakKod.c 63 73 69 7A 54 65 6B 50 61 72 63 61 59 61 7A 69 | 0030 - 003F | csizTekParcaYazi
+	//    0-9697797 KaynakKod.c 4F 72 6E 65 67 69 7C 35 31 7C 20 22 41 6C 69 73 | 0040 - 004F | Ornegi|51| "Alis
+	//    0-9697797 KaynakKod.c 69 6C 64 69 6B 20 6F 7A 65 6C 20 6B 61 72 61 6B | 0050 - 005F | ildik ozel karak
+	//    0-9697797 KaynakKod.c 74 65 72 6C 69 20 79 61 7A 69 20 6F 72 6E 65 67 | 0060 - 006F | terli yazi orneg
+	//    0-9697797 KaynakKod.c 69 7C 35 32 7C 22 20 4B 6F 6D 75 74 33 | 0070 - 007C | i|52|" Komut3
+	//    0-9697797 KaynakKod.c OrnekYazi2 --- OrnekYazi2 = KomutSatiri_Oku_Yazi(Komut);
+	//    0-9697797 KaynakKod.c Adet:00028 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 41 79 69 72 61 63 73 69 7A 54 65 6B 50 61 72 63 | 0000 - 000F | AyiracsizTekParc
+	//    0-9697797 KaynakKod.c 61 59 61 7A 69 4F 72 6E 65 67 69 00 | 0010 - 001B | aYaziOrnegi
+	//    0-9697797 KaynakKod.c Komut --- Komut
+	//    0-9697797 KaynakKod.c Adet:00097 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 4F 7A 65 6C 4B 61 72 61 6B 74 65 72 6C 69 5F 41 | 0000 - 000F | OzelKarakterli_A
+	//    0-9697797 KaynakKod.c 79 69 72 61 63 73 69 7A 54 65 6B 50 61 72 63 61 | 0010 - 001F | yiracsizTekParca
+	//    0-9697797 KaynakKod.c 59 61 7A 69 4F 72 6E 65 67 69 7C 35 31 7C 20 22 | 0020 - 002F | YaziOrnegi|51| "
+	//    0-9697797 KaynakKod.c 41 6C 69 73 69 6C 64 69 6B 20 6F 7A 65 6C 20 6B | 0030 - 003F | Alisildik ozel k
+	//    0-9697797 KaynakKod.c 61 72 61 6B 74 65 72 6C 69 20 79 61 7A 69 20 6F | 0040 - 004F | arakterli yazi o
+	//    0-9697797 KaynakKod.c 72 6E 65 67 69 7C 35 32 7C 22 20 4B 6F 6D 75 74 | 0050 - 005F | rnegi|52|" Komut
+	//    0-9697797 KaynakKod.c 33 | 0060 - 0060 | 3
+	//    0-9697797 KaynakKod.c OrnekYazi3 --- OrnekYazi3 = KomutSatiri_Oku_Yazi(Komut);
+	//    0-9697797 KaynakKod.c Adet:00044 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 4F 7A 65 6C 4B 61 72 61 6B 74 65 72 6C 69 5F 41 | 0000 - 000F | OzelKarakterli_A
+	//    0-9697797 KaynakKod.c 79 69 72 61 63 73 69 7A 54 65 6B 50 61 72 63 61 | 0010 - 001F | yiracsizTekParca
+	//    0-9697797 KaynakKod.c 59 61 7A 69 4F 72 6E 65 67 69 33 00 | 0020 - 002B | YaziOrnegi3
+	//    0-9697797 KaynakKod.c Komut --- Komut
+	//    0-9697797 KaynakKod.c Adet:00050 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 22 41 6C 69 73 69 6C 64 69 6B 20 6F 7A 65 6C 20 | 0000 - 000F | "Alisildik ozel
+	//    0-9697797 KaynakKod.c 6B 61 72 61 6B 74 65 72 6C 69 20 79 61 7A 69 20 | 0010 - 001F | karakterli yazi
+	//    0-9697797 KaynakKod.c 6F 72 6E 65 67 69 7C 35 32 7C 22 20 4B 6F 6D 75 | 0020 - 002F | ornegi|52|" Komu
+	//    0-9697797 KaynakKod.c 74 33 | 0030 - 0031 | t3
+	//    0-9697797 KaynakKod.c OrnekYazi4 --- OrnekYazi4 = KomutSatiri_Oku_Yazi(Komut);
+	//    0-9697797 KaynakKod.c Adet:00039 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 41 6C 69 73 69 6C 64 69 6B 20 6F 7A 65 6C 20 6B | 0000 - 000F | Alisildik ozel k
+	//    0-9697797 KaynakKod.c 61 72 61 6B 74 65 72 6C 69 20 79 61 7A 69 20 6F | 0010 - 001F | arakterli yazi o
+	//    0-9697797 KaynakKod.c 72 6E 65 67 69 34 00 | 0020 - 0026 | rnegi4
+	//    0-9697797 KaynakKod.c Komut --- Komut
+	//    0-9697797 KaynakKod.c Adet:00006 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 4B 6F 6D 75 74 33 | 0000 - 0005 | Komut3
+	//    0-9697797 KaynakKod.c OrnekYazi1 Alisildik yazi ornegi
+	//    0-9697797 KaynakKod.c OrnekYazi2 AyiracsizTekParcaYaziOrnegi
+	//    0-9697797 KaynakKod.c OrnekYazi3 OzelKarakterli_AyiracsizTekParcaYaziOrnegi3
+	//    0-9697797 KaynakKod.c OrnekYazi4 Alisildik ozel karakterli yazi ornegi4
+	//    0-9697797 KaynakKod.c DizidekiKonum = KomutSatiri_KontrolEt_Siradaki_DizidekiElemanlardanBiriMi(Komut, dizi, 5); -> 2
+	//    0-9697797 KaynakKod.c Cevap --- KomutSatiri_Cevapla_Onay(Cevap);
+	//    0-9697797 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 3E 3E 54 61 6D 61 6D 0D 0A 00 00 00 00 00 00 00 | 0000 - 000F | >>Tamam
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0010 - 001F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
+	//    0-9697797 KaynakKod.c KomutSatiri_Cevap_Ekle(Cevap, "Serbest Cevap -858993459", 35);
+	//    0-9697797 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 53 65 72 62 65 73 74 20 43 65 76 61 70 20 33 35 | 0000 - 000F | Serbest Cevap 35
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0010 - 001F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
+	//    0-9697797 KaynakKod.c KomutSatiri_Cevapla_Hex(Cevap, Hex);
+	//    0-9697797 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 3E 3E 30 78 31 31 32 32 33 33 34 34 35 35 36 36 | 0000 - 000F | >>0x112233445566
+	//    0-9697797 KaynakKod.c 37 37 38 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F | 778899AABBCCDDEE
+	//    0-9697797 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
+	//    0-9697797 KaynakKod.c KomutSatiri_Cevapla_Onay(Cevap);
+	//    0-9697797 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 3E 3E 54 61 6D 61 6D 0D 0A 00 34 34 35 35 36 36 | 0000 - 000F | >>Tamam   445566
+	//    0-9697797 KaynakKod.c 37 37 38 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F | 778899AABBCCDDEE
+	//    0-9697797 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
+	//    0-9697797 KaynakKod.c KomutSatiri_Cevapla_TamSayi(Cevap, 35);
+	//    0-9697797 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 3E 3E 33 35 0D 0A 00 0D 0A 00 34 34 35 35 36 36 | 0000 - 000F | >>35      445566
+	//    0-9697797 KaynakKod.c 37 37 38 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F | 778899AABBCCDDEE
+	//    0-9697797 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
+	//    0-9697797 KaynakKod.c KomutSatiri_Cevapla_Yazi(Cevap, "Serbest Yazi");
+	//    0-9697797 KaynakKod.c Adet:00256 | Hex | Konum | Ascii
+	//    0-9697797 KaynakKod.c 3E 3E 22 53 65 72 62 65 73 74 20 59 61 7A 69 22 | 0000 - 000F | >>"Serbest Yazi"
+	//    0-9697797 KaynakKod.c 0D 0A 00 38 39 39 41 41 42 42 43 43 44 44 45 45 | 0010 - 001F |    899AABBCCDDEE
+	//    0-9697797 KaynakKod.c 46 46 0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 | 0020 - 002F | FF
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0040 - 004F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0050 - 005F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0060 - 006F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0070 - 007F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0080 - 008F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0090 - 009F |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00A0 - 00AF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00B0 - 00BF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00C0 - 00CF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00D0 - 00DF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
+	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
 	}
-	
-Ornek_Liste	
 	
 	void Ornek_Liste()
 	{
@@ -838,9 +960,9 @@ Ornek_Liste
 		sonuc = Liste_Eleman_Ekle(Liste, &Eleman2);
 		Gunluk("sonuc = Liste_Eleman_Ekle(Liste, &Eleman2); -> %d", sonuc);
 	
-		Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32));
+		Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32), true);
 		*Eleman3 = 3;
-		Gunluk("Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32)); -> 0x%X", (Tip_Isaretci_SayiKarsiligi)Eleman3);
+		Gunluk("Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32), true); -> 0x%X", (Tip_Isaretci_SayiKarsiligi)Eleman3);
 	
 		Tip_u8 Eleman1Okunan;
 		memcpy(&Eleman1Okunan, Liste_Eleman_Ilk(Liste), sizeof(Tip_u8));
@@ -863,30 +985,30 @@ Ornek_Liste
 			//Sirayla
 		}
 	
-		Liste_Eleman_Sil(Liste, &Eleman1, false);
-		Liste_Eleman_Sil(Liste, Eleman3, true);
+		Gunluk("Liste_Eleman_Sil(Liste, &Eleman1, false); -> %d", Liste_Eleman_Sil(Liste, &Eleman1, false));
+		Gunluk("Liste_Eleman_Sil(Liste, Eleman3, true); -> %d", Liste_Eleman_Sil(Liste, Eleman3, true));
 	
 		Liste_Sil(Liste, false);
 	
-	//	0-26313609 KaynakKod.c -----Ornek_Liste-----
-	//	0-26313609 KaynakKod.c Tip_bool sonuc = Liste_Eleman_Ekle(Liste, &Eleman1); -> 1
-	//	0-26313609 KaynakKod.c sonuc = Liste_Eleman_Ekle(Liste, &Eleman2); -> 1
-	//	0-26313609 KaynakKod.c Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32)); -> 0x369F40F8
-	//	0-26313609 KaynakKod.c memcpy(&Eleman1Okunan, Liste_Eleman_Ilk(Liste), sizeof(Tip_u8)); -> 1
-	//	0-26313609 KaynakKod.c memcpy(&Eleman3Okunan, Liste_Eleman_Son(Liste), sizeof(Tip_u32)); -> 3
-	//	0-26313609 KaynakKod.c Liste_Eleman_Sayisi(Liste) -> 3
-	//	0-26313609 KaynakKod.c Sayac : 1 --- Tip_Isaretci Isrt = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni); -> 0x371FFB87
-	//	0-26313609 KaynakKod.c Sayac : 2 --- Tip_Isaretci Isrt = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni); -> 0x371FFB84
-	//	0-26313609 KaynakKod.c Sayac : 3 --- Tip_Isaretci Isrt = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni); -> 0x369F40F8
+	//	0-10844376 KaynakKod.c -----Ornek_Liste-----
+	//	0-10844376 KaynakKod.c Tip_bool sonuc = Liste_Eleman_Ekle(Liste, &Eleman1); -> 1
+	//	0-10844376 KaynakKod.c sonuc = Liste_Eleman_Ekle(Liste, &Eleman2); -> 1
+	//	0-10844376 KaynakKod.c Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32), true); -> 0xFE7C60F8
+	//	0-10844376 KaynakKod.c memcpy(&Eleman1Okunan, Liste_Eleman_Ilk(Liste), sizeof(Tip_u8)); -> 1
+	//	0-10844376 KaynakKod.c memcpy(&Eleman3Okunan, Liste_Eleman_Son(Liste), sizeof(Tip_u32)); -> 3
+	//	0-10844376 KaynakKod.c Liste_Eleman_Sayisi(Liste) -> 3
+	//	0-10844376 KaynakKod.c Sayac : 1 --- Tip_Isaretci Isrt = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni); -> 0x8B7FF717
+	//	0-10844376 KaynakKod.c Sayac : 2 --- Tip_Isaretci Isrt = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni); -> 0x8B7FF714
+	//	0-10844376 KaynakKod.c Sayac : 3 --- Tip_Isaretci Isrt = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni); -> 0xFE7C60F8
+	//	0-10844376 KaynakKod.c Liste_Eleman_Sil(Liste, &Eleman1, false); -> 1
+	//	0-10844376 KaynakKod.c Liste_Eleman_Sil(Liste, Eleman3, true); -> 1
 	}
-	
-Ornek_Tampon
 	
 	void Ornek_Tampon()
 	{
 		Gunluk("-----Ornek_Tampon-----");
 	
-		Tip_Isaretci_Tampon Tampon =  Tampon_Yeni(10);
+		Tip_Isaretci_Tampon Tampon =  Tampon_Yeni(10, false);
 		if (Tampon == NULL) return;
 		Gunluk("Tip_Isaretci_Tampon Tampon = Tampon_Yeni(10); - isaretci 0x%X, Sayac %d, Kapasite %d", (Tip_Isaretci_SayiKarsiligi)Tampon->Isaretci, Tampon->Sayac, Tampon->Kapasite);
 	
@@ -926,15 +1048,9 @@ Ornek_Tampon
 		Adet = Tampon_DoluAlan(Tampon);
 		Gunluk("Adet = Tampon_DoluAlan(Tampon); -> %d", Adet);
 	
-		#ifdef _YT_Tanimli_HEAP_Kutuphanesini_kullanMA
-			Gunluk("Once - Tampon_Yenile(Tampon); - isaretci 0x%X, Sayac %d, Kapasite %d", (Tip_Isaretci_SayiKarsiligi)Tampon->Isaretci, Tampon->Sayac, Tampon->Kapasite);
-			Tampon_Yenile(Tampon);
-			Gunluk("Sonra - Tampon_Yenile(Tampon); - isaretci 0x%X, Sayac %d, Kapasite %d", (Tip_Isaretci_SayiKarsiligi)Tampon->Isaretci, Tampon->Sayac, Tampon->Kapasite);
-		#else
-			Tampon_Sil(Tampon);
-			Tampon_Yeni(10);
-			Gunluk("Tampon_Yeni(10); - isaretci 0x%X, Sayac %d, Kapasite %d", (Tip_Isaretci_SayiKarsiligi)Tampon->Isaretci, Tampon->Sayac, Tampon->Kapasite);
-		#endif
+		Tampon_Sil(Tampon);
+		Tampon = Tampon_Yeni(10, false);
+		Gunluk("Tampon_Yeni(10); - isaretci 0x%X, Sayac %d, Kapasite %d", (Tip_Isaretci_SayiKarsiligi)Tampon->Isaretci, Tampon->Sayac, Tampon->Kapasite);
 	
 		Tampon_DoluAlan(Tampon) = 5;
 		Gunluk("Tampon_DoluAlan(Tampon) = 5; - isaretci 0x%X, Sayac %d, Kapasite %d", (Tip_Isaretci_SayiKarsiligi)Tampon->Isaretci, Tampon->Sayac, Tampon->Kapasite);
@@ -947,36 +1063,33 @@ Ornek_Tampon
 	
 		Tampon_Sil(Tampon);
 	
-	//	0-4900218 KaynakKod.c -----Ornek_Tampon-----
-	//	0-4900218 KaynakKod.c Tip_Isaretci_Tampon Tampon = Tampon_Yeni(10); - isaretci 0xCE7C40A0, Sayac 0, Kapasite 10
-	//	0-4900218 KaynakKod.c Tip_bool sonuc = Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Tampon, Kaynak, strlen(Kaynak)); -> 1
-	//	0-4900218 KaynakKod.c Tampon_Bilgi_Ekle_GecerliKonumdanItibaren - isaretci 0xCE7C40A0, Sayac 7, Kapasite 10
-	//	0-4900218 KaynakKod.c Adet:00010 | Hex | Konum | Ascii
-	//	0-4900218 KaynakKod.c 41 72 47 65 4D 75 50 00 00 00 | 0000 - 0009 | ArGeMuP
-	//	0-4900218 KaynakKod.c Tip_u32 Adet = Tampon_Kapasite(Tampon); -> 10
-	//	0-4900218 KaynakKod.c Adet = Tampon_DoluAlan(Tampon); -> 7
-	//	0-4900218 KaynakKod.c Adet = Tampon_BosAlan(Tampon); -> 3
-	//	0-4900218 KaynakKod.c Adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, okunan_blok, sizeof(okunan_blok)); -> 7
-	//	0-4900218 KaynakKod.c Adet:00007 | Hex | Konum | Ascii
-	//	0-4900218 KaynakKod.c 41 72 47 65 4D 75 50 | 0000 - 0006 | ArGeMuP
-	//	0-4900218 KaynakKod.c Adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, okunan_blok2, sizeof(okunan_blok2)); -> 2
-	//	0-4900218 KaynakKod.c Adet:00002 | Hex | Konum | Ascii
-	//	0-4900218 KaynakKod.c 41 72 | 0000 - 0001 | Ar
-	//	0-4900218 KaynakKod.c Adet = Tampon_Bilgi_Oku_Konum(Tampon, 2, okunan_blok2, sizeof(okunan_blok2)); -> 2
-	//	0-4900218 KaynakKod.c Adet:00002 | Hex | Konum | Ascii
-	//	0-4900218 KaynakKod.c 47 65 | 0000 - 0001 | Ge
-	//	0-4900218 KaynakKod.c Adet = Tampon_Bilgi_Oku_BaslangictanGecerliKonumaKadar(Tampon, okunan_blok2, sizeof(okunan_blok2)); -> 2
-	//	0-4900218 KaynakKod.c Adet:00002 | Hex | Konum | Ascii
-	//	0-4900218 KaynakKod.c 41 72 | 0000 - 0001 | Ar
-	//	0-4900218 KaynakKod.c Adet = Tampon_DoluAlan(Tampon); -> 5
-	//	0-4900218 KaynakKod.c Once - Tampon_Yenile(Tampon); - isaretci 0xCE7C40A0, Sayac 5, Kapasite 10
-	//	0-4900218 KaynakKod.c Sonra - Tampon_Yenile(Tampon); - isaretci 0xCE7C40A0, Sayac 0, Kapasite 32
-	//	0-4900218 KaynakKod.c Tampon_DoluAlan(Tampon) = 5; - isaretci 0xCE7C40A0, Sayac 5, Kapasite 32
-	//	0-4900218 KaynakKod.c Tampon_Paketle(Tampon); - isaretci 0xCE7C40A0, Sayac 0, Kapasite 5
-	//	0-4900218 KaynakKod.c Tampon_Kirp(Tampon, 2, 1); - isaretci 0xCE7C40A2, Sayac 0, Kapasite 2
+	//	0-10636282 KaynakKod.c -----Ornek_Tampon-----
+	//	0-10636282 KaynakKod.c Tip_Isaretci_Tampon Tampon = Tampon_Yeni(10); - isaretci 0xF78560A0, Sayac 0, Kapasite 10
+	//	0-10636282 KaynakKod.c Tip_bool sonuc = Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Tampon, Kaynak, strlen(Kaynak)); -> 1
+	//	0-10636282 KaynakKod.c Tampon_Bilgi_Ekle_GecerliKonumdanItibaren - isaretci 0xF78560A0, Sayac 7, Kapasite 10
+	//	0-10636282 KaynakKod.c Adet:00010 | Hex | Konum | Ascii
+	//	0-10636282 KaynakKod.c 41 72 47 65 4D 75 50 00 00 00 | 0000 - 0009 | ArGeMuP
+	//	0-10636282 KaynakKod.c Tip_u32 Adet = Tampon_Kapasite(Tampon); -> 10
+	//	0-10636282 KaynakKod.c Adet = Tampon_DoluAlan(Tampon); -> 7
+	//	0-10636282 KaynakKod.c Adet = Tampon_BosAlan(Tampon); -> 3
+	//	0-10636282 KaynakKod.c Adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, okunan_blok, sizeof(okunan_blok)); -> 7
+	//	0-10636282 KaynakKod.c Adet:00007 | Hex | Konum | Ascii
+	//	0-10636282 KaynakKod.c 41 72 47 65 4D 75 50 | 0000 - 0006 | ArGeMuP
+	//	0-10636282 KaynakKod.c Adet = Tampon_Bilgi_Oku_Konum(Tampon, 0, okunan_blok2, sizeof(okunan_blok2)); -> 2
+	//	0-10636282 KaynakKod.c Adet:00002 | Hex | Konum | Ascii
+	//	0-10636282 KaynakKod.c 41 72 | 0000 - 0001 | Ar
+	//	0-10636282 KaynakKod.c Adet = Tampon_Bilgi_Oku_Konum(Tampon, 2, okunan_blok2, sizeof(okunan_blok2)); -> 2
+	//	0-10636282 KaynakKod.c Adet:00002 | Hex | Konum | Ascii
+	//	0-10636282 KaynakKod.c 47 65 | 0000 - 0001 | Ge
+	//	0-10636282 KaynakKod.c Adet = Tampon_Bilgi_Oku_BaslangictanGecerliKonumaKadar(Tampon, okunan_blok2, sizeof(okunan_blok2)); -> 2
+	//	0-10636282 KaynakKod.c Adet:00002 | Hex | Konum | Ascii
+	//	0-10636282 KaynakKod.c 41 72 | 0000 - 0001 | Ar
+	//	0-10636282 KaynakKod.c Adet = Tampon_DoluAlan(Tampon); -> 5
+	//	0-10636282 KaynakKod.c Tampon_Yeni(10); - isaretci 0xF78560A0, Sayac 0, Kapasite 10
+	//	0-10636282 KaynakKod.c Tampon_DoluAlan(Tampon) = 5; - isaretci 0xF78560A0, Sayac 5, Kapasite 10
+	//	0-10636282 KaynakKod.c Tampon_Paketle(Tampon); - isaretci 0xF78560A0, Sayac 0, Kapasite 5
+	//	0-10636282 KaynakKod.c Tampon_Kirp(Tampon, 2, 1); - isaretci 0xF78560A2, Sayac 0, Kapasite 2
 	}
-	
-Ornek_YaziIslemleri	
 	
 	void Ornek_YaziIslemleri()
 	{
@@ -1034,23 +1147,19 @@ Ornek_YaziIslemleri
 	//    0-6775953 KaynakKod.c YI_Yazdir_Hex_Tampon ->0x313233343536373839<-
 	}
 	
-Ornek_YerTahsisati	
-	
 	void Ornek_YerTahsisati()
 	{
 		Gunluk("-----Ornek_YerTahsisati-----");
 	
-		Tip_Isaretci Isrtc =  YT_Yeni(10, true);
+		Tip_Isaretci Isrtc =  YT_Yeni(10, false);
 		if (Isrtc == NULL) return;
 	
-		Gunluk("Tip_Isaretci Isrtc =  YT_Yeni(10, true); -> 0x%X", (Tip_Isaretci_SayiKarsiligi)Isrtc);
+		Gunluk("Tip_Isaretci Isrtc =  YT_Yeni(10, false); -> 0x%X", (Tip_Isaretci_SayiKarsiligi)Isrtc);
 		YT_Sil(Isrtc);
 	
-	//	0-7005875 KaynakKod.c -----Ornek_YerTahsisati-----
-	//	0-7005875 KaynakKod.c Tip_Isaretci Isrtc =  YT_Yeni(10, true); -> 0x18CC4090
+	//	0-10606422 KaynakKod.c -----Ornek_YerTahsisati-----
+	//	0-10606422 KaynakKod.c Tip_Isaretci Isrtc =  YT_Yeni(10, false); -> 0xAB2B6090
 	}
-	
-Ornek_Zamanlama	
 	
 	void Ornek_Zamanlama()
 	{
@@ -1080,8 +1189,6 @@ Ornek_Zamanlama
 	//	0-9706187 KaynakKod.c Kalan sure : 954 msn
 	//	0-9706703 KaynakKod.c Kalan sure : 438 msn
 	}
-	
-Ornek_HazirKod_C_Ayarlar_h	
 	
 	void Ornek_HazirKod_C_Ayarlar_h()
 	{
@@ -1114,6 +1221,8 @@ Ornek_HazirKod_C_Ayarlar_h
 	
 		Gunluk("Hesapla_Yuzde(15, 1000) -> %d", Hesapla_Yuzde(15, 1000));
 		Gunluk("Hesapla_Dolgu(35, 8) -> %d", Hesapla_Dolgu(35, 8));
+		Gunluk("Hesapla_EnKucuk(15, 1000) -> %d", Hesapla_EnKucuk(15, 1000));
+		Gunluk("Hesapla_EnBuyuk(35, 8) -> %d", Hesapla_EnBuyuk(35, 8));
 	
 		Tip_u32 Tutucu;
 		HataDurumu_Baslat(Tutucu);
@@ -1145,6 +1254,8 @@ Ornek_HazirKod_C_Ayarlar_h
 	//	0-12772500 KaynakKod.c 05 00 00 00 04 50 | 0000 - 0005 |      P
 	//	0-12772500 KaynakKod.c Hesapla_Yuzde(15, 1000) -> 1
 	//	0-12772500 KaynakKod.c Hesapla_Dolgu(35, 8) -> 5
+	//	0-12772500 KaynakKod.c Hesapla_EnKucuk(15, 1000) -> 15
+	//	0-12772500 KaynakKod.c Hesapla_EnBuyuk(35, 8) -> 35
 	//	0-12772500 KaynakKod.c HataDurumu_Baslat(Tutucu); -> 0
 	//	0-12772500 KaynakKod.c HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> 1
 	//	0-12772500 KaynakKod.c HataDurumu_Hatasiz(Tutucu, e_HataDurumu_Hata_Hata1); -> 1
@@ -1152,3 +1263,102 @@ Ornek_HazirKod_C_Ayarlar_h
 	//	0-12772500 KaynakKod.c HataDurumu_Hatali(Tutucu, e_HataDurumu_Hata_Hata1); -> 0
 	//	0-12772500 KaynakKod.c HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> 1
 	}
+	
+	void Kiyaslama_Dizi_Liste()
+	{
+		#define _Kiyaslama_Eleman_Sayisi 500
+		#define _Kiyaslama_Denenme_Sayisi 10
+	
+		int SureOlcumleri_Dizi[_Kiyaslama_Denenme_Sayisi];
+		int SureOlcumleri_Liste[_Kiyaslama_Denenme_Sayisi];
+	
+		YT_Sil(YT_Yeni(1, false));
+		Gunluk("Bostaki ram miktari %d bayt", YT_BosAlan());
+		Tip_u8 BosDegisken = 0;
+		int Tik = 0;
+		int ToplamSure = 0;
+		Tip_u8 * okunan = Tip_null;
+	
+		////////////////////////////////////////////////////////////////////
+	
+		Tik = GetTickCount() + 1000;
+		Tip_Isaretci_Liste Liste = Liste_Yeni();
+		for(Tip_u32 a = 0; a < _Kiyaslama_Eleman_Sayisi; a++)
+		{
+			if (!Liste_Eleman_Ekle(Liste, &BosDegisken))
+			{
+				Gunluk("Ram yetersiz %d", a);
+				return;
+			}
+	
+			if (Tik < GetTickCount())
+			{
+				Tik = GetTickCount() + 1000;
+				Gunluk("Eleman %d eklendi", a);
+			}
+		}
+		Gunluk("Liste %d eleman icin %d bayt alan kullandi", _Kiyaslama_Eleman_Sayisi, configTOTAL_HEAP_SIZE - YT_BosAlan());
+	
+		ToplamSure = 0;
+		for(Tip_u32 b = 0; b < _Kiyaslama_Denenme_Sayisi; b++)
+		{
+			Tik = GetTickCount();
+			Liste_Kuyruk_DegiskeniniOlustur(Liste, KuyrukDegiskeni);
+			while (KuyrukDegiskeni)
+			{
+				okunan = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni);
+				*okunan++;
+			}
+			SureOlcumleri_Liste[b] = GetTickCount() - Tik;
+	
+			ToplamSure += SureOlcumleri_Liste[b];
+		}
+		ToplamSure /= _Kiyaslama_Denenme_Sayisi;
+		Liste_Sil(Liste, false);
+		Gunluk("Liste -> Ortalama : %d msn", ToplamSure);
+		Gunluk("Liste silindikten sonraki bostaki ram miktari %d bayt", YT_BosAlan());
+	
+		/////////////////////////////////////////////////////////////////////
+	
+		Tik = GetTickCount() + 1000;
+		Tip_Isaretci_Dizi Dizi = Dizi_Yeni();
+		for(Tip_u32 a = 0; a < _Kiyaslama_Eleman_Sayisi; a++)
+		{
+			if (!Dizi_Eleman_Ekle(Dizi, &BosDegisken))
+			{
+				Gunluk("Ram yetersiz %d", a);
+				return;
+			}
+	
+			if (Tik < GetTickCount())
+			{
+				Tik = GetTickCount() + 1000;
+				Gunluk("Eleman %d eklendi", a);
+			}
+		}
+		Gunluk("Dizi %d eleman icin %d bayt alan kullandi", _Kiyaslama_Eleman_Sayisi, configTOTAL_HEAP_SIZE - YT_BosAlan());
+	
+		okunan = Tip_null; (void)okunan;
+		ToplamSure = 0;
+		for(Tip_u32 b = 0; b < _Kiyaslama_Denenme_Sayisi; b++)
+		{
+			Tik = GetTickCount();
+			for(Tip_u32 c = 0; c < _Kiyaslama_Eleman_Sayisi; c++)
+			{
+				okunan = Dizi_Elemani(Dizi, c);
+				*okunan++;
+			}
+			SureOlcumleri_Dizi[b] = GetTickCount() - Tik;
+	
+			ToplamSure += SureOlcumleri_Dizi[b];
+		}
+		ToplamSure /= _Kiyaslama_Denenme_Sayisi;
+		Dizi_Sil(Dizi, false);
+		Gunluk("Dizi -> Ortalama : %d msn", ToplamSure);
+		Gunluk("Dizi silindikten sonraki bostaki ram miktari %d bayt", YT_BosAlan());
+	
+		//Eleman Ekle / Sil süresi 		-> Dizi > Liste*
+		//Elemanlar arasinda dolasma 	-> Birbirine denk
+		//Ram kullanimi 				-> Liste > Dizi*
+	}
+

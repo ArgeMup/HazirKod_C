@@ -17,7 +17,7 @@
 
 			if (_Dizi_(Dizi)->Isaretci != Tip_null)
 			{
-				_Islem_memcpy_(Isaretci, _Dizi_(Dizi)->Isaretci, EnKucuk(_Dizi_(Dizi)->ElemanSayisi, YeniElemanSayisi) * Isaretci_KapladigiAlan_Bayt);
+				_Islem_memcpy_(Isaretci, _Dizi_(Dizi)->Isaretci, Hesapla_EnKucuk(_Dizi_(Dizi)->ElemanSayisi, YeniElemanSayisi) * Isaretci_KapladigiAlan_Bayt);
 				YT_Sil(_Dizi_(Dizi)->Isaretci);
 			}
 

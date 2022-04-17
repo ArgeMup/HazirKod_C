@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.6
+// V1.7
 
 #include "KomutSatiri.h"
 
@@ -19,51 +19,44 @@
 	}
 
 	//Blok Bilgi Icerik Kontrol Islemleri
-	Tip_bool KomutSatiri_Tampon_BilgiUygunMu(Tip_Isaretci_Tampon Tampon, Tip_bool UzunKomut)
+	Tip_bool KomutSatiri_Baslat(Tip_Isaretci_Tampon Tampon, Tip_bool UzunKomut, Tip_Isaretci_KomutSatiri_Tampon_Detaylar Detaylar)
 	{
-		Tip_i32 Konum = 0;
+		Tip_s_KomutSatiri_Tampon_Detaylar _TamponDetaylari;
+		if (Detaylar == Tip_null) Detaylar = &_TamponDetaylari;
+		_Islem_memset_(Detaylar, 0, sizeof(Tip_s_KomutSatiri_Tampon_Detaylar));
+
+		Tip_i32 Konum = AI_Bul_Blok_Sondan(Tampon->Isaretci, Tampon->Sayac, _KomutSatiri_Komut_Bitisi, sizeof(_KomutSatiri_Komut_Bitisi) - 1);
+		if (Konum < 0) return false;
+		Detaylar->Komut_Bitisi = Isaretci_Konumlandir(Tampon->Isaretci, Konum, Tip_char, Tip_void);
 
 		if (UzunKomut)
 		{
-			if (Tampon->Sayac < _KomutSatiri_UzunKomut_EnAzKaSa) return false;
-
-			Konum = AI_Bul_Blok(Tampon->Isaretci, Tampon->Sayac, _KomutSatiri_UzunKomut_Baslangici, sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1);
+			Konum = AI_Bul_Blok(Tampon->Isaretci, Konum, _KomutSatiri_UzunKomut_Baslangici, sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1);
 		if (Konum < 0) return false;
+			Detaylar->Komut_Baslangici = Isaretci_Konumlandir(Tampon->Isaretci, Konum, Tip_char, Tip_void);
+		}
+		else Detaylar->Komut_Baslangici = Tampon->Isaretci;
 
-		Konum += sizeof(_KomutSatiri_UzunKomut_Baslangici) + 1 /*Ayirac*/;
+		Konum = (Tip_Isaretci_SayiKarsiligi)Detaylar->Komut_Bitisi - (Tip_Isaretci_SayiKarsiligi)Detaylar->Komut_Baslangici;
+		Detaylar->YeterliSayidaKarakterVarMi = Konum >= ( UzunKomut ? _KomutSatiri_UzunKomut_EnAzKaSa : _KomutSatiri_KisaKomut_EnAzKaSa );
+
+		if (!Detaylar->YeterliSayidaKarakterVarMi) return false;
+
+		if (UzunKomut)
+		{
+			Tampon->Isaretci = Isaretci_Konumlandir(Detaylar->Komut_Baslangici, sizeof(_KomutSatiri_UzunKomut_Baslangici), Tip_char, Tip_void); /*DonanimAdresi bilgisinin ilk karakterine denk gelecek*/
+			Tampon->Kapasite = Konum - sizeof(_KomutSatiri_UzunKomut_Baslangici);
+
+			if (!KomutSatiri_Oku_TamSayi(Tampon, &Detaylar->DonanimAdresi)) return false;
+			if ( ( Detaylar->DonanimAdresi == _KomutSatiri_DonanimAdresi_GenelCagri ) ||
+				 ( Detaylar->DonanimAdresi == _KomutSatiri_DonanimAdresi_Kendisi ) ) return true;
 		}
 		else
 		{
-			if (Tampon->Sayac < _KomutSatiri_KisaKomut_EnAzKaSa) return false;
-		}
-
-		Konum = AI_Bul_Blok(Isaretci_Konumlandir(Tampon->Isaretci, Konum, Tip_char, Tip_void), Tampon->Sayac - Konum, _KomutSatiri_Komut_Bitisi, sizeof(_KomutSatiri_Komut_Bitisi) - 1);
-		if (Konum < 0) return false;
-
+			Tampon->Kapasite = Konum;
+			Detaylar->DonanimAdresi = -1;
 		return true;
 	}
-	Tip_bool KomutSatiri_Tampon_Baslat(Tip_Isaretci_Tampon Tampon, Tip_bool UzunKomut, Tip_i32 DonanimAdresi)
-	{
-		Tip_i32 Konum = 0;
-
-		if (UzunKomut)
-		{
-			Konum = AI_Bul_Blok(Tampon->Isaretci, Tampon->Kapasite, _KomutSatiri_UzunKomut_Baslangici, sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1);
-		if (Konum < 0) return false;
-
-		_KomutSatiri_Tampon_Kirp(Tampon, Konum + sizeof(_KomutSatiri_UzunKomut_Baslangici)); /*Ayirac uzerine denk gelecek*/
-		}
-		else Tampon_Paketle(Tampon);
-
-		Konum = AI_Bul_Blok(Tampon->Isaretci, Tampon->Kapasite, _KomutSatiri_Komut_Bitisi, sizeof(_KomutSatiri_Komut_Bitisi) - 1);
-		if (Konum < 0) return false;
-		Tampon->Kapasite = Konum;
-
-		if (!UzunKomut) return true;
-
-		if (!KomutSatiri_Oku_TamSayi(Tampon, &Konum)) return false;
-
-		if (Konum == _KomutSatiri_DonanimAdresi_GenelCagri || Konum == DonanimAdresi) return true;
 
 		return false;
 	}
