@@ -138,6 +138,7 @@
 	#ifdef HazirKod_C_Kullan_Gunluk
 		#define _Gunluk_Cikti_Onem_Seviyesi 					_Gunluk_Cikti_Onem_Seviye_Geveze
 		#define _Gunluk_Renkli_Cikti_Uretsin
+		#define _Gunluk_Sablon_Satir_Numarasi					":%d" //Satir numarasini kapatmak icin bu satiri kaldir
 		#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//{ printf("%s", Tampon); fflush(stdout); } //fwrite (Tampon, sizeof(Tip_u8), Adet, stdout);
 		#define _Gunluk_Renk_BeklenmeyenDurum					( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi )
 		#define _Gunluk_Renk_Hata								( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah )

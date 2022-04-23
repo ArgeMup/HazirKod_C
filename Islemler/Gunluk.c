@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.9
+// V1.10
 #define _Gunluk_Baslik "Gunluk"
 #include "Gunluk.h"
 
@@ -14,19 +14,20 @@
 		_Gunluk_Disari_Aktarma_Islemi("\r\n\r\n\r\n", 6);
 		_Gunluk_Disari_Aktarma_Islemi("*****************************************************\r\n", 55);
 	}
-	Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik, const Tip_char * Sekil, ...)
+	Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem , const Tip_char * Sekil, ...)
 	{
 		if ( Baslik == NULL || !Sure_DolduMu(_Gunluk_An) ) return;
 
 		va_list valist;
-		va_start(valist, Sekil);
+		if (Sekil) va_start(valist, Sekil);
 		Tip_bool Kirpildi = false;
 
 		#ifdef _Gunluk_Tampon_Kapasitesi_Sabit
 			Tip_char Yazi[_Gunluk_Tampon_Kapasitesi_Sabit];
 			Tip_u32 Kapasite = _Gunluk_Tampon_Kapasitesi_Sabit - 2 /*\r\n*/;
 		#else
-			Tip_u32 Kapasite = vsnprintf(NULL, 0, Sekil, valist);
+			Tip_u32 Kapasite = 0;
+			if (Sekil) Kapasite = vsnprintf(NULL, 0, Sekil, valist);
 			Kapasite += Gorunum == e_Gunluk_Gorunum_Duzyazi ? 0 : 32;
 			Kapasite += 12 /*Zaman Damgasi*/ + 32 /*Tahmini Baslik*/ + 2 /*son*/;
 			if (Kapasite > _Gunluk_Tampon_Azami_Kapasitesi)
@@ -53,18 +54,18 @@
 		Sure_Yazdir(Zaman_Damgasi, ZamanDamgasiYazisi, sizeof(ZamanDamgasiYazisi));
 
 		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", ZamanDamgasiYazisi);
-		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s %s", Baslik, ( Kirpildi ? "KIRPILDI " : "" ) );
-		Konum += vsnprintf(&Yazi[Konum], Kapasite - Konum, Sekil, valist);
+		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s" _Gunluk_Sablon_Satir_Numarasi " %s", Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken, ( Kirpildi ? "KIRPILDI " : "" ) );
+		if (Sekil) Konum += vsnprintf(&Yazi[Konum], Kapasite - Konum, Sekil, valist);
 
 		if (Gorunum != e_Gunluk_Gorunum_Duzyazi) Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "\033[0m");
 	
 		Konum += snprintf(&Yazi[Konum],  sizeof(Yazi) - Konum, "\r\n");
 
-		va_end(valist);
+		if (Sekil) va_end(valist);
 	
 		_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 	}
-	Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik, Tip_Isaretci Tampon, Tip_u16 Adet)
+	Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, Tip_Isaretci Tampon, Tip_u16 Adet)
 	{
 		if ( Baslik == NULL || !Sure_DolduMu(_Gunluk_An) ) return;
 
@@ -79,7 +80,7 @@
 		Sure_Yazdir(Zaman_Damgasi, ZamanDamgasiYazisi, sizeof(ZamanDamgasiYazisi));
 
 		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", ZamanDamgasiYazisi);
-		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s Adet:%.5d | Hex | Konum | Ascii\r\n", Baslik, Adet);
+		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s" _Gunluk_Sablon_Satir_Numarasi " Adet:%.5d | Hex | Konum | Ascii\r\n", Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken, Adet);
 		_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 		
 		while (YazdirilanAdet < Adet)
@@ -89,7 +90,7 @@
 
 			Konum = 0;
 
-			Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s %s ", ZamanDamgasiYazisi, Baslik);
+			Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s %s" _Gunluk_Sablon_Satir_Numarasi " ", ZamanDamgasiYazisi, Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken);
 
 			for (Tip_u16 i = 0; i < AnlikAdet; i++)
 			{

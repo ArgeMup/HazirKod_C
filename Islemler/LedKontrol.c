@@ -52,8 +52,10 @@
 			default:
 			case (e_LedKontrol_Islem_IlkCalistirma):
 				LedKontrol_AnlikBildirim();
+				goto LedKontrol_Gorev_e_LedKontrol_Islem_Bosta;
 
 			case (e_LedKontrol_Islem_Bosta):
+			LedKontrol_Gorev_e_LedKontrol_Islem_Bosta:
 				if (_LedKontrol.AnlikBildirim_Isteniyor) Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_AnlikBildirim_0;
 				else
 				{
@@ -72,8 +74,10 @@
 				_LedKontrol.SayacGenel = _LedKontrol_AnlikBildirim_Adet;
 				_LedKontrol.AnlikBildirim_Isteniyor = false;
 				Detaylar->CalistirilacakAdim++;
+				goto LedKontrol_Gorev_e_LedKontrol_Islem_AnlikBildirim_1;
 
 			case (e_LedKontrol_Islem_AnlikBildirim_1):
+			LedKontrol_Gorev_e_LedKontrol_Islem_AnlikBildirim_1:
 				if (--_LedKontrol.SayacGenel == 0)
 				{
 					Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_Bosta;
