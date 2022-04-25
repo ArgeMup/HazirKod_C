@@ -15,8 +15,8 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	#include "Zamanlama.h"
 	
 	//////////////////////////////////////////////////////////////////////////////
-	#define _Gunluk_Baslik "KaynakKod.c"	//Gunluk ciktilarini tum dosyada kapatmak için NULL olmali
-	#include "Gunluk.h"						//Kaynak kod içinde tanimlanmali
+	#define _Gunluk_Baslik "KaynakKod.c"	//Gunluk ciktilarini tum dosyada kapatmak iÃ§in NULL olmali
+	#include "Gunluk.h"						//Kaynak kod iÃ§inde tanimlanmali
 	//////////////////////////////////////////////////////////////////////////////
 	
 	void Ornek_AramaIslemleri();
@@ -53,10 +53,10 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	
 		return EXIT_SUCCESS;
 	}
-	
+
 	void Ornek_Gunluk()
 	{
-		//Sure Sayacini baslatmak için gerekli
+		//Sure Sayacini baslatmak iÃ§in gerekli
 		Gunluk_Baslat();
 	
 		Gunluk("Gelisiguzel bir bilgi verir - siyah yazi");
@@ -82,7 +82,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-19698453 KaynakKod.c 61 62 59 5A 01 05 23 | 0000 - 0006 | abYZ  #
 	//	0-19699968 KaynakKod.c Bunu yazdiracak
 	}
-	
+
 	void Ornek_AramaIslemleri()
 	{
 		Gunluk("-----Ornek_AramaIslemleri-----");
@@ -220,7 +220,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-28180812 KaynakKod.c 04 41 72 67 65 4D 75 70 00 09 0A 23 2D 03 04 05 | 0020 - 002F |  ArgeMup   #-
 	//	0-28180812 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 0030 - 003F |
 	}
-	
+
 	Tip_bool Ornek_Depo_Islem_Siliniyor_IkinciSefer = false;
 	Tip_bool Ornek_Depo_Islem_Siliniyor(Tip_Isaretci_IGIC IGIC, Tip_u32 Adet)
 	{
@@ -314,7 +314,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-28515734 KaynakKod.c Adet = Depo_DoluAlan(Depo); -> 51
 	//	0-28515734 KaynakKod.c Adet = Depo_Kapasite(Depo); -> 100
 	}
-	
+
 	void Ornek_Dizi()
 	{
 		Gunluk("-----Ornek_Dizi-----");
@@ -383,7 +383,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-12872515 KaynakKod.c Adet:00008 | Hex | Konum | Ascii
 	//	0-12872515 KaynakKod.c A6 F8 7F F5 CD 00 00 00 | 0000 - 0007 |
 	}
-	
+
 	Tip_bool Ornek_Gorev_Islem_BirKez_HemenCalistirildi = false;
 	Tip_i32 Ornek_Gorev_Islem(Tip_Isaretci_Gorev_Detaylar Detaylar)
 	{
@@ -408,7 +408,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	
 		Gunluk("bool sonuc = Gorev_Islem_Ekle(Gorev, Ornek_Gorev_Islem, &KullaniciNesnesi); -> %d", sonuc);
 	
-	////Led kontrol islemi GOREV kutuphanesine uygun, donanýmsal hatalar vb. olaylar
+	////Led kontrol islemi GOREV kutuphanesine uygun, donanÄ±msal hatalar vb. olaylar
 	////LedKontrol kutuphanesi ile dis dunyaya aktarilabilir
 	//	sonuc = Gorev_Islem_Ekle(Gorev, LedKontrol_Gorev, NULL);
 	//	Gunluk("sonuc = Gorev_Islem_Ekle(Gorev, LedKontrol_Gorev, NULL); -> %d", sonuc);
@@ -451,7 +451,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-20749672 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 4294967295
 	//	0-20749672 KaynakKod.c:444 Bitti, Kullanici Nesnesi : -1968869232
 	}
-	
+
 	Tip_bool Ornek_IlkGirenIlkCikar_Islem_Siliniyor(Tip_Isaretci_IGIC IGIC, Tip_u32 Adet)
 	{
 		Gunluk("Ornek_IlkGirenIlkCikar_Islem_Siliniyor, %d adet", Adet);
@@ -517,7 +517,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-21856437 KaynakKod.c Ornek_IlkGirenIlkCikar_Islem_Siliniyor, 14 adet
 	//	0-21856437 KaynakKod.c sonuc = IGIC_Bilgi_Ekle(IGIC, Bilgi, strlen(Bilgi)); -> 1
 	}
-	
+
 	Tip_u32 KomutSatiri_DonanimAdresi = 1;
 	void Ornek_KomutSatiri()
 	{
@@ -943,7 +943,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00E0 - 00EF |
 	//    0-9697797 KaynakKod.c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | 00F0 - 00FF |
 	}
-	
+
 	void Ornek_Liste()
 	{
 		Gunluk("-----Ornek_Liste-----");
@@ -1003,7 +1003,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-10844376 KaynakKod.c Liste_Eleman_Sil(Liste, &Eleman1, false); -> 1
 	//	0-10844376 KaynakKod.c Liste_Eleman_Sil(Liste, Eleman3, true); -> 1
 	}
-	
+
 	void Ornek_Tampon()
 	{
 		Gunluk("-----Ornek_Tampon-----");
@@ -1093,7 +1093,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-10636282 KaynakKod.c Tampon_Kirp(Tampon, 2, 1); - isaretci 0xF78560A2, Sayac 0, Kapasite 2
 	//  0-10636282 KaynakKod.c IsiBitinceSil 0, Nesne 0000000000000000
 	}
-	
+
 	void Ornek_YaziIslemleri()
 	{
 		Gunluk("-----Ornek_YaziIslemleri-----");
@@ -1149,7 +1149,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//    0-6775953 KaynakKod.c YI_Yazdir_TamSayi ->65535<-
 	//    0-6775953 KaynakKod.c YI_Yazdir_Hex_Tampon ->0x313233343536373839<-
 	}
-	
+
 	void Ornek_YerTahsisati()
 	{
 		Gunluk("-----Ornek_YerTahsisati-----");
@@ -1163,7 +1163,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-10606422 KaynakKod.c -----Ornek_YerTahsisati-----
 	//	0-10606422 KaynakKod.c Tip_Isaretci Isrtc =  YT_Yeni(10, false); -> 0xAB2B6090
 	}
-	
+
 	void Ornek_Zamanlama()
 	{
 		Gunluk("-----Ornek_Zamanlama-----");
@@ -1192,7 +1192,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-9706187 KaynakKod.c Kalan sure : 954 msn
 	//	0-9706703 KaynakKod.c Kalan sure : 438 msn
 	}
-	
+
 	void Ornek_HazirKod_C_Ayarlar_h()
 	{
 		Gunluk("-----Ornek_HazirKod_C_Ayarlar_h-----");
@@ -1266,7 +1266,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-12772500 KaynakKod.c HataDurumu_Hatali(Tutucu, e_HataDurumu_Hata_Hata1); -> 0
 	//	0-12772500 KaynakKod.c HataDurumu_HataDevamEdiyorMu(Tutucu, e_HataDurumu_Hata_Hata1) -> 1
 	}
-	
+
 	void Kiyaslama_Dizi_Liste()
 	{
 		#define _Kiyaslama_Eleman_Sayisi 500
@@ -1360,7 +1360,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		Gunluk("Dizi -> Ortalama : %d msn", ToplamSure);
 		Gunluk("Dizi silindikten sonraki bostaki ram miktari %d bayt", YT_BosAlan());
 	
-		//Eleman Ekle / Sil süresi 		-> Dizi > Liste*
+		//Eleman Ekle / Sil sÃ¼resi 		-> Dizi > Liste*
 		//Elemanlar arasinda dolasma 	-> Birbirine denk
 		//Ram kullanimi 				-> Liste > Dizi*
 	}
