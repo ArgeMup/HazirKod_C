@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.6
+// V1.7
 
 #ifndef __HazirKod_C_Tampon_H__
 #define __HazirKod_C_Tampon_H__
@@ -11,18 +11,19 @@
 		#include "YerTahsisati.h"
 
 		////////////////////////////////////////////////////////////////////////////////
-		//Ic Kullanim
+		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
 		typedef struct
 		{
 			Tip_Isaretci Isaretci;
 			Tip_u32 Kapasite;
 			Tip_u32 Sayac;
+
+			#ifdef _Tampon_Sablon_KullaniciNesnesi
+				_Tampon_Sablon_KullaniciNesnesi KullaniciNesnesi;
+			#endif
 		} * Tip_Isaretci_Tampon, _Tip_s_Tampon;
 
-		////////////////////////////////////////////////////////////////////////////////
-		//Genel Goruse Acik Tanimlamalar
-		////////////////////////////////////////////////////////////////////////////////
 		#define Tampon_Kapasite(s_Tampon)										( s_Tampon->Kapasite )
 		#define Tampon_DoluAlan(s_Tampon)										( s_Tampon->Sayac )
 		#define Tampon_BosAlan(s_Tampon)										( Tampon_Kapasite(s_Tampon) - Tampon_DoluAlan(s_Tampon) )

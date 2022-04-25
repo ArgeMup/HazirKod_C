@@ -130,6 +130,12 @@
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Gorev
 		typedef Tip_u8 							_Tip_Gorev_CalistirilacakAdim;
+		typedef struct
+		{
+			Tip_u32 Sayac;
+			Tip_Isaretci Nesne;
+		} Tip_s_Gorev_KullaniciNesnesi;
+		#define _Gorev_Sablon_KullaniciNesnesi					Tip_s_Gorev_KullaniciNesnesi //KullaniciNesnesini kapatmak icin bu satiri kaldir
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -234,6 +240,12 @@
 	//Tampon.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Tampon
+		typedef struct
+		{
+			bool IsiBitinceSil;
+			Tip_Isaretci Nesne;
+		} Tip_s_Tampon_KullaniciNesnesi;
+		#define _Tampon_Sablon_KullaniciNesnesi					Tip_s_Tampon_KullaniciNesnesi //KullaniciNesnesini kapatmak icin bu satiri kaldir
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////

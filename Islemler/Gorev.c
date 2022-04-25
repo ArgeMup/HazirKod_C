@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.4
+// V1.5
 
 #include "Gorev.h"
 
@@ -20,7 +20,7 @@
 		} ZamanlamayaMudahaleEt;
 	} _Tip_s_Gorev;
 
-	Tip_bool Gorev_Islem_Ekle(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem, Tip_Isaretci KullaniciNesnesi)
+	Tip_bool Gorev_Islem_Ekle(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem _Gorev_Sablon_KullaniciNesnesi_Islem)
 	{
 		if (Gorev == Tip_null || Islem == Tip_null) return false;
 
@@ -28,7 +28,10 @@
 		if (Yeni == Tip_null) return false;
 
 		Yeni->Islem = Islem;
+
+		#ifdef _Gorev_Sablon_KullaniciNesnesi
 		Yeni->Detaylar.KullaniciNesnesi = KullaniciNesnesi;
+		#endif
 
 		return true;
 	}

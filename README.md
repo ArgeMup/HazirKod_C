@@ -387,9 +387,8 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	Tip_bool Ornek_Gorev_Islem_BirKez_HemenCalistirildi = false;
 	Tip_i32 Ornek_Gorev_Islem(Tip_Isaretci_Gorev_Detaylar Detaylar)
 	{
-		Gunluk("Ornek_Gorev_Islem, Kullanici Nesnesi : %u\r\n", *((Tip_u32 *)Detaylar->KullaniciNesnesi));
-	
-		if (++*((Tip_u32 *)Detaylar->KullaniciNesnesi) > 5)
+		Gunluk("Ornek_Gorev_Islem, Kullanici Nesnesi : %u\r\n", Detaylar->KullaniciNesnesi->Sayac);
+		if (++Detaylar->KullaniciNesnesi->Sayac > 5)
 		{
 			Gorev_Islem_CikVeSil();
 		}
@@ -400,12 +399,13 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	{
 		Gunluk("-----Ornek_Gorev-----");
 	
-		Tip_u32 KullaniciNesnesi = 0;
+		Tip_s_Gorev_KullaniciNesnesi KullaniciNesnesi = { 0 };
 	
 		Tip_Isaretci_Gorev Gorev =  Gorev_Yeni();
 		if (Gorev == NULL) return;
 	
 		bool sonuc = Gorev_Islem_Ekle(Gorev, Ornek_Gorev_Islem, &KullaniciNesnesi);
+	
 		Gunluk("bool sonuc = Gorev_Islem_Ekle(Gorev, Ornek_Gorev_Islem, &KullaniciNesnesi); -> %d", sonuc);
 	
 	////Led kontrol islemi GOREV kutuphanesine uygun, donanýmsal hatalar vb. olaylar
@@ -415,7 +415,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	
 		while (Gorev_Islem_MevcutMu(Gorev, Ornek_Gorev_Islem))
 		{
-			if (!Ornek_Gorev_Islem_BirKez_HemenCalistirildi && KullaniciNesnesi == 3)
+			if (!Ornek_Gorev_Islem_BirKez_HemenCalistirildi && KullaniciNesnesi.Sayac == 3)
 			{
 				Gorev_Islem_HemenCalistir(Gorev, Ornek_Gorev_Islem, 5);
 				Gunluk("Gorev_Islem_HemenCalistir(Gorev, Ornek_Gorev_Islem, 5);");
@@ -431,25 +431,25 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		Gorev_Sil(Gorev);
 		Gunluk("Bitti, Kullanici Nesnesi : %d\r\n", KullaniciNesnesi);
 	
-	//	0-30695609 KaynakKod.c -----Ornek_Gorev-----
-	//	0-30695609 KaynakKod.c bool sonuc = Gorev_Islem_Ekle(Gorev, Ornek_Gorev_Islem, &KullaniciNesnesi); -> 1
-	//	0-30695609 KaynakKod.c Ornek_Gorev_Islem, Kullanici Nesnesi : 0
-	//	0-30695609 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
-	//	0-30696625 KaynakKod.c Ornek_Gorev_Islem, Kullanici Nesnesi : 1
-	//	0-30696625 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
-	//	0-30697625 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1
-	//	0-30697640 KaynakKod.c Ornek_Gorev_Islem, Kullanici Nesnesi : 2
-	//	0-30697640 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
-	//	0-30698656 KaynakKod.c Gorev_Islem_HemenCalistir(Gorev, Ornek_Gorev_Islem, 5);
-	//	0-30698656 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 5
-	//	0-30698671 KaynakKod.c Ornek_Gorev_Islem, Kullanici Nesnesi : 3
-	//	0-30698671 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
-	//	0-30699671 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1
-	//	0-30699687 KaynakKod.c Ornek_Gorev_Islem, Kullanici Nesnesi : 4
-	//	0-30699687 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
-	//	0-30700703 KaynakKod.c Ornek_Gorev_Islem, Kullanici Nesnesi : 5
-	//	0-30700703 KaynakKod.c Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 4294967295
-	//	0-30700703 KaynakKod.c Bitti, Kullanici Nesnesi : 6
+	//	0-20744594 KaynakKod.c:412 -----Ornek_Gorev-----
+	//	0-20744594 KaynakKod.c:421 bool sonuc = Gorev_Islem_Ekle(Gorev, Ornek_Gorev_Islem, &KullaniciNesnesi); -> 1
+	//	0-20744594 KaynakKod.c:402 Ornek_Gorev_Islem, Kullanici Nesnesi : 0
+	//	0-20744594 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
+	//	0-20745594 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1
+	//	0-20745610 KaynakKod.c:402 Ornek_Gorev_Islem, Kullanici Nesnesi : 1
+	//	0-20745610 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
+	//	0-20746626 KaynakKod.c:402 Ornek_Gorev_Islem, Kullanici Nesnesi : 2
+	//	0-20746626 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
+	//	0-20747626 KaynakKod.c:433 Gorev_Islem_HemenCalistir(Gorev, Ornek_Gorev_Islem, 5);
+	//	0-20747626 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 5
+	//	0-20747641 KaynakKod.c:402 Ornek_Gorev_Islem, Kullanici Nesnesi : 3
+	//	0-20747641 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
+	//	0-20748657 KaynakKod.c:402 Ornek_Gorev_Islem, Kullanici Nesnesi : 4
+	//	0-20748657 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1000
+	//	0-20749657 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 1
+	//	0-20749672 KaynakKod.c:402 Ornek_Gorev_Islem, Kullanici Nesnesi : 5
+	//	0-20749672 KaynakKod.c:438 Tip_u32 TavsiyeEdilenBeklemeMiktari = Gorev_Calistir(Gorev); -> 4294967295
+	//	0-20749672 KaynakKod.c:444 Bitti, Kullanici Nesnesi : -1968869232
 	}
 	
 	Tip_bool Ornek_IlkGirenIlkCikar_Islem_Siliniyor(Tip_Isaretci_IGIC IGIC, Tip_u32 Adet)
@@ -1061,6 +1061,8 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		Tampon_Kirp(Tampon, 2, 1);
 		Gunluk("Tampon_Kirp(Tampon, 2, 1); - isaretci 0x%X, Sayac %d, Kapasite %d", (Tip_Isaretci_SayiKarsiligi)Tampon->Isaretci, Tampon->Sayac, Tampon->Kapasite);
 	
+		Gunluk("IsiBitinceSil %d, Nesne %p", Tampon->KullaniciNesnesi.IsiBitinceSil, Tampon->KullaniciNesnesi.Nesne);
+	
 		Tampon_Sil(Tampon);
 	
 	//	0-10636282 KaynakKod.c -----Ornek_Tampon-----
@@ -1089,6 +1091,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-10636282 KaynakKod.c Tampon_DoluAlan(Tampon) = 5; - isaretci 0xF78560A0, Sayac 5, Kapasite 10
 	//	0-10636282 KaynakKod.c Tampon_Paketle(Tampon); - isaretci 0xF78560A0, Sayac 0, Kapasite 5
 	//	0-10636282 KaynakKod.c Tampon_Kirp(Tampon, 2, 1); - isaretci 0xF78560A2, Sayac 0, Kapasite 2
+	//  0-10636282 KaynakKod.c IsiBitinceSil 0, Nesne 0000000000000000
 	}
 	
 	void Ornek_YaziIslemleri()
