@@ -1,8 +1,12 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.12
+// V1.13
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
+
+	#ifdef DEBUG
+		#warning "!!! HATA AYIKLAMA ICIN DERLENEN KOD CALISIYOR !!!"
+	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
 	//HazirKod_C_Ayarlar.h
@@ -130,12 +134,7 @@
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Gorev
 		typedef Tip_u8 							_Tip_Gorev_CalistirilacakAdim;
-		typedef struct
-		{
-			Tip_u32 Sayac;
-			Tip_Isaretci Nesne;
-		} Tip_s_Gorev_KullaniciNesnesi;
-		#define _Gorev_Sablon_KullaniciNesnesi					Tip_s_Gorev_KullaniciNesnesi //KullaniciNesnesini kapatmak icin bu satiri kaldir
+		#define _Gorev_Sablon_KullaniciNesnesi	//KullaniciNesnesini kapatmak icin bu satiri kaldir
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////

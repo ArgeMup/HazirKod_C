@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.5
+// V1.6
 
 #include "Gorev.h"
 
@@ -30,7 +30,7 @@
 		Yeni->Islem = Islem;
 
 		#ifdef _Gorev_Sablon_KullaniciNesnesi
-		Yeni->Detaylar.KullaniciNesnesi = KullaniciNesnesi;
+			Yeni->Detaylar.KullaniciNesnesi = KullaniciNesnesi;
 		#endif
 
 		return true;
@@ -47,7 +47,7 @@
 
 		return false;
 	}
-	Tip_void Gorev_Islem_HemenCalistir(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem, Tip_u32 Gecikme_msn)
+	Tip_void Gorev_Islem_HemenCalistir(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem _Gorev_Sablon_KullaniciNesnesi_Islem, Tip_u32 Gecikme_msn)
 	{
 		if (Gorev == Tip_null || Islem == Tip_null) return;
 
@@ -56,9 +56,19 @@
 			_Tip_s_Gorev * Eleman = Dizi_Elemani(Gorev, i);
 			if (Eleman->Islem == Islem)
 			{
-				Eleman->ZamanlamayaMudahaleEt.Gecikme_msn = Gecikme_msn;
-				Eleman->ZamanlamayaMudahaleEt.HemenCalistir = true;
-				return;
+				#ifdef _Gorev_Sablon_KullaniciNesnesi
+					bool Duzenle = false;
+					if (KullaniciNesnesi == NULL) Duzenle = true;
+					else if (KullaniciNesnesi == Eleman->Detaylar.KullaniciNesnesi) Duzenle = true;
+
+					if (Duzenle)
+					{
+				#endif
+						Eleman->ZamanlamayaMudahaleEt.Gecikme_msn = Gecikme_msn;
+						Eleman->ZamanlamayaMudahaleEt.HemenCalistir = true;
+				#ifdef _Gorev_Sablon_KullaniciNesnesi
+					}
+				#endif
 			}
 		}
 	}

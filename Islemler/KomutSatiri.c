@@ -32,7 +32,7 @@
 		if (UzunKomut)
 		{
 			Konum = AI_Bul_Blok(Tampon->Isaretci, Konum, _KomutSatiri_UzunKomut_Baslangici, sizeof(_KomutSatiri_UzunKomut_Baslangici) - 1);
-		if (Konum < 0) return false;
+			if (Konum < 0) return false;
 			Detaylar->Komut_Baslangici = Isaretci_Konumlandir(Tampon->Isaretci, Konum, Tip_char, Tip_void);
 		}
 		else Detaylar->Komut_Baslangici = Tampon->Isaretci;
@@ -55,8 +55,8 @@
 		{
 			Tampon->Kapasite = Konum;
 			Detaylar->DonanimAdresi = -1;
-		return true;
-	}
+			return true;
+		}
 
 		return false;
 	}
