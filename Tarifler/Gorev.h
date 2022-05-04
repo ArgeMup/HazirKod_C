@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.8
+// V1.9
 
 #ifndef __HazirKod_C_Gorev_H__
 #define __HazirKod_C_Gorev_H__
@@ -39,10 +39,11 @@
 
 		#define Gorev_Yeni()							Dizi_Yeni()
 		#define Gorev_Sil(s_Gorev)						Dizi_Sil(s_Gorev, true)
+		#define Gorev_Sill(s_Gorev)						Dizi_Sill(s_Gorev, true)
 		Tip_u32 Gorev_Calistir(Tip_Isaretci_Gorev Gorev);
 
 		Tip_bool Gorev_Islem_Ekle(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem _Gorev_Sablon_KullaniciNesnesi_Islem);
-		Tip_bool Gorev_Islem_MevcutMu(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem);
+		Tip_bool Gorev_Islem_MevcutMu(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem _Gorev_Sablon_KullaniciNesnesi_Islem);
 		Tip_void Gorev_Islem_HemenCalistir(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem _Gorev_Sablon_KullaniciNesnesi_Islem, Tip_u32 Gecikme_msn);
 
 		#define Gorev_Islem_CikVeSil()					return -1

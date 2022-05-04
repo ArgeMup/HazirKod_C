@@ -80,7 +80,7 @@
 		Sure_Yazdir(Zaman_Damgasi, ZamanDamgasiYazisi, sizeof(ZamanDamgasiYazisi));
 
 		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s ", ZamanDamgasiYazisi);
-		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s" _Gunluk_Sablon_Satir_Numarasi " Adet:%.5d | Hex | Konum | Ascii\r\n", Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken, Adet);
+		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, "%s" _Gunluk_Sablon_Satir_Numarasi " Adet:%d | Hex | Konum | Ascii\r\n", Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken, Adet);
 		_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 		
 		while (YazdirilanAdet < Adet)

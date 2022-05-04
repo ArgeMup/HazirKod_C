@@ -13,6 +13,7 @@
 		////////////////////////////////////////////////////////////////////////////////
 		Tip_Isaretci YT_Yeni(Tip_u32 Adet, Tip_bool Sifirla);
 		Tip_void YT_Sil(Tip_Isaretci Isaretci);
+		#define YT_Sill(Isaretci)				{ YT_Sil(Isaretci); Isaretci = Tip_null; }
 
 		#ifdef _YT_Tanimli_HEAP_Kutuphanesini_kullanMA
 

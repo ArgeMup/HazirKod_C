@@ -42,6 +42,7 @@
 		#define IGIC_DoluAlan(s_IGIC)		(_IGIC_(s_IGIC)->DoluAlan)
 		#define IGIC_BosAlan(s_IGIC)		(IGIC_Kapasite(s_IGIC) - IGIC_DoluAlan(s_IGIC))
 		#define IGIC_Sil(s_IGIC)			YT_Sil(s_IGIC)
+		#define IGIC_Sill(s_IGIC)			YT_Sill(s_IGIC)
 
 		Tip_Isaretci_IGIC IGIC_Yeni(Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor);
 		Tip_u32 IGIC_Bilgi_Oku(Tip_Isaretci_IGIC IGIC, Tip_Isaretci YazilacakTampon, Tip_u32 TamponKapasitesi, Tip_bool VeBosYerAc);

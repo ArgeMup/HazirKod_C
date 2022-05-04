@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.6
+// V1.7
 
 #include "Tampon.h"
 
@@ -14,14 +14,11 @@
 		Yeni->Kapasite = Kapasite;
 		Yeni->Isaretci = Isaretci_Konumlandir(Yeni, sizeof(_Tip_s_Tampon), Tip_u8, Tip_void);
 
-		if (Sifirla)
-		{
-			_Islem_memset_(Yeni->Isaretci, 0, Kapasite);
+		if (Sifirla) _Islem_memset_(Yeni->Isaretci, 0, Kapasite);
 
-			#ifdef _Tampon_Sablon_KullaniciNesnesi
-				_Islem_memset_(&Yeni->KullaniciNesnesi, 0, sizeof(_Tampon_Sablon_KullaniciNesnesi));
-			#endif
-		}
+		#ifdef _Tampon_Sablon_KullaniciNesnesi
+			_Islem_memset_(&Yeni->KullaniciNesnesi, 0, sizeof(_Tampon_Sablon_KullaniciNesnesi));
+		#endif
 
 		return Yeni;
 	}

@@ -34,6 +34,7 @@
 
 		Tip_Isaretci_Depo Depo_Yeni(Tip_u8 AyirmaBirimi_KapladigiAlan_Bayt, Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor);
 		Tip_void Depo_Sil(Tip_Isaretci_Depo Depo);
+		#define Depo_Sill(s_Depo) 			{ Depo_Sil(s_Depo); s_Depo = Tip_null; }
 
 		Tip_bool Depo_Bilgi_Ekle(Tip_Isaretci_Depo Depo, Tip_Isaretci OkunacakTampon, Tip_u32 Adet);
 		Tip_u32 Depo_Bilgi_Oku(Tip_Isaretci_Depo Depo, Tip_Isaretci YazilacakTampon, Tip_u32 TamponKapasitesi);

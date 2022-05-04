@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.7
+// V1.8
 
 #include "KomutSatiri.h"
 
@@ -19,7 +19,7 @@
 	}
 
 	//Blok Bilgi Icerik Kontrol Islemleri
-	Tip_bool KomutSatiri_Baslat(Tip_Isaretci_Tampon Tampon, Tip_bool UzunKomut, Tip_Isaretci_KomutSatiri_Tampon_Detaylar Detaylar)
+	Tip_bool KomutSatiri_Baslat(Tip_Isaretci_Tampon Tampon, Tip_bool UzunKomut, Tip_s_KomutSatiri_Tampon_Detaylar * Detaylar)
 	{
 		Tip_s_KomutSatiri_Tampon_Detaylar _TamponDetaylari;
 		if (Detaylar == Tip_null) Detaylar = &_TamponDetaylari;

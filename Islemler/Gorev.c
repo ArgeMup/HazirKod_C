@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.6
+// V1.7
 
 #include "Gorev.h"
 
@@ -35,14 +35,22 @@
 
 		return true;
 	}
-	Tip_bool Gorev_Islem_MevcutMu(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem)
+	Tip_bool Gorev_Islem_MevcutMu(Tip_Isaretci_Gorev Gorev, Tip_Islem_Gorev Islem _Gorev_Sablon_KullaniciNesnesi_Islem)
 	{
 		if (Gorev == Tip_null || Islem == Tip_null) return false;
 
 		for (Tip_u32 i = 0; i < Dizi_Eleman_Sayisi(Gorev); i++)
 		{
 			_Tip_s_Gorev * Eleman = Dizi_Elemani(Gorev, i);
-			if (Eleman->Islem == Islem) return true;
+			if (Eleman->Islem == Islem)
+			{
+				#ifdef _Gorev_Sablon_KullaniciNesnesi
+					if (KullaniciNesnesi == NULL) return true;
+					else if (KullaniciNesnesi == Eleman->Detaylar.KullaniciNesnesi) return true;
+				#else
+					return true;
+				#endif
+			}
 		}
 
 		return false;
@@ -57,11 +65,11 @@
 			if (Eleman->Islem == Islem)
 			{
 				#ifdef _Gorev_Sablon_KullaniciNesnesi
-					bool Duzenle = false;
-					if (KullaniciNesnesi == NULL) Duzenle = true;
-					else if (KullaniciNesnesi == Eleman->Detaylar.KullaniciNesnesi) Duzenle = true;
+					bool UzerindeCalistir = false;
+					if (KullaniciNesnesi == NULL) UzerindeCalistir = true;
+					else if (KullaniciNesnesi == Eleman->Detaylar.KullaniciNesnesi) UzerindeCalistir = true;
 
-					if (Duzenle)
+					if (UzerindeCalistir)
 					{
 				#endif
 						Eleman->ZamanlamayaMudahaleEt.Gecikme_msn = Gecikme_msn;

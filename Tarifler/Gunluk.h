@@ -9,8 +9,8 @@
 	#ifdef HazirKod_C_Kullan_Gunluk
 
 		////////////////////////////////////////////////////////////////////////////////
-		//#define _Gunluk_Baslik "KaynakKod"	//Gunluk ciktilarini tum dosyada kapatmak için NULL olmali
-		//#include "Gunluk.h"					//Kaynak kod içinde tanimlanmali
+		//#define _Gunluk_Baslik "KaynakKod"	//Gunluk ciktilarini tum dosyada kapatmak icin NULL olmali
+		//#include "Gunluk.h"					//Kaynak kod icinde tanimlanmali
 		////////////////////////////////////////////////////////////////////////////////
 
 		#include <stdio.h>

@@ -32,6 +32,7 @@
 		Tip_void Tampon_Paketle(Tip_Isaretci_Tampon Tampon);
 		Tip_bool Tampon_Kirp(Tip_Isaretci_Tampon Tampon, Tip_u32 Bastan, Tip_u32 Sondan);
 		Tip_void Tampon_Sil(Tip_Isaretci_Tampon Tampon);
+		#define Tampon_Sill(s_Tampon)											{ Tampon_Sil(s_Tampon); s_Tampon = Tip_null; }
 
 		Tip_u32 Tampon_Bilgi_Oku_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKonumu, Tip_Isaretci Hedef, Tip_u32 HedefKapasitesi);
 		Tip_bool Tampon_Bilgi_Ekle_Konum(Tip_Isaretci_Tampon Tampon, Tip_u32 BaslangicKonumu, Tip_Isaretci Kaynak, Tip_u32 Adet);
