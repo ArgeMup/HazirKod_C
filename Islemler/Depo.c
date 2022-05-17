@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.4
+// V1.5
 
 #include "Depo.h"
 
@@ -8,7 +8,7 @@
 	#define _Gunluk_Baslik "Depo"
 	#include "Gunluk.h"
 
-	Tip_Isaretci_Depo Depo_Yeni(Tip_u8 AyirmaBirimi_KapladigiAlan_Bayt, Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor)
+	Tip_Isaretci_Depo Depo_Yeni(Tip_u8 AyirmaBirimi_KapladigiAlan_Bayt, Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor _Depo_Sablon_KullaniciNesnesi_Islem)
 	{
 		if (Kapasite == 0 ||
 			AyirmaBirimi_KapladigiAlan_Bayt == 0 ||
@@ -18,7 +18,7 @@
 		_Tip_s_Depo * Yeni = YT_Yeni(sizeof(_Tip_s_Depo), false);
 		if (Yeni == Tip_null) return Tip_null;
 
-		Yeni->IGIC = IGIC_Yeni(Kapasite, YerKalmazsa, Islem_Siliniyor);
+		Yeni->IGIC = IGIC_Yeni(Kapasite, YerKalmazsa, Islem_Siliniyor _Depo_Sablon_KullaniciNesnesi_Degisken);
 		if (Yeni->IGIC == Tip_null)
 		{
 			YT_Sil(Yeni);
@@ -60,7 +60,7 @@
 
 			if (_Depo_IGIC_(Depo)->Islem_Siliniyor)
 			{
-				if (!_Depo_IGIC_(Depo)->Islem_Siliniyor(_Depo_IGIC_(Depo), AnlikAdet)) return false; //SilmeIslemiIptalEdildi;
+				if (!_Depo_IGIC_(Depo)->Islem_Siliniyor(_Depo_IGIC_(Depo)->KullaniciNesnesi, AnlikAdet)) return false; //SilmeIslemiIptalEdildi;
 			}
 
 			if (Depo_BosAlan(Depo) < toplam)

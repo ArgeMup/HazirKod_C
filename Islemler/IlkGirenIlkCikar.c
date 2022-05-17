@@ -8,7 +8,7 @@
 	#define _Gunluk_Baslik "IGIC"
 	#include "Gunluk.h"
 
-	Tip_Isaretci_IGIC IGIC_Yeni(Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor)
+	Tip_Isaretci_IGIC IGIC_Yeni(Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor _IGIC_Sablon_KullaniciNesnesi_Islem)
 	{
 		if (Kapasite == 0 ||
 			YerKalmazsa > e_IGIC_YerKalmazsa_TalebiReddet) return Tip_null;
@@ -20,6 +20,10 @@
 		Yeni->Tampon = Isaretci_Konumlandir(Yeni, sizeof(_Tip_s_IGIC), Tip_u8, Tip_void);
 		Yeni->YerKalmazsa = YerKalmazsa;
 		Yeni->Islem_Siliniyor = Islem_Siliniyor;
+
+		#ifdef _IGIC_Sablon_KullaniciNesnesi
+			Yeni->KullaniciNesnesi = KullaniciNesnesi;
+		#endif
 
 		return Yeni;
 	}
@@ -67,7 +71,7 @@
 
 			if (_IGIC_(IGIC)->Islem_Siliniyor)
 			{
-				if (!_IGIC_(IGIC)->Islem_Siliniyor(IGIC, Fark)) return false; //Silme islemi iptal edildi
+				if (!_IGIC_(IGIC)->Islem_Siliniyor(IGIC->KullaniciNesnesi, Fark)) return false; //Silme islemi iptal edildi
 				else
 				{
 					//Kullanici yer acmis mi

@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #ifndef __HazirKod_C_Depo_H__
 #define __HazirKod_C_Depo_H__
@@ -13,6 +13,20 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim
 		////////////////////////////////////////////////////////////////////////////////
+		#ifdef _IGIC_Sablon_KullaniciNesnesi
+			#ifdef _Depo_Sablon_KullaniciNesnesi
+				#define _Depo_Sablon_KullaniciNesnesi_Islem 	,Tip_Isaretci KullaniciNesnesi
+				#define _Depo_Sablon_KullaniciNesnesi_Degisken	,KullaniciNesnesi
+			#else
+				#define _Depo_Sablon_KullaniciNesnesi_Islem
+				#define _Depo_Sablon_KullaniciNesnesi_Degisken
+			#endif
+		#else
+			#undef _Depo_Sablon_KullaniciNesnesi
+			#define _Depo_Sablon_KullaniciNesnesi_Islem
+			#define _Depo_Sablon_KullaniciNesnesi_Degisken
+		#endif
+
 		typedef struct
 		{
 			Tip_Isaretci_IGIC IGIC;
@@ -32,7 +46,7 @@
 		#define Depo_DoluAlan(s_Depo)		( _Depo_IGIC_(s_Depo)->DoluAlan )
 		#define Depo_BosAlan(s_Depo)		( Depo_Kapasite(s_Depo) - Depo_DoluAlan(s_Depo) )
 
-		Tip_Isaretci_Depo Depo_Yeni(Tip_u8 AyirmaBirimi_KapladigiAlan_Bayt, Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor);
+		Tip_Isaretci_Depo Depo_Yeni(Tip_u8 AyirmaBirimi_KapladigiAlan_Bayt, Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor _Depo_Sablon_KullaniciNesnesi_Islem);
 		Tip_void Depo_Sil(Tip_Isaretci_Depo Depo);
 		#define Depo_Sill(s_Depo) 			{ Depo_Sil(s_Depo); s_Depo = Tip_null; }
 

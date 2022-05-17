@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.3
+// V1.4
 
 #include "LedKontrol.h"
 
@@ -27,18 +27,15 @@
 
 	struct s_LedKontrol_
 	{
+		Tip_bool GorevinDurdurulmasi_Isteniyor;
 		Tip_bool AnlikBildirim_Isteniyor;
 		Tip_u8 SayacGenel;
-		Tip_u32 HataDurumu;
 	}_LedKontrol = { 0 };
 
-	#define _LedKontrol_SonEleman ( sizeof(Tip_u32) * 8 )
-
-	Tip_void LedKontrol_HataDurumunuGuncelle(Tip_u32 HataDurumu)
+	Tip_void LedKontrol_GoreviDurdur()
 	{
-		_LedKontrol.HataDurumu = HataDurumu;
+		_LedKontrol.GorevinDurdurulmasi_Isteniyor = true;
 	}
-
 	Tip_void LedKontrol_AnlikBildirim()
 	{
 		_LedKontrol.AnlikBildirim_Isteniyor = true;
@@ -46,6 +43,8 @@
 
 	Tip_i32 LedKontrol_Gorev(Tip_Isaretci_Gorev_Detaylar Detaylar)
 	{
+		if (_LedKontrol.GorevinDurdurulmasi_Isteniyor) Gorev_Islem_CikVeSil();
+
 		YenidenCalistir:
 		switch (Detaylar->CalistirilacakAdim)
 		{
@@ -60,9 +59,9 @@
 				else
 				{
 					_LedKontrol.SayacGenel = 0;
-					for (; _LedKontrol.SayacGenel < _LedKontrol_SonEleman; _LedKontrol.SayacGenel++) if (HataDurumu_HataDevamEdiyorMu(_LedKontrol.HataDurumu, _LedKontrol.SayacGenel)) break;
+					for (; _LedKontrol.SayacGenel < _LedKontrol_GosterilebilecekHataSayisi; _LedKontrol.SayacGenel++) if (HataDurumu_HataDevamEdiyorMu(_LedKontrol_HataDurumuDegiskeni, _LedKontrol.SayacGenel)) break;
 
-					if (_LedKontrol.SayacGenel == _LedKontrol_SonEleman) Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_HerseyYolunda_0;
+					if (_LedKontrol.SayacGenel == _LedKontrol_GosterilebilecekHataSayisi) Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_HerseyYolunda_0;
 					else Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_HataVar_0;
 				}
 				goto YenidenCalistir;

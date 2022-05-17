@@ -13,12 +13,16 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim
 		////////////////////////////////////////////////////////////////////////////////
+		#ifdef _IGIC_Sablon_KullaniciNesnesi
+			#define _IGIC_Sablon_KullaniciNesnesi_Islem		,Tip_Isaretci KullaniciNesnesi
+		#else
+			#define _IGIC_Sablon_KullaniciNesnesi_Islem
+		#endif
 
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
-		typedef Tip_Isaretci Tip_Isaretci_IGIC;
-		typedef Tip_bool (*Tip_Islem_IGIC_Siliniyor) (Tip_Isaretci_IGIC, Tip_u32);
+		typedef Tip_bool (*Tip_Islem_IGIC_Siliniyor) (Tip_Isaretci, Tip_u32);
 
 		typedef struct
 		{
@@ -35,7 +39,12 @@
 
 			Tip_u32 Konum_Ekleme;
 			Tip_u32 Konum_Okuma;
-		} _Tip_s_IGIC;
+
+			#ifdef _IGIC_Sablon_KullaniciNesnesi
+				Tip_Isaretci KullaniciNesnesi;
+			#endif
+
+		} _Tip_s_IGIC, *Tip_Isaretci_IGIC;
 		#define _IGIC_(s_IGIC)				((_Tip_s_IGIC *)s_IGIC)
 
 		#define IGIC_Kapasite(s_IGIC)		(_IGIC_(s_IGIC)->Kapasite)
@@ -44,7 +53,7 @@
 		#define IGIC_Sil(s_IGIC)			YT_Sil(s_IGIC)
 		#define IGIC_Sill(s_IGIC)			YT_Sill(s_IGIC)
 
-		Tip_Isaretci_IGIC IGIC_Yeni(Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor);
+		Tip_Isaretci_IGIC IGIC_Yeni(Tip_u32 Kapasite, enum e_IGIC_YerKalmazsa_ YerKalmazsa, Tip_Islem_IGIC_Siliniyor Islem_Siliniyor _IGIC_Sablon_KullaniciNesnesi_Islem);
 		Tip_u32 IGIC_Bilgi_Oku(Tip_Isaretci_IGIC IGIC, Tip_Isaretci YazilacakTampon, Tip_u32 TamponKapasitesi, Tip_bool VeBosYerAc);
 		Tip_bool IGIC_Bilgi_Ekle(Tip_Isaretci_IGIC IGIC, Tip_Isaretci OkunacakTampon, Tip_u32 Adet);
 

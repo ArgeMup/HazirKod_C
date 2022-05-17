@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.13
+// V1.14
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -121,6 +121,7 @@
 	//Depo.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Depo
+		#define _Depo_Sablon_KullaniciNesnesi	//KullaniciNesnesini kapatmak icin bu satiri kaldir
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -182,6 +183,7 @@
 	//IlkGirenIlkCikar.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_IlkGirenIlkCikar
+		#define _IGIC_Sablon_KullaniciNesnesi	//KullaniciNesnesini kapatmak icin bu satiri kaldir
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -219,6 +221,8 @@
 	//LedKontrol.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_LedKontrol
+		#define _LedKontrol_HataDurumuDegiskeni					( 0xFFFFFFFF ) // ( Ayarlar.Cihaz.HataDurumu ) Bu degiskeni kullanici tanimlar
+		#define _LedKontrol_GosterilebilecekHataSayisi			( 2 ) // ornegin e_HataDurumu_Hatalar_ eleman sayisi kadar
 		#define _LedKontrol_AnlikBildirim_Bekleme				( 50 )
 		#define _LedKontrol_AnlikBildirim_Adet					( 5 )
 		#define _LedKontrol_HerseyYolunda_Bekleme_Kisa			( 150 )

@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.8
+// V1.9
 
 #include "KomutSatiri.h"
 
@@ -87,8 +87,19 @@
 	}
 
 	//Okuma Islemleri
+	Tip_bool KomutSatiri_Oku_SiradakiKarakter(Tip_Isaretci_Tampon Tampon, Tip_char * YazilacakTampon)
+	{
+		if (Tampon->Kapasite == 0 || YazilacakTampon == NULL) return false;
+
+		*YazilacakTampon = Isaretci_Icerigi(Tampon->Isaretci, 0, char, char);
+
+		_KomutSatiri_Tampon_Kirp(Tampon, 1);
+		return true;
+	}
 	Tip_bool KomutSatiri_Oku_TamSayi(Tip_Isaretci_Tampon Tampon, Tip_i32 * YazilacakTampon)
 	{
+		if (Tampon->Kapasite == 0 || YazilacakTampon == NULL) return false;
+
 		Tip_char * Isrtc = NULL;
 		*YazilacakTampon = _Islem_strtol_(Tampon->Isaretci, &Isrtc, 0);
 		if (Tampon->Isaretci == Isrtc) return false;
