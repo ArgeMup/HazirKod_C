@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #include "YaziIslemleri.h"
 
@@ -82,24 +82,24 @@
 	#else
 		( void ) An;
 	#endif
-		strftime(Hedef, HedefKapasite, _YI_Yazdir_Sablon_TarihSaat, &ZamanBilgisi);
+		strftime(Hedef, HedefKapasite, _Yazdirma_Sablon_TarihSaat, &ZamanBilgisi);
 		return Hedef;
 	}
 	Tip_char * YI_Yazdir_NoktaliSayi(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_float NoktaliSayi)
 	{
-		snprintf(Hedef, HedefKapasite, _YI_Yazdir_Sablon_NoktaliSayi, NoktaliSayi);
+		snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_NoktaliSayi, NoktaliSayi);
 
 		return Hedef;
 	}
 	Tip_char * YI_Yazdir_TamSayi_Hex(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_u32 TamSayi)
 	{
-		snprintf(Hedef, HedefKapasite, _YI_Yazdir_Sablon_TamSayi_Hex, TamSayi);
+		snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_Tip_u32, TamSayi);
 
 		return Hedef;
 	}
 	Tip_char * YI_Yazdir_TamSayi(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_i32 TamSayi)
 	{
-		snprintf(Hedef, HedefKapasite, _YI_Yazdir_Sablon_TamSayi, TamSayi);
+		snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_Tip_i32, TamSayi);
 
 		return Hedef;
 	}
@@ -109,7 +109,7 @@
 
 		for (Tip_u32 i = 0; i < Adet && AdetKullanilan < HedefKapasite; i++)
 		{
-			AdetKullanilan += snprintf(Isaretci_Konumlandir(Hedef, AdetKullanilan, Tip_char, Tip_char), HedefKapasite - AdetKullanilan, _YI_Yazdir_Sablon_Tampon_Hex, Isaretci_Icerigi(Kaynak, i, Tip_u8, Tip_u8));
+			AdetKullanilan += snprintf(Isaretci_Konumlandir(Hedef, AdetKullanilan, Tip_char, Tip_char), HedefKapasite - AdetKullanilan, _Yazdirma_Sablon_Hex, Isaretci_Icerigi(Kaynak, i, Tip_u8, Tip_u8));
 		}
 
 		if (AdetKullanilan >= HedefKapasite) AdetKullanilan = HedefKapasite - 1;

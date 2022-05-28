@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.5
+// V1.6
 
 #ifndef __HazirKod_C_LedKontrol_H__
 #define __HazirKod_C_LedKontrol_H__
@@ -14,7 +14,7 @@
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
 		Tip_i32 LedKontrol_Gorev(Tip_Isaretci_Gorev_Detaylar Detaylar);
-		Tip_void LedKontrol_GoreviDurdur();
+		Tip_void LedKontrol_Gorev_BaslatDurdur(Tip_bool Durdur);
 		Tip_void LedKontrol_AnlikBildirim();
 
 	#endif

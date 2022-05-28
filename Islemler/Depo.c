@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.5
+// V1.6
 
 #include "Depo.h"
 
@@ -60,7 +60,7 @@
 
 			if (_Depo_IGIC_(Depo)->Islem_Siliniyor)
 			{
-				if (!_Depo_IGIC_(Depo)->Islem_Siliniyor(_Depo_IGIC_(Depo)->KullaniciNesnesi, AnlikAdet)) return false; //SilmeIslemiIptalEdildi;
+				if (!_Depo_IGIC_(Depo)->Islem_Siliniyor(_Depo_IGIC_(Depo), AnlikAdet)) return false; //SilmeIslemiIptalEdildi;
 			}
 
 			if (Depo_BosAlan(Depo) < toplam)
@@ -75,7 +75,7 @@
 		return true;
 
 		BeklenmeyenDurum:
-		HazirKod_C_Gunluk("Beklenmeyen Durum Depo_Bilgi_Ekle %X %X %d", Depo, OkunacakTampon, Adet);
+		HazirKod_C_Gunluk("Beklenmeyen Durum Depo_Bilgi_Ekle " _Yazdirma_Sablon_Tip_Isaretci " " _Yazdirma_Sablon_Tip_Isaretci " " _Yazdirma_Sablon_Tip_u32, Depo, OkunacakTampon, Adet);
 		return false;
 	}
 	Tip_u32 Depo_Bilgi_Oku(Tip_Isaretci_Depo Depo, Tip_Isaretci YazilacakTampon, Tip_u32 TamponKapasitesi)
@@ -103,7 +103,7 @@
 		return OkunanAdet;
 	
 		BeklenmeyenDurum:
-		HazirKod_C_Gunluk("Beklenmeyen Durum Depo_Bilgi_Oku %X %X %d", Depo, YazilacakTampon, TamponKapasitesi);
+		HazirKod_C_Gunluk("Beklenmeyen Durum Depo_Bilgi_Oku " _Yazdirma_Sablon_Tip_Isaretci " " _Yazdirma_Sablon_Tip_Isaretci " " _Yazdirma_Sablon_Tip_u32, Depo, YazilacakTampon, TamponKapasitesi);
 		return 0;
 	}
 	Tip_u32 Depo_Bilgi_SiradakiAdet(Tip_Isaretci_Depo Depo)
@@ -117,7 +117,7 @@
 		else if (igic_okunan == _Depo_(Depo)->AyirmaBirimi_KapladigiAlan_Bayt) return AnlikAdet;
 
 		//BeklenmeyenDurum:
-		HazirKod_C_Gunluk("Beklenmeyen Durum Depo_Bilgi_SiradakiAdet %X", Depo);
+		HazirKod_C_Gunluk("Beklenmeyen Durum Depo_Bilgi_SiradakiAdet " _Yazdirma_Sablon_Tip_Isaretci, Depo);
 		return 0;
 	}
 	

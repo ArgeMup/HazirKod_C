@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.4
+// V1.5
 
 #include "LedKontrol.h"
 
@@ -32,9 +32,9 @@
 		Tip_u8 SayacGenel;
 	}_LedKontrol = { 0 };
 
-	Tip_void LedKontrol_GoreviDurdur()
+	Tip_void LedKontrol_Gorev_BaslatDurdur(Tip_bool Durdur)
 	{
-		_LedKontrol.GorevinDurdurulmasi_Isteniyor = true;
+		_LedKontrol.GorevinDurdurulmasi_Isteniyor = Durdur;
 	}
 	Tip_void LedKontrol_AnlikBildirim()
 	{

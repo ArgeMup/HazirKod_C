@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.9
+// V1.10
 
 #include "KomutSatiri.h"
 
@@ -207,16 +207,16 @@
 	}
 
 	//Cevaplama Islemleri
-	Tip_void KomutSatiri_Cevapla_Hex(Tip_Isaretci_Tampon Hedef, Tip_Isaretci_Tampon Kaynak)
+	Tip_void KomutSatiri_Cevapla_Hex(Tip_Isaretci_Tampon Hedef, Tip_Isaretci Kaynak, Tip_u32 Adet)
 	{
-		KomutSatiri_Cevap_Ekle(Hedef, "%s0x", _KomutSatiri_Cevap_Baslangici);
+		KomutSatiri_Cevap_Ekle(Hedef, _Yazdirma_Sablon_Yazi "0x", _KomutSatiri_Cevap_Baslangici);
 
-		for (Tip_u32 i = 0; i < Kaynak->Kapasite; i++)
+		for (Tip_u32 i = 0; i < Adet; i++)
 		{
-			KomutSatiri_Cevap_Ekle(Hedef, "%02X", Isaretci_Icerigi(Kaynak->Isaretci, i, Tip_u8, Tip_u8));
+			KomutSatiri_Cevap_Ekle(Hedef, _Yazdirma_Sablon_Hex, Isaretci_Icerigi(Kaynak, i, Tip_u8, Tip_u8));
 		}
 
-		KomutSatiri_Cevap_Ekle(Hedef, "%s", _KomutSatiri_Cevap_Bitisi);
+		KomutSatiri_Cevap_Ekle(Hedef, _Yazdirma_Sablon_Yazi, _KomutSatiri_Cevap_Bitisi);
 	}
 
 #endif

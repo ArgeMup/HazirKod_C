@@ -222,7 +222,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	}
 
 	Tip_bool Ornek_Depo_Islem_Siliniyor_IkinciSefer = false;
-	Tip_bool Ornek_Depo_Islem_Siliniyor(Tip_Isaretci_IGIC IGIC, Tip_u32 Adet)
+	Tip_bool Ornek_Depo_Islem_Siliniyor(Tip_Isaretci IGIC, Tip_u32 Adet)
 	{
 		if (!Ornek_Depo_Islem_Siliniyor_IkinciSefer)
 		{
@@ -452,7 +452,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-20749672 KaynakKod.c:444 Bitti, Kullanici Nesnesi : -1968869232
 	}
 
-	Tip_bool Ornek_IlkGirenIlkCikar_Islem_Siliniyor(Tip_Isaretci_IGIC IGIC, Tip_u32 Adet)
+	Tip_bool Ornek_IlkGirenIlkCikar_Islem_Siliniyor(Tip_Isaretci IGIC, Tip_u32 Adet)
 	{
 		Gunluk("Ornek_IlkGirenIlkCikar_Islem_Siliniyor, %d adet", Adet);
 		return true;

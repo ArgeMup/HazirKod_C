@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.4
+// V1.5
 
 #include "YerTahsisati.h"
 
@@ -17,7 +17,7 @@
 		{
 	#endif
 
-				HazirKod_C_Gunluk("+++ %p - %p - %d adet", Uretilen, Uretilen + Adet, Adet);
+				HazirKod_C_Gunluk("+++ " _Yazdirma_Sablon_Tip_Isaretci " - " _Yazdirma_Sablon_Tip_Isaretci " - " _Yazdirma_Sablon_Tip_u32 " adet", Uretilen, Uretilen + Adet, Adet);
 
 				if (Sifirla && Uretilen != Tip_null) _Islem_memset_(Uretilen, 0, Adet);
 
@@ -29,7 +29,7 @@
 		{
 				_YT_Islem_free_(Uretilen);
 
-				HazirKod_C_Gunluk("Beklenmeyen Durum YT_Yeni %p - %p - %d adet", Uretilen, Uretilen + Adet, Adet);
+				HazirKod_C_Gunluk("Beklenmeyen Durum YT_Yeni " _Yazdirma_Sablon_Tip_Isaretci " - " _Yazdirma_Sablon_Tip_Isaretci " - " _Yazdirma_Sablon_Tip_u32 " adet", Uretilen, Uretilen + Adet, Adet);
 			return Tip_null;
 		}
 	#endif
@@ -39,7 +39,7 @@
 		if (Isaretci == Tip_null) return;
 
 		_YT_Islem_free_(Isaretci);
-		HazirKod_C_Gunluk("--- %p", Isaretci);
+		HazirKod_C_Gunluk("--- " _Yazdirma_Sablon_Tip_Isaretci, Isaretci);
 	}
 
 #endif

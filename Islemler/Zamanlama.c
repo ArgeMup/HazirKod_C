@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.1
+// V1.2
 
 #include "Zamanlama.h"
 
@@ -71,7 +71,7 @@
 		{
 			if (Hedef == NULL || HedefKapasite == 0) return NULL;
 
-			snprintf(Hedef, HedefKapasite, _Zamanlama_Yazdir_Sablon_TamSayi "-" _Zamanlama_Yazdir_Sablon_TamSayi, Degisken.Yuksek, Degisken.Dusuk * _An_Aralik_Msn_);
+			snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_TamSayi_i "-" _Yazdirma_Sablon_TamSayi_i, Degisken.Yuksek, Degisken.Dusuk * _An_Aralik_Msn_);
 
 			return Hedef;
 		}
@@ -82,7 +82,7 @@
 		{
 			if (Hedef == NULL || HedefKapasite == 0) return NULL;
 
-			snprintf(Hedef, HedefKapasite, _Zamanlama_Yazdir_Sablon_TamSayi, Degisken * _An_Aralik_Msn_);
+			snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_TamSayi_i, Degisken * _An_Aralik_Msn_);
 
 			return Hedef;
 		}

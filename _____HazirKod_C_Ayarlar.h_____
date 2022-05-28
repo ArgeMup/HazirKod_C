@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.14
+// V1.15
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -28,10 +28,34 @@
 	typedef char																Tip_char;
 	typedef float 																Tip_float;
 	typedef void *																Tip_Isaretci;
-	typedef Tip_u32																Tip_Isaretci_SayiKarsiligi;
+	typedef size_t																Tip_Isaretci_SayiKarsiligi;
 	#define Tip_void															void
 	#define Tip_null															NULL
 	#define Tip_time															time_t
+
+	#define _Yazdirma_Sablon_TamSayi_i											"%d"				//%d, %ld, %lld
+	#define _Yazdirma_Sablon_TamSayi_u											"%u"				//%u, %lu, %llu
+	#define _Yazdirma_Sablon_TarihSaat											"%Y-%m-%d %X %Z"	//1881-05-19 23:59:59 GMT
+	#define _Yazdirma_Sablon_NoktaliSayi										"%.2f"				//0.99
+	#define _Yazdirma_Sablon_Yazi												"%s"				//ArGeMuP
+	#define _Yazdirma_Sablon_SatirSonu											"\r\n"				//CRLF
+	#define _Yazdirma_Sablon_Hex												"%02X"				//AA
+	#define _Yazdirma_Sablon_Hex_Tip_8											"0x%02X"			//0xAA
+	#define _Yazdirma_Sablon_Hex_Tip_16											"0x%04X"			//0xAA11
+	#define _Yazdirma_Sablon_Hex_Tip_32											"0x%08X"			//0xAA11BB22
+	#define _Yazdirma_Sablon_Tip_u8												_Yazdirma_Sablon_TamSayi_u
+	#define _Yazdirma_Sablon_Tip_i8												_Yazdirma_Sablon_TamSayi_i
+	#define _Yazdirma_Sablon_Tip_u16											_Yazdirma_Sablon_TamSayi_u
+	#define _Yazdirma_Sablon_Tip_i16											_Yazdirma_Sablon_TamSayi_i
+	#define _Yazdirma_Sablon_Tip_u32											_Yazdirma_Sablon_TamSayi_u
+	#define _Yazdirma_Sablon_Tip_i32											_Yazdirma_Sablon_TamSayi_i
+	#define _Yazdirma_Sablon_Tip_u64											_Yazdirma_Sablon_TamSayi_u
+	#define _Yazdirma_Sablon_Tip_i64											_Yazdirma_Sablon_TamSayi_i
+	#define _Yazdirma_Sablon_Tip_bool											_Yazdirma_Sablon_TamSayi_u
+	#define _Yazdirma_Sablon_Tip_char											"%c"				//A
+	#define _Yazdirma_Sablon_Tip_float											"%f"				//NOKTALI.SAYI
+	#define _Yazdirma_Sablon_Tip_Isaretci										"%p"				//99AABBCC
+	#define _Yazdirma_Sablon_Tip_Isaretci_SayiKarsiligi							_Yazdirma_Sablon_TamSayi_u
 
 	#define _Islem_memcpy_(x,y,z)												memcpy( ( x ), ( y ), ( z ) )
 	#define _Islem_memset_(x,y,z)												memset( ( x ), ( y ), ( z ) )
@@ -89,9 +113,9 @@
 	#define Bacak_Oku(Bacak)
 
 	#define _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Hataliysa_SonIslemler) if ( Bit_Uret_Ters( ( SonucunYazilacagiDegisken = ( Islem ) ) KarsilastirmaIslemi ( BeklenenSonuc ) ) ) { Hataliysa_SonIslemler }
-	#define Hataliysa_YenidenBaslat(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_BeklenmeyenDurum("Satir : %d, Sebep : %ld", __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); YenidenBaslat((Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); )
-	#define Hataliysa_GeriDon(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_Hata("Satir : %d, Sebep : %ld", __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); return; )
-	#define Hataliysa_EtiketeGit(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Etiket) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_Hata("Satir : %d, Sebep : %ld", __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); goto Etiket; )
+	#define Hataliysa_YenidenBaslat(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_BeklenmeyenDurum("Satir : " _Yazdirma_Sablon_TamSayi_i ", Sebep : " _Yazdirma_Sablon_Tip_Isaretci_SayiKarsiligi, __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); YenidenBaslat((Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); )
+	#define Hataliysa_GeriDon(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_Hata("Satir : " _Yazdirma_Sablon_TamSayi_i ", Sebep : " _Yazdirma_Sablon_Tip_Isaretci_SayiKarsiligi, __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); return; )
+	#define Hataliysa_EtiketeGit(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Etiket) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_Hata("Satir : " _Yazdirma_Sablon_TamSayi_i ", Sebep : " _Yazdirma_Sablon_Tip_Isaretci_SayiKarsiligi, __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); goto Etiket; )
 
 	////////////////////////////////////////////////////////////////////////////////
 	//Kullanilmayan Kutuphanelerin Kapatilabilmesi icin Anahtarlar // Acik Birakildiginda Ýhtiyac Duyulan Diger Kutuphaneler
@@ -144,8 +168,8 @@
 	#ifdef HazirKod_C_Kullan_Gunluk
 		#define _Gunluk_Cikti_Onem_Seviyesi 					_Gunluk_Cikti_Onem_Seviye_Geveze
 		#define _Gunluk_Renkli_Cikti_Uretsin
-		#define _Gunluk_Sablon_Satir_Numarasi					":%d" //Satir numarasini kapatmak icin bu satiri kaldir
-		#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//{ printf("%s", Tampon); fflush(stdout); } //fwrite (Tampon, sizeof(Tip_u8), Adet, stdout);
+		#define _Gunluk_Sablon_Satir_Numarasi					":" _Yazdirma_Sablon_TamSayi_i //Satir numarasini kapatmak icin bu satiri kaldir
+		#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//{ printf(_Yazdirma_Sablon_Yazi, Tampon); fflush(stdout); } //fwrite (Tampon, sizeof(Tip_u8), Adet, stdout);
 		#define _Gunluk_Renk_BeklenmeyenDurum					( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi )
 		#define _Gunluk_Renk_Hata								( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah )
 		#define _Gunluk_Renk_Uyari								( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah )
@@ -193,7 +217,7 @@
 		#define _KomutSatiri_Yazi_Ayiracsiz_TekParca_Olabilir
 		#define _KomutSatiri_Yazi_Icinde_OzelKarakter_Olabilir
 		#define _KomutSatiri_UzunKomut_Baslangici				"Kart"
-		#define _KomutSatiri_Komut_Bitisi						"\r\n"
+		#define _KomutSatiri_Komut_Bitisi						_Yazdirma_Sablon_SatirSonu
 		#define _KomutSatiri_Cevap_Baslangici					">>"
 		#define _KomutSatiri_Cevap_Bitisi						_KomutSatiri_Komut_Bitisi
 		#define _KomutSatiri_Ayirac			 					' '
@@ -255,11 +279,6 @@
 	//YaziIslemleri.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_YaziIslemleri
-		#define _YI_Yazdir_Sablon_TarihSaat						"%Y-%m-%d %X %Z" 	//1881-05-19 23:59:59 GMT
-		#define _YI_Yazdir_Sablon_NoktaliSayi					"%.2f"				//0.99
-		#define _YI_Yazdir_Sablon_TamSayi						"%d"				//1
-		#define _YI_Yazdir_Sablon_TamSayi_Hex					"0x%08X"			//0xAA11BB22
-		#define _YI_Yazdir_Sablon_Tampon_Hex					"%02X"				//0x112233445566778899AA
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -291,7 +310,6 @@
 	#ifdef HazirKod_C_Kullan_Zamanlama
 		#define _An_Aralik_Msn_									( 1 ) //_An_Okuma_Islemi_ nin dondurecegi degerin her bir kademesinin degeri
 		#define _An_Okuma_Islemi()								//GetTickCount() //1 LSB nin degeri _An_Aralik_Msn_ kadar olmali
-		#define _Zamanlama_Yazdir_Sablon_TamSayi				"%d" //4 bayt %d, %u veya %lu - 8 bayt %llu
 
 		//#define _An_Okuma_Islemi_8bayt_Deger_Uretiyor			//Kullanilan donanima ait tick islemi 8 bayt deger donduruyorsa bu anahtarý ac
 		#ifndef _An_Okuma_Islemi_8bayt_Deger_Uretiyor			//4 baytlik deger dondugunden calisma seklini secmek gerekiyor

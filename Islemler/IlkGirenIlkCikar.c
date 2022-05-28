@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #include "IlkGirenIlkCikar.h"
 
@@ -71,7 +71,7 @@
 
 			if (_IGIC_(IGIC)->Islem_Siliniyor)
 			{
-				if (!_IGIC_(IGIC)->Islem_Siliniyor(IGIC->KullaniciNesnesi, Fark)) return false; //Silme islemi iptal edildi
+				if (!_IGIC_(IGIC)->Islem_Siliniyor(IGIC, Fark)) return false; //Silme islemi iptal edildi
 				else
 				{
 					//Kullanici yer acmis mi
@@ -105,7 +105,7 @@
 		return true;
 
 		BeklenmeyenDurum:
-		HazirKod_C_Gunluk("Beklenmeyen Durum IGIC_Bilgi_Ekle %X %X %d", IGIC, OkunacakTampon, Adet);
+		HazirKod_C_Gunluk("Beklenmeyen Durum IGIC_Bilgi_Ekle " _Yazdirma_Sablon_Tip_Isaretci " " _Yazdirma_Sablon_Tip_Isaretci " " _Yazdirma_Sablon_Tip_u32, IGIC, OkunacakTampon, Adet);
 		return false;
 	}
 
