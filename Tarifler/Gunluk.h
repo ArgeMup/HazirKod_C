@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.7
+// V1.8
 
 #ifndef __HazirKod_C_Gunluk_H__
 #define __HazirKod_C_Gunluk_H__
@@ -16,6 +16,7 @@
 		#include <stdio.h>
 		#include <stdarg.h>
 		#include <ctype.h>
+		#include "Zamanlama.h"
 
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
@@ -51,9 +52,6 @@
 			e_Gunluk_Gorunum_Yuzey_Beyaz = ( e_Gunluk_Gorunum_Yazi_Beyaz << 4 ),
 		};
 
-		#include "Gunluk.h"
-		#include "Zamanlama.h"
-
 		Tip_void Gunluk_Baslat();
 		Tip_void Gunluk_SureliDurdur(Tip_u32 Saniye);
 
@@ -72,7 +70,9 @@
 		#endif
 
 		Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, const Tip_char * Sekil, ...);
-		Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, Tip_Isaretci Tampon, Tip_u16 Adet);
+		Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, Tip_Isaretci Tampon, Tip_u32 Adet);
+		Tip_void Gunluk_SadeceYazdir(const Tip_char * Sekil, ...);
+		#define Gunluk_SadeceGonder(Tampon, Adet) _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)
 
 		#ifdef _Gunluk_Renkli_Cikti_Uretsin
 			#define __Gunluk_Renk_BeklenmeyenDurum			( _Gunluk_Renk_BeklenmeyenDurum )

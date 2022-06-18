@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.11
+// V1.12
 #define _Gunluk_Baslik "Gunluk"
 #include "Gunluk.h"
 
@@ -13,6 +13,38 @@
 
 		_Gunluk_Disari_Aktarma_Islemi(_Yazdirma_Sablon_SatirSonu _Yazdirma_Sablon_SatirSonu _Yazdirma_Sablon_SatirSonu, (sizeof(_Yazdirma_Sablon_SatirSonu) - 1) * 3);
 		_Gunluk_Disari_Aktarma_Islemi("*****************************************************" _Yazdirma_Sablon_SatirSonu, 55);
+	}
+	Tip_void Gunluk_SadeceYazdir(const Tip_char * Sekil, ...)
+	{
+		if ( Sekil == NULL ) return;
+
+		va_list valist;
+		va_start(valist, Sekil);
+		Tip_bool Kirpildi = false;
+
+		#ifdef _Gunluk_Tampon_Kapasitesi_Sabit
+			Tip_char Yazi[_Gunluk_Tampon_Kapasitesi_Sabit];
+			Tip_u32 Kapasite = _Gunluk_Tampon_Kapasitesi_Sabit - (sizeof(_Yazdirma_Sablon_SatirSonu) - 1);
+		#else
+			Tip_u32 Kapasite = 0;
+			if (Sekil) Kapasite = vsnprintf(NULL, 0, Sekil, valist);
+			Kapasite += 2 /*son*/;
+			if (Kapasite > _Gunluk_Tampon_Azami_Kapasitesi)
+			{
+				Kirpildi = true;
+				Kapasite = _Gunluk_Tampon_Azami_Kapasitesi;
+			}
+			Tip_char Yazi[Kapasite];
+		#endif
+
+		Tip_u16 Konum = 0;
+		if (Kirpildi) Konum = snprintf(&Yazi[0], Kapasite, _Yazdirma_Sablon_Yazi, "KIRPILDI ");
+		Konum += vsnprintf(&Yazi[Konum], Kapasite - Konum, Sekil, valist);
+		Konum += snprintf(&Yazi[Konum],  sizeof(Yazi) - Konum, _Yazdirma_Sablon_SatirSonu);
+
+		va_end(valist);
+
+		_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 	}
 	Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem , const Tip_char * Sekil, ...)
 	{
@@ -65,11 +97,11 @@
 	
 		_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 	}
-	Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, Tip_Isaretci Tampon, Tip_u16 Adet)
+	Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, Tip_Isaretci Tampon, Tip_u32 Adet)
 	{
 		if ( Baslik == NULL || !Sure_DolduMu(_Gunluk_An) ) return;
 
-		Tip_char Yazi[256];
+		Tip_char Yazi[24 /*Zaman Damgasi*/ + 32 /*Tahmini Baslik*/ + ( _Gunluk_Hex_BirSatirdakiBilgiSayisi * 4 ) + 24 /*Aralik*/ + 2 /*son*/ + 8 /*Fazladan*/];
 		Tip_u16 Kapasite = sizeof(Yazi) - (sizeof(_Yazdirma_Sablon_SatirSonu) - 1);
 		Tip_u16 YazdirilanAdet = 0;
 		Tip_u16 Konum = 0;
@@ -80,26 +112,26 @@
 		Sure_Yazdir(Zaman_Damgasi, ZamanDamgasiYazisi, sizeof(ZamanDamgasiYazisi));
 
 		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, _Yazdirma_Sablon_Yazi " ", ZamanDamgasiYazisi);
-		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, _Yazdirma_Sablon_Yazi _Gunluk_Sablon_Satir_Numarasi " Adet:" _Yazdirma_Sablon_Tip_u16 " | Hex | Konum | Ascii" _Yazdirma_Sablon_SatirSonu, Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken, Adet);
+		Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, _Yazdirma_Sablon_Yazi _Gunluk_Sablon_Satir_Numarasi " Adet:" _Yazdirma_Sablon_Tip_u32 " | Hex | Konum | Ascii" _Yazdirma_Sablon_SatirSonu, Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken, Adet);
 		_Gunluk_Disari_Aktarma_Islemi(Yazi, Konum);
 		
 		while (YazdirilanAdet < Adet)
 		{
-			Tip_u16 AnlikAdet = Adet - YazdirilanAdet;
-			if (AnlikAdet > 16) AnlikAdet = 16;
+			Tip_u32 AnlikAdet = Adet - YazdirilanAdet;
+			if (AnlikAdet > _Gunluk_Hex_BirSatirdakiBilgiSayisi) AnlikAdet = _Gunluk_Hex_BirSatirdakiBilgiSayisi;
 
 			Konum = 0;
 
 			Konum += snprintf(&Yazi[Konum],  Kapasite - Konum, _Yazdirma_Sablon_Yazi " " _Yazdirma_Sablon_Yazi _Gunluk_Sablon_Satir_Numarasi " ", ZamanDamgasiYazisi, Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Degisken);
 
-			for (Tip_u16 i = 0; i < AnlikAdet; i++)
+			for (Tip_u32 i = 0; i < AnlikAdet; i++)
 			{
 				Konum += snprintf(&Yazi[Konum], Kapasite - Konum, _Yazdirma_Sablon_Hex " ", Isaretci_Icerigi(Tampon, YazdirilanAdet + i, Tip_u8, Tip_u8));
 			}
 
 			Konum += snprintf(&Yazi[Konum], Kapasite - Konum, "| " _Yazdirma_Sablon_Hex_Tip_16 " - " _Yazdirma_Sablon_Hex_Tip_16 " | ", YazdirilanAdet, YazdirilanAdet + AnlikAdet - 1);
 
-			for (Tip_u16 i = 0; i < AnlikAdet; i++)
+			for (Tip_u32 i = 0; i < AnlikAdet; i++)
 			{
 				Tip_char siradaki = Isaretci_Icerigi(Tampon, YazdirilanAdet + i, Tip_u8, Tip_char);
 				if (!isprint(siradaki)) siradaki = ' ';

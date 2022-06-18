@@ -175,6 +175,7 @@
 		#define _Gunluk_Renk_Uyari								( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah )
 		#define _Gunluk_Renk_Bilgi								( e_Gunluk_Gorunum_Yazi_Yesil | e_Gunluk_Gorunum_Yuzey_Siyah )
 		#define _Gunluk_Renk_Geveze								( e_Gunluk_Gorunum_Duzyazi )
+		#define _Gunluk_Hex_BirSatirdakiBilgiSayisi				( 16 )
 		#define _Gunluk_Tampon_Kapasitesi_Sabit					( 256 ) //Sabit miktarda stack dan temin edilen alan için bu satırı ac
 		#ifndef _Gunluk_Tampon_Kapasitesi_Sabit
 			#define _Gunluk_Tampon_Azami_Kapasitesi				( 512 ) //Degisken miktarda heap den temin edilen alan icin usttekini kapat

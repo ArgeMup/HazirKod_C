@@ -71,7 +71,7 @@
 		{
 			if (Hedef == NULL || HedefKapasite == 0) return NULL;
 
-			snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_TamSayi_i "-" _Yazdirma_Sablon_TamSayi_i, Degisken.Yuksek, Degisken.Dusuk * _An_Aralik_Msn_);
+			snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_TamSayi_u "-" _Yazdirma_Sablon_TamSayi_u, Degisken.Yuksek, Degisken.Dusuk * _An_Aralik_Msn_);
 
 			return Hedef;
 		}
@@ -82,7 +82,7 @@
 		{
 			if (Hedef == NULL || HedefKapasite == 0) return NULL;
 
-			snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_TamSayi_i, Degisken * _An_Aralik_Msn_);
+			snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_TamSayi_u, Degisken * _An_Aralik_Msn_);
 
 			return Hedef;
 		}
