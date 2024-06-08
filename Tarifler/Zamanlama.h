@@ -13,22 +13,20 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Ic Kullanim
 		////////////////////////////////////////////////////////////////////////////////
-		#ifdef _Zamanlama_Tasmayan_Yontemi_Kullan
-			typedef struct { Tip_u32 Yuksek, Dusuk; } Tip_Sure;
-			typedef Tip_u32 _Tip_Sure_Islem;
+		#ifdef _Zamanlama_An_Okuma_Islemi_8bayt_Deger_Uretiyor
+			typedef Tip_u64 Tip_Sure;
+			typedef Tip_u64 _Tip_Sure_Islem;
 		#else
-			#ifdef _An_Okuma_Islemi_8bayt_Deger_Uretiyor
-				typedef Tip_u64 Tip_Sure;
-				typedef Tip_u64 Tip_Sure_Islem;
+			#ifdef _Zamanlama_Tasmayan_Yontemi_Kullan
+				typedef struct { Tip_u32 Yuksek, Dusuk; } Tip_Sure;
+				typedef Tip_u32 _Tip_Sure_Islem;
 			#else
 				typedef Tip_u32 Tip_Sure;
 				typedef Tip_u32 _Tip_Sure_Islem;
 			#endif
-
-			#define _Sure_Ekle(u)		(_Tip_Sure_Islem)( (_Tip_Sure_Islem)_An_Okuma_Islemi() + (_Tip_Sure_Islem)( u ) )
 		#endif
 
-		#define _Msn_(u)		( (_Tip_Sure_Islem)( (_Tip_Sure_Islem)(u) / (_Tip_Sure_Islem)(_An_Aralik_Msn_) ) + (_Tip_Sure_Islem)1 )
+		#define _Msn_(u)		( (_Tip_Sure_Islem)( (_Tip_Sure_Islem)(u) / (_Tip_Sure_Islem)(_Zamanlama_An_Aralik_Msn_) ) + (_Tip_Sure_Islem)1 )
 		#define _Saniye_(u)		_Msn_	( (_Tip_Sure_Islem)(u) * (_Tip_Sure_Islem)1000 )
 		#define _Dakika_(u)		_Saniye_( (_Tip_Sure_Islem)(u) * (_Tip_Sure_Islem)60 )
 		#define _Saat_(u)		_Dakika_( (_Tip_Sure_Islem)(u) * (_Tip_Sure_Islem)60 )
@@ -38,9 +36,12 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
+		typedef _Tip_Sure_Islem (*Tip_Islem_Zamanlama_An_Okuma) ();
+		void Zamanlama_Baslat(Tip_Islem_Zamanlama_An_Okuma An_Okuma_Islemi);
+
 		#ifdef _Zamanlama_Tasmayan_Yontemi_Kullan
 			typedef Tip_void (*Tip_Islem_Zamanlama_Kilit) (Tip_bool);
-			void Zamanlama_Baslat(Tip_Islem_Zamanlama_Kilit Kilit_Islemi);
+			void Zamanlama_Baslat_Kilit_Islemi(Tip_Islem_Zamanlama_Kilit Kilit_Islemi);
 			Tip_char * Sure_Yazdir(Tip_Sure Degisken, Tip_char * Hedef, Tip_u32 HedefKapasite);
 
 			void _An_Guncelle();
@@ -50,7 +51,7 @@
 
 			#define Sure_DegiskeniniOlustur(Ad)					Tip_Sure Ad = { 0 }
 			#define Sure_DolduMu(Degisken)			            ( _Sure_DolduMu(&Degisken) )
-			#define Sure_KalanSure_MiliSaniye(Degisken)			( ( _Sure_KalanSure_MiliSaniye((&Degisken)) ) * ( _An_Aralik_Msn_ ) )
+			#define Sure_KalanSure_MiliSaniye(Degisken)			( ( _Sure_KalanSure_MiliSaniye((&Degisken)) ) * ( _Zamanlama_An_Aralik_Msn_ ) )
 
 			#define Sure_Hemen(Degisken)						_Islem_memset_( &Degisken, 0, sizeof(Tip_Sure) )
 			#define Sure_Simdi(Degisken)	            		_Sure_Ekle(&Degisken, (_Msn_(0) ) )
@@ -62,9 +63,12 @@
 			#define Sure_Hafta(Degisken, Sure)		            _Sure_Ekle(&Degisken, (_Hafta_(Sure) ) )
 			#define Sure_Asla(Degisken)							_Islem_memset_( &Degisken, 0xFF, sizeof(Tip_Sure) )
 		#else
+			Tip_char * Sure_Yazdir(Tip_Sure Degisken, Tip_char * Hedef, Tip_u32 HedefKapasite);
+			Tip_Sure _Sure_Ekle(Tip_Sure Sure);
+
 			#define Sure_DegiskeniniOlustur(Ad)					Tip_Sure Ad = _Sure_Ekle(0)
 			#define Sure_DolduMu(Degisken)			            ( Degisken <= _Sure_Ekle(0) )
-			#define Sure_KalanSure_MiliSaniye(Degisken)			( ( Degisken - _Sure_Ekle(0) ) * ( _An_Aralik_Msn_ ) )
+			#define Sure_KalanSure_MiliSaniye(Degisken)			( ( Degisken - _Sure_Ekle(0) ) * ( _Zamanlama_An_Aralik_Msn_ ) )
 
 			#define Sure_Hemen(Degisken)						Degisken = 0
 			#define Sure_Simdi(Degisken)	            		Degisken = _Sure_Ekle(_Msn_(0))
@@ -75,9 +79,6 @@
 			#define Sure_Gun(Degisken, Sure)		            Degisken = _Sure_Ekle(_Gun_(Sure))
 			#define Sure_Hafta(Degisken, Sure)		            Degisken = _Sure_Ekle(_Hafta_(Sure))
 			#define Sure_Asla(Degisken)							Degisken = ( (_Tip_Sure_Islem)0 - 1 )
-
-			Tip_char * Sure_Yazdir(Tip_Sure Degisken, Tip_char * Hedef, Tip_u32 HedefKapasite);
-			#define Zamanlama_Baslat() //hata vermemesi icin
 		#endif
 
 	#endif

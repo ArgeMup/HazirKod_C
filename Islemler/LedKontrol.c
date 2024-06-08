@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.5
+// V1.6
 
 #include "LedKontrol.h"
 
@@ -30,8 +30,13 @@
 		Tip_bool GorevinDurdurulmasi_Isteniyor;
 		Tip_bool AnlikBildirim_Isteniyor;
 		Tip_u8 SayacGenel;
+		Tip_Islem_LedKontrol_YakSondur _LedKontrol_YakSondur_Islemi;
 	}_LedKontrol = { 0 };
 
+	Tip_void LedKontrol_Baslat(Tip_Islem_LedKontrol_YakSondur LedKontrol_YakSondur_Islemi)
+	{
+		_LedKontrol._LedKontrol_YakSondur_Islemi = LedKontrol_YakSondur_Islemi;
+	}
 	Tip_void LedKontrol_Gorev_BaslatDurdur(Tip_bool Durdur)
 	{
 		_LedKontrol.GorevinDurdurulmasi_Isteniyor = Durdur;
@@ -83,12 +88,12 @@
 					goto YenidenCalistir;
 				}
 
-				_LedKontrol_LediYak();
+				_LedKontrol._LedKontrol_YakSondur_Islemi(true);
 				Detaylar->CalistirilacakAdim++;
 				Gorev_Islem_CikVeTekrarCalistir(_LedKontrol_AnlikBildirim_Bekleme);
 
 			case (e_LedKontrol_Islem_AnlikBildirim_2):
-				_LedKontrol_LediSondur();
+				_LedKontrol._LedKontrol_YakSondur_Islemi(false);
 				Detaylar->CalistirilacakAdim--;
 				Gorev_Islem_CikVeTekrarCalistir(_LedKontrol_AnlikBildirim_Bekleme);
 
@@ -96,17 +101,17 @@
 			//Hersey Yolunda//////////////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////
 			case (e_LedKontrol_Islem_HerseyYolunda_0):
-				_LedKontrol_LediYak();
+				_LedKontrol._LedKontrol_YakSondur_Islemi(true);
 				Detaylar->CalistirilacakAdim++;
 				Gorev_Islem_CikVeTekrarCalistir(_LedKontrol_HerseyYolunda_Bekleme_Uzun);
 
 			case (e_LedKontrol_Islem_HerseyYolunda_1):
-				_LedKontrol_LediSondur();
+				_LedKontrol._LedKontrol_YakSondur_Islemi(false);
 				Detaylar->CalistirilacakAdim++;
 				Gorev_Islem_CikVeTekrarCalistir(_LedKontrol_HerseyYolunda_Bekleme_Kisa);
 
 			case (e_LedKontrol_Islem_HerseyYolunda_2):
-				_LedKontrol_LediYak();
+				_LedKontrol._LedKontrol_YakSondur_Islemi(true);
 				Detaylar->CalistirilacakAdim = e_LedKontrol_Islem_Bosta;
 				Gorev_Islem_CikVeTekrarCalistir(_LedKontrol_HerseyYolunda_Bekleme_Uzun);
 
@@ -125,12 +130,12 @@
 					goto YenidenCalistir;
 				}
 
-				_LedKontrol_LediYak();
+				_LedKontrol._LedKontrol_YakSondur_Islemi(true);
 				Detaylar->CalistirilacakAdim++;
 				Gorev_Islem_CikVeTekrarCalistir(_LedKontrol_HataVar_Bekleme_Kisa);
 
 			case (e_LedKontrol_Islem_HataVar_2):
-				_LedKontrol_LediSondur();
+				_LedKontrol._LedKontrol_YakSondur_Islemi(false);
 				Detaylar->CalistirilacakAdim--;
 				Gorev_Islem_CikVeTekrarCalistir(_LedKontrol_HataVar_Bekleme_Kisa);
 

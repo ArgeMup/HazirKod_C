@@ -22,7 +22,13 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
-		typedef Tip_bool (*Tip_Islem_IGIC_Siliniyor) (Tip_Isaretci, Tip_u32);
+		typedef Tip_bool (*Tip_Islem_IGIC_Siliniyor) (Tip_Isaretci /*Tip_Isaretci_IGIC*/, Tip_u32);
+
+		enum e_IGIC_YerKalmazsa_
+		{
+			e_IGIC_YerKalmazsa_EnEskiyiSil,
+			e_IGIC_YerKalmazsa_TalebiReddet
+		};
 
 		typedef struct
 		{
@@ -30,11 +36,7 @@
 			Tip_u32 Kapasite;
 			Tip_u32 DoluAlan;
 
-			enum e_IGIC_YerKalmazsa_
-			{
-				e_IGIC_YerKalmazsa_EnEskiyiSil,
-				e_IGIC_YerKalmazsa_TalebiReddet
-			} YerKalmazsa;
+			enum e_IGIC_YerKalmazsa_ YerKalmazsa;
 			Tip_Islem_IGIC_Siliniyor Islem_Siliniyor;
 
 			Tip_u32 Konum_Ekleme;

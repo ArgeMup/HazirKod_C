@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.15
+// V1.16
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -100,17 +100,26 @@
 	#define Bit_Yaz_Ters(Degisken, No)											Degisken = BitDizisi_Uret_Bit_Ters( ( Degisken ), ( No ) )
 	#define BaytDizisi_Yaz_Ters(Isaretci_Hedef, Isaretci_Kaynak, Adet)  		for (Tip_u8 i = 0; i < Adet; i++) { Isaretci_Icerigi_u8(Isaretci_Hedef, i) = Isaretci_Icerigi_u8(Isaretci_Kaynak, Adet - 1 - i); }
 
+	//BaytDizisinin Hafizadaki Yerlesimi
+	//Bilgi 0x11223344 Hafiza Adresi 0x00 0x01 0x02 0x03
+	//Yuksekten Dusuge				 0x11 0x22 0x33 0x44 Big endian
+	//Dusukten Yuksege				 0x44 0x33 0x22 0x11 Little endian
+	#define BaytDizisi_HafizaYerlesimi_YuksektenDusugeMi(CevabinYazilacagiBoolDegiskeni) { Tip_u32 Gecici = 0x44332211; CevabinYazilacagiBoolDegiskeni = Isaretci_Icerigi_u8(&Gecici, 0) == 0x44; }
+	#define BaytDizisi_HafizaYerlesimi_DusuktenYuksegeMi(CevabinYazilacagiBoolDegiskeni) { Tip_u32 Gecici = 0x44332211; CevabinYazilacagiBoolDegiskeni = Isaretci_Icerigi_u8(&Gecici, 0) == 0x11; }
+	#define BaytDizisi_HafizaYerlesimi_YuksektenDusugeMi_2()					( __BYTE_ORDER == __BIG_ENDIAN )
+	#define BaytDizisi_HafizaYerlesimi_DusuktenYuksegeMi_2()					( __BYTE_ORDER == __LITTLE_ENDIAN )
+
 	#define Hesapla_Yuzde(Kullanim, Butun)										( ( ( Kullanim ) * 100 ) / ( Butun ) )
 	#define Hesapla_Dolgu(Kullanim, Butun)										( ( Butun ) - ( ( Kullanim ) & ( ( Butun ) - 1 ) ) )
 	#define Hesapla_EnKucuk(x, y)												( ( x ) < ( y ) ? ( x ) : ( y ) )
 	#define Hesapla_EnBuyuk(x, y)												( ( x ) > ( y ) ? ( x ) : ( y ) )
 
-	#define YenidenBaslat(Sebep)												//abort()
-	#define Bekle_MiliSaniye(Sure)												//Sleep(Sure)
-
-	#define Bacak_Yaz_1(Bacak)
-	#define Bacak_Yaz_0(Bacak)
-	#define Bacak_Oku(Bacak)
+	////Hazir atamalar
+	//#define YenidenBaslat(Sebep)												abort()
+	//#define Bekle_MiliSaniye(Sure)											Sleep(Sure)
+	//#define Bacak_Yaz_1(Bacak)
+	//#define Bacak_Yaz_0(Bacak)
+	//#define Bacak_Oku(Bacak)
 
 	#define _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Hataliysa_SonIslemler) if ( Bit_Uret_Ters( ( SonucunYazilacagiDegisken = ( Islem ) ) KarsilastirmaIslemi ( BeklenenSonuc ) ) ) { Hataliysa_SonIslemler }
 	#define Hataliysa_YenidenBaslat(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_BeklenmeyenDurum("Satir : " _Yazdirma_Sablon_TamSayi_i ", Sebep : " _Yazdirma_Sablon_Tip_Isaretci_SayiKarsiligi, __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); YenidenBaslat((Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); )
@@ -118,10 +127,10 @@
 	#define Hataliysa_EtiketeGit(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Etiket) _Hataliysa_(Islem, KarsilastirmaIslemi, BeklenenSonuc, SonucunYazilacagiDegisken, Gunluk_Hata("Satir : " _Yazdirma_Sablon_TamSayi_i ", Sebep : " _Yazdirma_Sablon_Tip_Isaretci_SayiKarsiligi, __LINE__, (Tip_Isaretci_SayiKarsiligi)SonucunYazilacagiDegisken); goto Etiket; )
 
 	////////////////////////////////////////////////////////////////////////////////
-	//Kullanilmayan Kutuphanelerin Kapatilabilmesi icin Anahtarlar // Acik Birakildiginda Ýhtiyac Duyulan Diger Kutuphaneler
+	//Kullanilmayan Kutuphanelerin Kapatilabilmesi icin Anahtarlar // Acik Birakildiginda ihtiyac Duyulan Diger Kutuphaneler
 	////////////////////////////////////////////////////////////////////////////////
 	#define HazirKod_C_Kullan_AramaIslemleri	//
-	#define HazirKod_C_Kullan_Depo				//Gunluk IlkGÝrenIlkCikar
+	#define HazirKod_C_Kullan_Depo				//Gunluk IlkGirenIlkCikar
 	#define HazirKod_C_Kullan_Dizi				//YerTahsisati
 	#define HazirKod_C_Kullan_Gorev				//Zamanlama Liste
 	#define HazirKod_C_Kullan_Gunluk			//Zamanlama
@@ -169,17 +178,26 @@
 		#define _Gunluk_Cikti_Onem_Seviyesi 					_Gunluk_Cikti_Onem_Seviye_Geveze
 		#define _Gunluk_Renkli_Cikti_Uretsin
 		#define _Gunluk_Sablon_Satir_Numarasi					":" _Yazdirma_Sablon_TamSayi_i //Satir numarasini kapatmak icin bu satiri kaldir
-		#define _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)		//{ printf(_Yazdirma_Sablon_Yazi, Tampon); fflush(stdout); } //fwrite (Tampon, sizeof(Tip_u8), Adet, stdout);
-		#define _Gunluk_Renk_BeklenmeyenDurum					( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi )
-		#define _Gunluk_Renk_Hata								( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah )
-		#define _Gunluk_Renk_Uyari								( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah )
-		#define _Gunluk_Renk_Bilgi								( e_Gunluk_Gorunum_Yazi_Yesil | e_Gunluk_Gorunum_Yuzey_Siyah )
-		#define _Gunluk_Renk_Geveze								( e_Gunluk_Gorunum_Duzyazi )
+		
+		#define _Gunluk_Renk_DerleyiciHataGiderici				//( e_Gunluk_Gorunum_ ) //error: invalid conversion from 'int' to 'e_Gunluk_Gorunum_'
+		#define _Gunluk_Renk_BeklenmeyenDurum					( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi ) )
+		#define _Gunluk_Renk_Hata								( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah ) )
+		#define _Gunluk_Renk_Uyari								( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah ) )
+		#define _Gunluk_Renk_Bilgi								( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Yazi_Yesil | e_Gunluk_Gorunum_Yuzey_Siyah ) )
+		#define _Gunluk_Renk_Geveze								( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Duzyazi ) )
 		#define _Gunluk_Hex_BirSatirdakiBilgiSayisi				( 16 )
-		#define _Gunluk_Tampon_Kapasitesi_Sabit					( 256 ) //Sabit miktarda stack dan temin edilen alan için bu satýrý ac
+		#define _Gunluk_Tampon_Kapasitesi_Sabit					( 256 ) //Sabit miktarda stack dan temin edilen alan icin bu satiri ac
 		#ifndef _Gunluk_Tampon_Kapasitesi_Sabit
 			#define _Gunluk_Tampon_Azami_Kapasitesi				( 512 ) //Degisken miktarda heap den temin edilen alan icin usttekini kapat
 		#endif
+	
+		//Tip_void Gunluk_Disari_Aktarma_Islemi(Tip_Isaretci Tampon, Tip_u32 Adet)
+		//{
+		//	printf(_Yazdirma_Sablon_Yazi, (const Tip_char*)Tampon);
+		//	fflush(stdout);
+		//  veya
+		//  fwrite ((const Tip_void*)Tampon, sizeof(Tip_u8), Adet, stdout);
+		//}
 
 		////////////////////////////////////////////////////////////////////////////////
 		//#define _Gunluk_Baslik "KaynakKod"	//Gunluk ciktilarini tum dosyada kapatmak için NULL olmali
@@ -199,7 +217,7 @@
 		//Sabit
 		e_HataDurumu_Hata_SonEleman //Ilk eleman en onemli hatadir
 	};
-	#define HataDurumu_Baslat(Degisken)									Degisken = 0 //senaryo olarak, cihaz ilk kez calistiginda herseyin hatalý oldugunu varsayýp kontrol ede ede hatalarý silmesi icin 0 yazildi
+	#define HataDurumu_Baslat(Degisken)									Degisken = 0 //senaryo olarak, cihaz ilk kez calistiginda herseyin hatali oldugunu varsayip kontrol ede ede hatalari silmesi icin 0 yazildi
 	#define HataDurumu_HataDevamEdiyorMu(Degisken, e_HataDurumu_Hatalar_)	( !Bit_Oku(Degisken, e_HataDurumu_Hatalar_) )
 	#define	HataDurumu_Hatasiz(Degisken, e_HataDurumu_Hatalar_)			Bit_Yaz_1(Degisken, e_HataDurumu_Hatalar_)
 	#define	HataDurumu_Hatali(Degisken, e_HataDurumu_Hatalar_)			Bit_Yaz_0(Degisken, e_HataDurumu_Hatalar_)
@@ -254,8 +272,11 @@
 		#define _LedKontrol_HerseyYolunda_Bekleme_Uzun			( 1500 )
 		#define _LedKontrol_HataVar_Bekleme_Kisa				( 500 )
 		#define _LedKontrol_HataVar_Bekleme_Uzun				( 1500 - _LedKontrol_HerseyYolunda_Bekleme_Kisa )
-		#define _LedKontrol_LediYak()							Bacak_Yaz_0(Bacak_LED)
-		#define _LedKontrol_LediSondur()						Bacak_Yaz_1(Bacak_LED)
+		
+		//Tip_void LedKontrol_YakSondur_Islemi(Tip_bool Yak)
+		//{
+		//	...
+		//}	
 	#endif
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -309,13 +330,18 @@
 	//Zamanlama.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Zamanlama
-		#define _An_Aralik_Msn_									( 1 ) //_An_Okuma_Islemi_ nin dondurecegi degerin her bir kademesinin degeri
-		#define _An_Okuma_Islemi()								//GetTickCount() //1 LSB nin degeri _An_Aralik_Msn_ kadar olmali
+		#define _Zamanlama_An_Aralik_Msn_								( 1 ) // !!! ünlemleri silme
+		#define _Zamanlama_Yazdirma_Sablon								"%lu" //%u, %lu, %llu
 
-		//#define _An_Okuma_Islemi_8bayt_Deger_Uretiyor			//Kullanilan donanima ait tick islemi 8 bayt deger donduruyorsa bu anahtarý ac
-		#ifndef _An_Okuma_Islemi_8bayt_Deger_Uretiyor			//4 baytlik deger dondugunden calisma seklini secmek gerekiyor
-			#define _Zamanlama_Tasmayan_Yontemi_Kullan			//Tasmaz fakat daha fazla ram kullanir ve farkli THREAD lerden cagirilacak ise Tip_Islem_Zamanlama_Kilit doldurulmali
-		#endif													//Diðer her halukarda -> _An_Aralik_Msn_ 1 olarak yazýlýr ise kabaca 44 gun sonra sayac tasar
+		//#define _Zamanlama_An_Okuma_Islemi_8bayt_Deger_Uretiyor		//Kullanilan donanima ait tick islemi 8 bayt deger donduruyorsa bu anahtarý ac
+		#ifndef _Zamanlama_An_Okuma_Islemi_8bayt_Deger_Uretiyor			//4 baytlik deger dondugunden calisma seklini secmek gerekiyor
+			#define _Zamanlama_Tasmayan_Yontemi_Kullan					//Tasmaz fakat daha fazla ram kullanir ve farkli THREAD lerden cagirilacak ise Tip_Islem_Zamanlama_Kilit doldurulmali
+		#endif															//Diðer her halukarda -> _Zamanlama_An_Aralik_Msn_ 1 olarak yazýlýr ise kabaca 44 gun sonra sayac tasar
+
+		//_Tip_Sure_Islem Zamanlama_An_Okuma_Islemi()
+		//{
+		//	return GetTickCount(); !!! 1 LSB nin degeri _Zamanlama_An_Aralik_Msn_ kadar olmali
+		//}
 	#endif
 
 #endif /*__HazirKod_C_Ayarlar_H__ */

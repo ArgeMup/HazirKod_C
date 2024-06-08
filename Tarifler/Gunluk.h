@@ -52,7 +52,8 @@
 			e_Gunluk_Gorunum_Yuzey_Beyaz = ( e_Gunluk_Gorunum_Yazi_Beyaz << 4 ),
 		};
 
-		Tip_void Gunluk_Baslat();
+		typedef Tip_void (*Tip_Islem_Gunluk_Disari_Aktarma) (Tip_Isaretci, Tip_u32);
+		Tip_void Gunluk_Baslat(Tip_Islem_Gunluk_Disari_Aktarma Disari_Aktarma_Islemi);
 		Tip_void Gunluk_SureliDurdur(Tip_u32 Saniye);
 
 		////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +73,6 @@
 		Tip_void _Gunluk_Ekle(enum e_Gunluk_Gorunum_ Gorunum, const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, const Tip_char * Sekil, ...);
 		Tip_void _Gunluk_Ekle_Hex(const Tip_char * Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Islem, Tip_Isaretci Tampon, Tip_u32 Adet);
 		Tip_void Gunluk_SadeceYazdir(const Tip_char * Sekil, ...);
-		#define Gunluk_SadeceGonder(Tampon, Adet) _Gunluk_Disari_Aktarma_Islemi(Tampon, Adet)
 
 		#ifdef _Gunluk_Renkli_Cikti_Uretsin
 			#define __Gunluk_Renk_BeklenmeyenDurum			( _Gunluk_Renk_BeklenmeyenDurum )

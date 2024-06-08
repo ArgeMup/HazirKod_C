@@ -1,23 +1,30 @@
 # HazirKod_C
 Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 
-	#include "AramaIslemleri.h"
-	#include "Depo.h"
-	#include "Dizi.h"
-	#include "Gorev.h"
-	#include "IlkGirenIlkCikar.h"
-	#include "KomutSatiri.h"
-	#include "LedKontrol.h"
-	#include "Liste.h"
-	#include "Tampon.h"
-	#include "YaziIslemleri.h"
-	#include "YerTahsisati.h"
-	#include "Zamanlama.h"
-	
-	//////////////////////////////////////////////////////////////////////////////
-	#define _Gunluk_Baslik "KaynakKod.c"	//Gunluk ciktilarini tum dosyada kapatmak için NULL olmali
-	#include "Gunluk.h"						//Kaynak kod içinde tanimlanmali
-	//////////////////////////////////////////////////////////////////////////////
+	#include "windows.h"
+
+	extern"C"
+	{
+		#include "HazirKod_C_Ayarlar.h"
+		
+		#include "AramaIslemleri.h"
+		#include "Depo.h"
+		#include "Dizi.h"
+		#include "Gorev.h"
+		#include "IlkGirenIlkCikar.h"
+		#include "KomutSatiri.h"
+		#include "LedKontrol.h"
+		#include "Liste.h"
+		#include "Tampon.h"
+		#include "YaziIslemleri.h"
+		#include "YerTahsisati.h"
+		#include "Zamanlama.h"
+		
+		//////////////////////////////////////////////////////////////////////////////
+		#define _Gunluk_Baslik "KaynakKod.c"	//Gunluk ciktilarini tum dosyada kapatmak için NULL olmali
+		#include "Gunluk.h"						//Kaynak kod içinde tanimlanmali
+		//////////////////////////////////////////////////////////////////////////////
+	}
 	
 	void Ornek_AramaIslemleri();
 	void Ornek_Depo();
@@ -33,9 +40,17 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	void Ornek_Zamanlama();
 	void Ornek_HazirKod_C_Ayarlar_h();
 	void Kiyaslama_Dizi_Liste();
+	_Tip_Sure_Islem Zamanlama_An_Okuma_Islemi();
+	Tip_void Gunluk_Disari_Aktarma_Islemi(Tip_Isaretci Tampon, Tip_u32 Adet);
+	
+	#define YenidenBaslat(Sebep)		abort()
+	#define Bekle_MiliSaniye(Sure)		Sleep(Sure)
 	
 	int main(void)
 	{
+		Zamanlama_Baslat(Zamanlama_An_Okuma_Islemi);
+		Gunluk_Baslat(Gunluk_Disari_Aktarma_Islemi);
+
 		Ornek_Gunluk();
 		Ornek_AramaIslemleri();
 		Ornek_Depo();
@@ -54,11 +69,13 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		return EXIT_SUCCESS;
 	}
 
+	Tip_void Gunluk_Disari_Aktarma_Islemi(Tip_Isaretci Tampon, Tip_u32 Adet)
+	{
+		printf(_Yazdirma_Sablon_Yazi, (const Tip_char*)Tampon);
+		fflush(stdout);
+	}
 	void Ornek_Gunluk()
 	{
-		//Sure Sayacini baslatmak için gerekli
-		Gunluk_Baslat();
-	
 		Gunluk("Gelisiguzel bir bilgi verir - siyah yazi");
 		Gunluk_Bilgi("Asamalar arasi gecise dair bilgi verir - siyah ustune yesil yazi");
 		Gunluk_Uyari("Bilinen bir duruma dair bilgi verir - siyah ustune sari yazi");
@@ -243,7 +260,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		Tip_Isaretci_Depo Depo =  Depo_Yeni(sizeof(Tip_u8), 100, e_IGIC_YerKalmazsa_EnEskiyiSil, Ornek_Depo_Islem_Siliniyor);
 	
 		Tip_char * Bilgi = "1234567890ABCDEF";
-		Gunluk_Hex(Bilgi, sizeof(Bilgi));
+		Gunluk_Hex(Bilgi, strlen(Bilgi));
 	
 		Tip_bool sonuc = Depo_Bilgi_Ekle(Depo, Bilgi, strlen(Bilgi));
 		Gunluk("Tip_bool sonuc = Depo_Bilgi_Ekle(Depo, Bilgi, strlen(Bilgi)); -> %d", sonuc);
@@ -319,8 +336,8 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	{
 		Gunluk("-----Ornek_Dizi-----");
 	
-		Tip_u8 * 	a1 = YT_Yeni(sizeof(Tip_u8), false);
-		Tip_float *	a2 = YT_Yeni(sizeof(Tip_float), false);
+		Tip_u8 * 	a1 = (Tip_u8 *)YT_Yeni(sizeof(Tip_u8), false);
+		Tip_float *	a2 = (Tip_float *)YT_Yeni(sizeof(Tip_float), false);
 		Tip_u16     a3 = 555;
 	
 		Tip_Isaretci_Dizi Dizi = Dizi_Yeni();
@@ -328,13 +345,13 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		Gunluk("Dizi_Eleman_Sayisi(Dizi) : %d", Dizi_Eleman_Sayisi(Dizi));
 	
 		Gunluk("Dizi_Eleman_Ekle(Dizi, a1); -> %d", Dizi_Eleman_Ekle(Dizi, a1));
-		Gunluk("TDizi_Eleman_Ekle(Dizi, a2); -> %d", Dizi_Eleman_Ekle(Dizi, a2));
-		Gunluk("TDizi_Eleman_Ekle(Dizi, &a3); -> %d", Dizi_Eleman_Ekle(Dizi, &a3));
+		Gunluk("Dizi_Eleman_Ekle(Dizi, a2); -> %d", Dizi_Eleman_Ekle(Dizi, a2));
+		Gunluk("Dizi_Eleman_Ekle(Dizi, &a3); -> %d", Dizi_Eleman_Ekle(Dizi, &a3));
 	
 		Gunluk("Dizi_Eleman_Sayisi(Dizi) : %d", Dizi_Eleman_Sayisi(Dizi));
 	
-		Tip_u8 * 	b1 = Dizi_Elemani(Dizi, 0);
-		Tip_float *	b2 = Dizi_Elemani(Dizi, 1);
+		Tip_u8 * 	b1 = (Tip_u8 *)Dizi_Elemani(Dizi, 0);
+		Tip_float *	b2 = (Tip_float *)Dizi_Elemani(Dizi, 1);
 		Gunluk("Tip_u8 * 	b1 = Dizi_Elemani(Dizi, Konum_a1); -> %d", *b1);
 		Gunluk("Tip_float *	b2 = Dizi_Elemani(Dizi, Konum_a2); -> %d", *b2);
 	
@@ -395,6 +412,10 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	
 		Gorev_Islem_CikVeTekrarCalistir(1000);
 	}
+	Tip_void LedKontrol_YakSondur_Islemi(Tip_bool Yak)
+	{
+		Gunluk(Yak ? "LED YAK" : "LED SONDUR");
+	}
 	void Ornek_Gorev()
 	{
 		Gunluk("-----Ornek_Gorev-----");
@@ -408,11 +429,12 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	
 		Gunluk("bool sonuc = Gorev_Islem_Ekle(Gorev, Ornek_Gorev_Islem, &KullaniciNesnesi); -> %d", sonuc);
 	
-	////Led kontrol islemi GOREV kutuphanesine uygun, donanýmsal hatalar vb. olaylar
-	////LedKontrol kutuphanesi ile dis dunyaya aktarilabilir
-	//	sonuc = Gorev_Islem_Ekle(Gorev, LedKontrol_Gorev, NULL);
-	//	Gunluk("sonuc = Gorev_Islem_Ekle(Gorev, LedKontrol_Gorev, NULL); -> %d", sonuc);
-	
+		////Led kontrol islemi GOREV kutuphanesine uygun, donanýmsal hatalar vb. olaylar
+		////LedKontrol kutuphanesi ile dis dunyaya aktarilabilir
+		//LedKontrol_Baslat(LedKontrol_YakSondur_Islemi);
+		//sonuc = Gorev_Islem_Ekle(Gorev, LedKontrol_Gorev, NULL);
+		//Gunluk("sonuc = Gorev_Islem_Ekle(Gorev, LedKontrol_Gorev, NULL); -> %d", sonuc);
+		
 		while (Gorev_Islem_MevcutMu(Gorev, Ornek_Gorev_Islem, NULL))
 		{
 			if (!Ornek_Gorev_Islem_BirKez_HemenCalistirildi && KullaniciNesnesi == 3)
@@ -545,7 +567,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		Gunluk("%s", KomutMetni);
 	
 	    Tip_Isaretci_Tampon Komut = Tampon_Yeni(256, false), Cevap = Tampon_Yeni(256, false), Hex, OrnekYazi1 = NULL, OrnekYazi2 = NULL, OrnekYazi3 = NULL, OrnekYazi4 = NULL;
-	    Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));
+	    Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, (Tip_Isaretci)KomutMetni, strlen(KomutMetni));
 	    Tip_i32 DizidekiKonum;
 	
 	    Gunluk("Komut --- Tampon_Bilgi_Ekle_GecerliKonumdanItibaren(Komut, KomutMetni, strlen(KomutMetni));");
@@ -647,7 +669,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		{
 	    	Gunluk("Tampon_DoluAlan(Cevap) -> %d", DizidekiKonum);
 	
-	    	KomutSatiri_Cevapla_Ret(Cevap, "Parametrelerden biri hatali");
+	    	KomutSatiri_Cevapla_Ret_Aciklama(Cevap, "Parametrelerden biri hatali");
 	    	Gunluk("KomutSatiri_Cevapla_Ret(Cevap, \"Parametrelerden biri hatali\");");
 	    	Gunluk_Hex(Cevap->Isaretci, Cevap->Kapasite);
 		}
@@ -659,7 +681,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	        Gunluk_Hex(Cevap->Isaretci, Cevap->Kapasite);
 	
 	        Tampon_DoluAlan(Cevap) = 0;
-	        KomutSatiri_Cevapla_Hex(Cevap, Hex);
+	        KomutSatiri_Cevapla_Hex(Cevap, Hex->Isaretci, Hex->Kapasite);
 	        Gunluk("KomutSatiri_Cevapla_Hex(Cevap, Hex);");
 	        Gunluk_Hex(Cevap->Isaretci, Cevap->Kapasite);
 	
@@ -960,7 +982,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		sonuc = Liste_Eleman_Ekle(Liste, &Eleman2);
 		Gunluk("sonuc = Liste_Eleman_Ekle(Liste, &Eleman2); -> %d", sonuc);
 	
-		Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32), true);
+		Tip_u32 * Eleman3 = (Tip_u32 *)Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32), true);
 		*Eleman3 = 3;
 		Gunluk("Tip_u32 * Eleman3 = Liste_Eleman_Ekle_VeYerTahsisEt(Liste, sizeof(Tip_u32), true); -> 0x%X", (Tip_Isaretci_SayiKarsiligi)Eleman3);
 	
@@ -1131,7 +1153,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	    Gunluk("YI_Yazdir_NoktaliSayi ->%s<-", YI_Yazdir_NoktaliSayi(Bulunan, sizeof(Bulunan), 1.35));
 	    Gunluk("YI_Yazdir_TamSayi_Hex ->%s<-", YI_Yazdir_TamSayi_Hex(Bulunan, sizeof(Bulunan), 65535));
 	    Gunluk("YI_Yazdir_TamSayi ->%s<-", YI_Yazdir_TamSayi(Bulunan, sizeof(Bulunan), 65535));
-	    Gunluk("YI_Yazdir_Hex_Tampon ->%s<-", YI_Yazdir_Hex_Tampon(Bulunan, sizeof(Bulunan), "123456789", strlen("123456789")));
+	    Gunluk("YI_Yazdir_Hex_Tampon ->%s<-", YI_Yazdir_Hex_Tampon(Bulunan, sizeof(Bulunan), (Tip_Isaretci)"123456789", strlen("123456789")));
 	
 	//    0-6775953 KaynakKod.c -----Ornek_YaziIslemleri-----
 	//    0-6775953 KaynakKod.c Tip_u32 konum = YI_Bul("123456789", "456"); -> 3
@@ -1164,6 +1186,10 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 	//	0-10606422 KaynakKod.c Tip_Isaretci Isrtc =  YT_Yeni(10, false); -> 0xAB2B6090
 	}
 
+	_Tip_Sure_Islem Zamanlama_An_Okuma_Islemi()
+	{
+		return GetTickCount(); //1 LSB nin degeri _Zamanlama_An_Aralik_Msn_ kadar olmali
+	}
 	void Ornek_Zamanlama()
 	{
 		Gunluk("-----Ornek_Zamanlama-----");
@@ -1278,7 +1304,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 		YT_Sil(YT_Yeni(1, false));
 		Gunluk("Bostaki ram miktari %d bayt", YT_BosAlan());
 		Tip_u8 BosDegisken = 0;
-		int Tik = 0;
+		DWORD Tik = 0;
 		int ToplamSure = 0;
 		Tip_u8 * okunan = Tip_null;
 	
@@ -1309,8 +1335,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 			Liste_Kuyruk_DegiskeniniOlustur(Liste, KuyrukDegiskeni);
 			while (KuyrukDegiskeni)
 			{
-				okunan = Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni);
-				*okunan++;
+				okunan = (Tip_u8 *)Liste_Kuyruk_SonrakiEleman(Liste, KuyrukDegiskeni);
 			}
 			SureOlcumleri_Liste[b] = GetTickCount() - Tik;
 	
@@ -1348,8 +1373,7 @@ Genel Amacli C Kutuphanesi ArgeMup@yandex.com
 			Tik = GetTickCount();
 			for(Tip_u32 c = 0; c < _Kiyaslama_Eleman_Sayisi; c++)
 			{
-				okunan = Dizi_Elemani(Dizi, c);
-				*okunan++;
+				okunan = (Tip_u8 *)Dizi_Elemani(Dizi, c);
 			}
 			SureOlcumleri_Dizi[b] = GetTickCount() - Tik;
 	

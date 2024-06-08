@@ -17,7 +17,7 @@
 
 		#ifdef _YT_Tanimli_HEAP_Kutuphanesini_kullanMA
 
-		#include "heap_4.h"
+			#include "heap_4.h"
 			#define	YT_BosAlan() 				xPortGetFreeHeapSize()
 
 			#define _YT_Islem_malloc_(Adet)		pvPortMalloc(Adet)
@@ -32,7 +32,8 @@
 				#define _YT_Ram_Baslangic			( Isaretci_Konumlandir(ucHeap, 0, Tip_u8, Tip_Isaretci_SayiKarsiligi) )
 				#define _YT_Ram_Bitis				( Isaretci_Konumlandir(ucHeap, configTOTAL_HEAP_SIZE, Tip_u8, Tip_Isaretci_SayiKarsiligi) )
 			#endif
-
+		#else
+			#define	YT_BosAlan()				( 0 )
 		#endif
 
 	#endif

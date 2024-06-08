@@ -101,7 +101,7 @@
 	{
 		if (Hedef == Tip_null || HedefKapasite == 0) return Tip_null;
 
-		snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_Tip_u32, TamSayi);
+		snprintf(Hedef, HedefKapasite, _Yazdirma_Sablon_Hex_Tip_32, TamSayi);
 
 		return Hedef;
 	}

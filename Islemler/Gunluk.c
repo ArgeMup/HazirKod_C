@@ -1,18 +1,24 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.12
+// V1.13
 #define _Gunluk_Baslik "Gunluk"
 #include "Gunluk.h"
 
 #ifdef HazirKod_C_Kullan_Gunluk
 
 	Tip_Sure _Gunluk_An;
+	Tip_Islem_Gunluk_Disari_Aktarma _Gunluk_Disari_Aktarma_Islemi;
 
-	Tip_void Gunluk_Baslat()
+	Tip_void Gunluk_Baslat(Tip_Islem_Gunluk_Disari_Aktarma Disari_Aktarma_Islemi)
 	{
+		_Gunluk_Disari_Aktarma_Islemi = Disari_Aktarma_Islemi;
 		Sure_Hemen(_Gunluk_An);
 
 		_Gunluk_Disari_Aktarma_Islemi(_Yazdirma_Sablon_SatirSonu _Yazdirma_Sablon_SatirSonu _Yazdirma_Sablon_SatirSonu, (sizeof(_Yazdirma_Sablon_SatirSonu) - 1) * 3);
 		_Gunluk_Disari_Aktarma_Islemi("*****************************************************" _Yazdirma_Sablon_SatirSonu, 55);
+	}
+	Tip_void Gunluk_SadeceGonder(Tip_Isaretci Tampon, Tip_u32 Adet)
+	{
+		_Gunluk_Disari_Aktarma_Islemi(Tampon, Adet);
 	}
 	Tip_void Gunluk_SadeceYazdir(const Tip_char * Sekil, ...)
 	{
@@ -102,9 +108,9 @@
 		if ( Baslik == NULL || !Sure_DolduMu(_Gunluk_An) ) return;
 
 		Tip_char Yazi[24 /*Zaman Damgasi*/ + 32 /*Tahmini Baslik*/ + ( _Gunluk_Hex_BirSatirdakiBilgiSayisi * 4 ) + 24 /*Aralik*/ + 2 /*son*/ + 8 /*Fazladan*/];
-		Tip_u16 Kapasite = sizeof(Yazi) - (sizeof(_Yazdirma_Sablon_SatirSonu) - 1);
-		Tip_u16 YazdirilanAdet = 0;
-		Tip_u16 Konum = 0;
+		Tip_u32 Kapasite = sizeof(Yazi) - (sizeof(_Yazdirma_Sablon_SatirSonu) - 1);
+		Tip_u32 YazdirilanAdet = 0;
+		Tip_u32 Konum = 0;
 
 		char ZamanDamgasiYazisi[24];
 		Sure_DegiskeniniOlustur(Zaman_Damgasi);

@@ -13,6 +13,8 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//Genel Goruse Acik Tanimlamalar
 		////////////////////////////////////////////////////////////////////////////////
+		typedef Tip_void (*Tip_Islem_LedKontrol_YakSondur) (Tip_bool);
+		Tip_void LedKontrol_Baslat(Tip_Islem_LedKontrol_YakSondur LedKontrol_YakSondur_Islemi);
 		Tip_i32 LedKontrol_Gorev(Tip_Isaretci_Gorev_Detaylar Detaylar);
 		Tip_void LedKontrol_Gorev_BaslatDurdur(Tip_bool Durdur);
 		Tip_void LedKontrol_AnlikBildirim();
