@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.16
+// V1.17
 
 #ifndef __HazirKod_C_Ayarlar_H__
 #define __HazirKod_C_Ayarlar_H__
@@ -179,7 +179,7 @@
 		#define _Gunluk_Renkli_Cikti_Uretsin
 		#define _Gunluk_Sablon_Satir_Numarasi					":" _Yazdirma_Sablon_TamSayi_i //Satir numarasini kapatmak icin bu satiri kaldir
 		
-		#define _Gunluk_Renk_DerleyiciHataGiderici				//( e_Gunluk_Gorunum_ ) //error: invalid conversion from 'int' to 'e_Gunluk_Gorunum_'
+		#define _Gunluk_Renk_DerleyiciHataGiderici				//( enum e_Gunluk_Gorunum_ ) //error: invalid conversion from 'int' to 'e_Gunluk_Gorunum_'
 		#define _Gunluk_Renk_BeklenmeyenDurum					( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Yazi_Beyaz | e_Gunluk_Gorunum_Yuzey_Kirmizi ) )
 		#define _Gunluk_Renk_Hata								( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Yazi_Kirmizi | e_Gunluk_Gorunum_Yuzey_Siyah ) )
 		#define _Gunluk_Renk_Uyari								( _Gunluk_Renk_DerleyiciHataGiderici( e_Gunluk_Gorunum_Yazi_Sari | e_Gunluk_Gorunum_Yuzey_Siyah ) )
@@ -200,8 +200,8 @@
 		//}
 
 		////////////////////////////////////////////////////////////////////////////////
-		//#define _Gunluk_Baslik "KaynakKod"	//Gunluk ciktilarini tum dosyada kapatmak için NULL olmali
-		//#include "Gunluk.h"					//Kaynak kod içinde tanimlanmali
+		//#define _Gunluk_Baslik "KaynakKod"	// Gunluk ciktilarini tum dosyada kapatmak icin NULL olmali
+		//#include "Gunluk.h"					// Kaynak kod icinde tanimlanmali
 		////////////////////////////////////////////////////////////////////////////////
 	#endif
 
@@ -330,13 +330,13 @@
 	//Zamanlama.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Zamanlama
-		#define _Zamanlama_An_Aralik_Msn_								( 1 ) // !!! ünlemleri silme
+		#define _Zamanlama_An_Aralik_Msn_								( 1 ) // !!! _An_Okuma_Islemi_ nin dondurecegi degerin her bir kademesinin degeri
 		#define _Zamanlama_Yazdirma_Sablon								"%lu" //%u, %lu, %llu
 
-		//#define _Zamanlama_An_Okuma_Islemi_8bayt_Deger_Uretiyor		//Kullanilan donanima ait tick islemi 8 bayt deger donduruyorsa bu anahtarý ac
+		//#define _Zamanlama_An_Okuma_Islemi_8bayt_Deger_Uretiyor		//Kullanilan donanima ait tick islemi 8 bayt deger donduruyorsa bu anahtari ac
 		#ifndef _Zamanlama_An_Okuma_Islemi_8bayt_Deger_Uretiyor			//4 baytlik deger dondugunden calisma seklini secmek gerekiyor
 			#define _Zamanlama_Tasmayan_Yontemi_Kullan					//Tasmaz fakat daha fazla ram kullanir ve farkli THREAD lerden cagirilacak ise Tip_Islem_Zamanlama_Kilit doldurulmali
-		#endif															//Diðer her halukarda -> _Zamanlama_An_Aralik_Msn_ 1 olarak yazýlýr ise kabaca 44 gun sonra sayac tasar
+		#endif															//Diger her halukarda -> _Zamanlama_An_Aralik_Msn_ 1 olarak yazilir ise kabaca 44 gun sonra sayac tasar
 
 		//_Tip_Sure_Islem Zamanlama_An_Okuma_Islemi()
 		//{

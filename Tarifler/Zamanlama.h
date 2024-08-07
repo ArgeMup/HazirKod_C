@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.6
+// V1.7
 
 #ifndef __HazirKod_C_Zamanlama_H__
 #define __HazirKod_C_Zamanlama_H__
@@ -68,7 +68,7 @@
 
 			#define Sure_DegiskeniniOlustur(Ad)					Tip_Sure Ad = _Sure_Ekle(0)
 			#define Sure_DolduMu(Degisken)			            ( Degisken <= _Sure_Ekle(0) )
-			#define Sure_KalanSure_MiliSaniye(Degisken)			( ( Degisken - _Sure_Ekle(0) ) * ( _Zamanlama_An_Aralik_Msn_ ) )
+			#define Sure_KalanSure_MiliSaniye(Degisken)			( Sure_DolduMu(Degisken) ? 0 : ( ( Degisken - _Sure_Ekle(0) ) * ( _Zamanlama_An_Aralik_Msn_ ) ) )
 
 			#define Sure_Hemen(Degisken)						Degisken = 0
 			#define Sure_Simdi(Degisken)	            		Degisken = _Sure_Ekle(_Msn_(0))
