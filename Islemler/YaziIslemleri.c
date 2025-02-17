@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.4
+// V1.5
 
 #include "YaziIslemleri.h"
 
@@ -67,7 +67,7 @@
 
 	Tip_char * YI_Yazdir(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_char * Sekil, ...)
 	{
-		if (Hedef == Tip_null || HedefKapasite == 0) return Tip_null;
+		if (Hedef == Tip_null || HedefKapasite == 0 || Sekil == NULL) return Tip_null;
 
 		va_list args;
 		va_start(args, Sekil);
@@ -121,11 +121,11 @@
 
 		if (Adet > 0)
 		{
-			AdetKullanilan = snprintf(Isaretci_Konumlandir(Hedef, 0, Tip_char, Tip_char), HedefKapasite, "0x");
+			AdetKullanilan = YI_snprintf(Isaretci_Konumlandir(Hedef, 0, Tip_char, Tip_char), HedefKapasite, "0x");
 
 			for (Tip_u32 i = 0; i < Adet && AdetKullanilan < HedefKapasite; i++)
 			{
-				AdetKullanilan += snprintf(Isaretci_Konumlandir(Hedef, AdetKullanilan, Tip_char, Tip_char), HedefKapasite - AdetKullanilan, _Yazdirma_Sablon_Hex, Isaretci_Icerigi(Kaynak, i, Tip_u8, Tip_u8));
+				AdetKullanilan += YI_snprintf(Isaretci_Konumlandir(Hedef, AdetKullanilan, Tip_char, Tip_char), HedefKapasite - AdetKullanilan, _Yazdirma_Sablon_Hex, Isaretci_Icerigi(Kaynak, i, Tip_u8, Tip_u8));
 			}
 
 			if (AdetKullanilan >= HedefKapasite) AdetKullanilan = HedefKapasite - 1;
@@ -135,5 +135,34 @@
 
 		return Hedef;
 	}
+	
+	Tip_u32 YI_vsnprintf(Tip_char * Hedef, Tip_u32 HedefKapasite, const Tip_char * Sekil, va_list valist)
+	{
+		if ( Hedef == NULL || HedefKapasite < 1 || Sekil == NULL ) return 0;
 
+		Tip_i32 yazilan = vsnprintf(Hedef, HedefKapasite, Sekil, valist);
+
+		if (yazilan > 0)
+		{
+			if (yazilan < HedefKapasite) return yazilan;
+			else return HedefKapasite - 1 /*\0*/;
+		}
+		else return 0; 
+	}
+	Tip_u32 YI_snprintf(Tip_char * Hedef, Tip_u32 HedefKapasite, const Tip_char * Sekil, ...)
+	{
+		if ( Hedef == NULL || HedefKapasite < 1 || Sekil == NULL ) return 0;
+
+		va_list valist;
+		va_start(valist, Sekil);
+		Tip_i32 yazilan = vsnprintf(Hedef, HedefKapasite, Sekil, valist);
+		va_end(valist);
+
+		if (yazilan > 0)
+		{
+			if (yazilan < HedefKapasite) return yazilan;
+			else return HedefKapasite - 1 /*\0*/;
+		}
+		else return 0; 
+	}
 #endif

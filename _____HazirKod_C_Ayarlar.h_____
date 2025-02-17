@@ -133,7 +133,7 @@
 	#define HazirKod_C_Kullan_Depo				//Gunluk IlkGirenIlkCikar
 	#define HazirKod_C_Kullan_Dizi				//YerTahsisati
 	#define HazirKod_C_Kullan_Gorev				//Zamanlama Liste
-	#define HazirKod_C_Kullan_Gunluk			//Zamanlama
+	#define HazirKod_C_Kullan_Gunluk			//Zamanlama YaziIslemleri
 	#define HazirKod_C_Kullan_IlkGirenIlkCikar	//Gunluk YerTahsisati
 	#define HazirKod_C_Kullan_KomutSatiri		//Tampon AramaIslemleri YaziIslemleri
 	#define HazirKod_C_Kullan_LedKontrol		//Gorev
@@ -175,7 +175,12 @@
 	//Gunluk.h
 	////////////////////////////////////////////////////////////////////////////////
 	#ifdef HazirKod_C_Kullan_Gunluk
-		#define _Gunluk_Cikti_Onem_Seviyesi 					_Gunluk_Cikti_Onem_Seviye_Geveze
+		#ifdef DEBUG
+			#define _Gunluk_Cikti_Onem_Seviyesi 				_Gunluk_Cikti_Onem_Seviye_Geveze
+		#else
+			#define _Gunluk_Cikti_Onem_Seviyesi 				_Gunluk_Cikti_Onem_Seviye_BeklenmeyenDurum
+		#endif
+		
 		#define _Gunluk_Renkli_Cikti_Uretsin
 		#define _Gunluk_Sablon_Satir_Numarasi					":" _Yazdirma_Sablon_TamSayi_i //Satir numarasini kapatmak icin bu satiri kaldir
 		

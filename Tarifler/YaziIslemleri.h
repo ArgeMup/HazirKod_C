@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.2
+// V1.3
 
 #ifndef __HazirKod_C_YaziIslemleri_H__
 #define __HazirKod_C_YaziIslemleri_H__
@@ -27,7 +27,10 @@
 		Tip_char * YI_Yazdir_TamSayi_Hex(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_u32 TamSayi);
 		Tip_char * YI_Yazdir_TamSayi(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_i32 TamSayi);
 		Tip_char * YI_Yazdir_Hex_Tampon(Tip_char * Hedef, Tip_u32 HedefKapasite, Tip_Isaretci Kaynak, Tip_u32 Adet);
-
+		
+		Tip_u32 YI_snprintf(Tip_char * Hedef, Tip_u32 HedefKapasite, const Tip_char * Sekil, ...);
+		Tip_u32 YI_vsnprintf(Tip_char * Hedef, Tip_u32 HedefKapasite, const Tip_char * Sekil, va_list valist);
+		
 	#endif
 
 #endif	//__HazirKod_C_YaziIslemleri_H__
