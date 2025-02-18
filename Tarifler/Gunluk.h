@@ -1,5 +1,5 @@
 // Copyright ArgeMup GNU GENERAL PUBLIC LICENSE Version 3 <http://www.gnu.org/licenses/> <https://github.com/ArgeMup/HazirKod_C>
-// V1.8
+// V1.9
 
 #ifndef __HazirKod_C_Gunluk_H__
 #define __HazirKod_C_Gunluk_H__
@@ -91,25 +91,25 @@
 		#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_BeklenmeyenDurum
 			#define Gunluk_BeklenmeyenDurum(Yazi , ...)				_Gunluk_Ekle(__Gunluk_Renk_BeklenmeyenDurum, _Gunluk_Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Tanim, Yazi, ##__VA_ARGS__)
 		#else
-			#define Gunluk_BeklenmeyenDurum(Yazi , ...)
+			#define Gunluk_BeklenmeyenDurum(Yazi , ...)				( (Tip_void)0 )
 		#endif
 
 		#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Hata
 			#define Gunluk_Hata(Yazi , ...) 						_Gunluk_Ekle(__Gunluk_Renk_Hata, _Gunluk_Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Tanim, Yazi, ##__VA_ARGS__)
 		#else
-			#define Gunluk_Hata(Yazi , ...)
+			#define Gunluk_Hata(Yazi , ...)							( (Tip_void)0 )
 		#endif
 
 		#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Uyari
 			#define Gunluk_Uyari(Yazi , ...) 						_Gunluk_Ekle(__Gunluk_Renk_Uyari, _Gunluk_Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Tanim, Yazi, ##__VA_ARGS__)
 		#else
-			#define Gunluk_Uyari(Yazi , ...)
+			#define Gunluk_Uyari(Yazi , ...)						( (Tip_void)0 )
 		#endif
 
 		#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Bilgi
 			#define Gunluk_Bilgi(Yazi , ...) 						_Gunluk_Ekle(__Gunluk_Renk_Bilgi, _Gunluk_Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Tanim, Yazi, ##__VA_ARGS__)
 		#else
-			#define Gunluk_Bilgi(Yazi , ...)
+			#define Gunluk_Bilgi(Yazi , ...)						( (Tip_void)0 )
 		#endif
 
 		#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_Geveze
@@ -117,17 +117,17 @@
 			#define Gunluk_Hex(Tampon, Adet) 						_Gunluk_Ekle_Hex(_Gunluk_Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Tanim, Tampon, Adet)
 			#define Gunluk_Hex_Aciklama(Tampon, Adet, Yazi , ...)	{ Gunluk(Yazi, ##__VA_ARGS__); Gunluk_Hex(Tampon, Adet); }
 		#else
-			#define Gunluk(Yazi , ...)
-			#define Gunluk_Hex(Tampon, Adet)
-			#define Gunluk_Hex_Aciklama(Tampon, Adet, Yazi , ...)
+			#define Gunluk(Yazi , ...)								( (Tip_void)0 )
+			#define Gunluk_Hex(Tampon, Adet)						( (Tip_void)0 )
+			#define Gunluk_Hex_Aciklama(Tampon, Adet, Yazi , ...)	( (Tip_void)0 )
 		#endif
 
 		#if _Gunluk_Cikti_Onem_Seviyesi >= _Gunluk_Cikti_Onem_Seviye_HazirKod_C
 			#define HazirKod_C_Gunluk(Yazi , ...) 					_Gunluk_Ekle(e_Gunluk_Gorunum_Duzyazi, _Gunluk_Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Tanim, Yazi, ##__VA_ARGS__)
 			#define HazirKod_C_Gunluk_Hex(Tampon, Adet) 			_Gunluk_Ekle_Hex(_Gunluk_Baslik _Gunluk_Satir_Numarasinida_Yazdirsin_Tanim, Tampon, Adet)
 		#else
-			#define HazirKod_C_Gunluk(Yazi , ...)
-			#define HazirKod_C_Gunluk_Hex(Tampon, Adet)
+			#define HazirKod_C_Gunluk(Yazi , ...)					( (Tip_void)0 )
+			#define HazirKod_C_Gunluk_Hex(Tampon, Adet)				( (Tip_void)0 )
 		#endif
 
 	#endif
